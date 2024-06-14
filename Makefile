@@ -4,7 +4,7 @@ CC = c++
 RM = rm -rf
 CFLAGS =  -std=c++98 -MD -Wall -Wextra -Werror
 
-SRC = main Parsing
+SRC = main Parsing Engine Server
 
 SRC_DIR = src/
 OBJ_DIR = objects/
