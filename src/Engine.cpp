@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Engine.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:29:14 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/06/14 12:29:18 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:34:02 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Server.hpp"
+#include "../include/Users.hpp"
 
 void  Server::init()
 {
