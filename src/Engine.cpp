@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:29:14 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/06/14 12:34:02 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:50:45 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void  Server::init()
 void  Server::start()
 {
    int   activity;
+   Users *user;
    while (1)
    {
       activity = poll(&(this->Fds[0]), this->Fds.size(), -1);
@@ -91,4 +92,43 @@ void  Server::start()
             send_2usr(this->Fds[i].fd); 
       }
    }
+}
+int   Server::addNewClient();
+{
+	struct sockaddr_in clientAdr;
+	socklen_t clientAddrSize = sizeof(clientAdr);
+	int clientSocket = accept(this->_serverSocket, (struct sockaddr *)&clientAdr, &clientAddrSize);
+	if (clientSocket == -1) {
+		std::cerr << "Error: accept: " << strerror(errno) << std::endl;
+		return -1;
+	}
+	else
+		std::cout << BLUE << "NEW CONNECTION" << DEFAULT << std::endl;
+
+	if (fcntl(this->_serverSocket, F_SETFL, O_NONBLOCK) == -1) {
+		std::cerr << "Error: fcntl: " << strerror(errno) << std::endl;
+		return -1;
+	}
+
+	char name[1000];
+	if (getnameinfo((struct sockaddr*)&clientAdr, clientAddrSize, name, sizeof(name), 0, 0, NI_NUMERICHOST) != 0) {
+		std::cerr << "Error: getnameinfo: " << strerror(errno) << std::endl;
+		return -1;
+	}
+	
+	pollfd new_client_fd;
+	std::memset(&new_client_fd, 0, sizeof(new_client_fd));
+   new_client_fd.fd = clientSocket;
+   new_client_fd.events = POLLIN | POLLOUT;
+   addPfds(new_client_fd);
+	
+	Users *user = new Users(std::string(name), clientSocket);
+	if (!user) {
+		std::cerr << "Error: failed to create user for the connected client." << std::endl;
+		close(clientSocket);
+		removePfds(new_client_fd);
+		return -1;
+	}
+   addUser(user);
+	return 0;
 }
