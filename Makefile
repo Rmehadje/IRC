@@ -4,8 +4,7 @@ CC = c++
 RM = rm -rf
 CFLAGS =  -std=c++98 -MD -Wall -Wextra -Werror
 
-SRC			=	Server main Users Channel Utils ServerCommands ServerEngine Bot
-SRC_TEST	=	Server test Users Channel Utils ServerCommands ServerEngine Bot
+SRC = main Parsing
 
 SRC_DIR = src/
 OBJ_DIR = objects/
