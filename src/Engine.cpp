@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:29:14 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/06/14 14:50:45 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:56:48 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,4 +131,12 @@ int   Server::addNewClient();
 	}
    addUser(user);
 	return 0;
+}
+
+void  Server::addUser(Users *user)
+{
+   for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end();++it)
+      if ((*it)->getNickname() == user->getNickname())
+         return ;
+   this->AllUsers.push_back(user);
 }
