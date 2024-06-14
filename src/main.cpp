@@ -6,11 +6,12 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:20:28 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/14 12:20:42 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:24:56 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Lib.hpp"
+#include "../include/Server.hpp"
 
 int main(int argc, char **argv)
 {
