@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:34:46 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:23:29 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:12:58 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,8 @@ class Channel
 		std::string	getPassword() const;
 		std::string	getTopic() const;
 		int			getLimit() const;
+
+
+		void	addUsertoC(Users *user);
+		void	deleteUserfromC(Users	*user);
 };
