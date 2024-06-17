@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:34:46 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:44:38 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:23:29 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,13 @@ class Channel
 		~Channel();
 		Channel	&operator=(const Channel &og);
 
+		void	setName(std::string name);
+		void	setPassword(std::string password);
+		void	setTopic(std::string topic);
+		void	setLimit(int	limit);
 		
-}
+		std::string	getName() const;
+		std::string	getPassword() const;
+		std::string	getTopic() const;
+		int			getLimit() const;
+};
