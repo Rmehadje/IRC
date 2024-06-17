@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:01:11 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:06:13 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:40:09 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,6 @@ class	Users
 		void setStatus(int status);
 		void setBuffer(std::string msg);
 		void setCmd(std::string msg);
+
+		void	clearCmd();
 };

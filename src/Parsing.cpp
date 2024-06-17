@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:21:02 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:15:44 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:37:23 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,37 @@ int PortChecker(std::string Port)
 		return 0;
 	std::cerr << RED << "Please enter a valid Port!" << DEFAULT << std::endl;
 	return 1;
+}
+
+bool	Check(std::string str, std::string find)
+{
+	if (str.empty() || find.empty())
+		return false;
+	if (str.rfind(find) == std::string::npos)
+		return false;
+	return true;
+}
+
+std::vector<std::string> MySplit(std::string str, std::string del)
+{
+	std::vector<std::string> tmp;
+
+	if (!str.empty() && !del.empty())
+	{
+		int i = 0;
+		while (str[i])
+		{
+		    int j = 0;
+            i = str.find(del);
+            if (i == -1)
+                break ;
+            else{
+
+                tmp.push_back(str.substr(j, i));
+                str = str.substr(i + del.length(), str.length());
+                i = 0;
+            }
+		}
+	}
+    return tmp;
 }

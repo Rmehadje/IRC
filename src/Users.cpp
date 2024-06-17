@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:51:49 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:04:44 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:40:33 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,9 @@ Users &Users::operator=(const Users &cp){
 	}
 	std::cout << "copy assignment constructor has been called" << std::endl;
 	return (*this);
+}
+
+void	clearCmd()
+{
+	this->cmd.clear();
 }

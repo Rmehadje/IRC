@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:53:34 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:05:36 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:39:33 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,12 @@ void Server::handleMsg(Users *user, size_t i)
 		std::string msg(buffer, getBytesReceived());
 		std::memset(this->buffer, '\0', sizeof(this->buffer));
 		user->setCmd(msg);
-		// if (!checkStrSplit(user->getCmdBuffer(), "\r\n"))
-		// 	return ;
-		// std::vector<std::string> vec = strSplitStr(user->getCmdBuffer(), "\r\n");
-		// std::string tmp = user->getCmdBuffer().substr(user->getCmdBuffer().rfind("\r\n") + 2);
-		// user->clearCmdBuff();
-		// user->setCmdBuffer(tmp);
+		if (!Check(user->getCmd(), "\r\n"))
+			return ;
+		std::vector<std::string> vec = MySplit(user->getCmd(), "\r\n");
+		std::string tmp = user->getCmd().substr(user->getCmd().rfind("\r\n") + 2);
+		user->clearCmd();
+		user->setCmd(tmp);
 		// for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 		// 	Message cont = parsing(*it);
 		// 	executeCmd(cont, user);

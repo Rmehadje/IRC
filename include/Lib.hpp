@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:58:16 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:09:55 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:13:09 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,5 @@
 #define DEFAULT "\033[1;39m"
 
 int PortChecker(std::string port);
+bool	Check(std::string str, std::string find);
+std::vector<std::string> MySplit(std::string str, std::string del);
