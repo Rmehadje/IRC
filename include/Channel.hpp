@@ -6,9 +6,10 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:34:46 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 14:29:22 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:46:19 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #pragma once
 
@@ -56,4 +57,8 @@ class Channel
 		std::string	getPassword() const;
 		std::string	getTopic() const;
 		int			getLimit() const;
+
+
+		void	addUsertoC(Users *user);
+		void	deleteUserfromC(Users	*user);
 };

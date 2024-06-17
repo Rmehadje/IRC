@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:45:34 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/06/17 14:12:33 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:38:04 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ Channel	&Channel::operator=(const Channel &og){
 		setTopic(og.getTopic());
 		setLimit(og.getLimit());
 	}
+	return (*this);
 }
 
 void	Channel::setName(std::string name){
@@ -62,3 +63,23 @@ int		Channel::getLimit() const{
 	int	lim = this->limit;
 	return (lim);
 }
+
+void	Channel::addUsertoC(Users *user){
+	for (std::vector<Users *>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
+		if ((*it)->getNickname() == user->getNickname()){
+			return ;
+		}
+	}
+	this->UserList.push_back(user);
+}
+
+void	Channel::deleteUserfromC(Users *goner){
+	for (std::vector<Users *>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
+		if ((*it)->getNickname() == goner->getNickname()){
+			this->UserList.erase(it);
+			return ;
+		}
+	}
+}
+
+// flip to operator takes user makes him into operator or into a bozo
