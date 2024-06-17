@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:58:16 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:13:09 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:39:20 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 #define ORANGE "\033[38;5;202m\033[22m"
 #define GRAY "\033[1;30m"
 #define DEFAULT "\033[1;39m"
+
+struct Command
+{
+	std::string Rest;
+	std::string	CmdName;
+};
 
 int PortChecker(std::string port);
 bool	Check(std::string str, std::string find);
