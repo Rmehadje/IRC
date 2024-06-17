@@ -6,13 +6,14 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:24 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 11:24:23 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:08:35 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <sstream>
+#include <cstring>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -58,15 +59,18 @@ class Server
 		void	addUser(Users *user);
 		int	addNewClient();
 		void	send_2usr(int fd);
+		void	removePfds(struct pollfd sfd);
+		void	handleMsg(Users *user, size_t i);
 	
 	//Setters
 		void	setHost(std::string name);
 		void	setStatus(bool flag);
+		void	setBytesReceived(int BytesReceived);
 
 	//Getters
 		std::string getHost() const;
 		bool	getStatus() const;
 		int	getPort() const;
 		Users*	getUserByFd(int fd);
-		
+		ssize_t getBytesReceived();
 };

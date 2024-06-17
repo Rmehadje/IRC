@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Users.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:01:11 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:10:31 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:58:15 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "Lib.hpp"
-#include <unistd.h>
 
 class	Users
 {
@@ -25,7 +24,6 @@ class	Users
 		std::string Mode;
 		int			Socket;
 		int			Status;
-		std::string buffer;
 		//myb buffer
 	public:
 		Users(std::string hostname, int socket);
@@ -33,14 +31,13 @@ class	Users
 		Users(const Users &cp);
 		Users &operator=(const Users &cp);
 
-		std::string getNickname() const;
-		std::string getUsername() const;
-		std::string getHostname() const;
-		std::string getRealname() const;
-		std::string getMode() const;
-		int			getSocket() const;
-		int			getStatus() const;
-		std::string		getBuffer() const;
+		std::string getNickname();
+		std::string getUsername();
+		std::string getHostname();
+		std::string getRealname();
+		std::string getMode();
+		std::string getSocket();
+		std::string getStatus();
 		
 		void setNickname(std::string nickname);
 		void setUsername(std::string username);

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Users.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:51:49 by sal-zuba          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2024/06/17 12:06:50 by rmehadje         ###   ########.fr       */
+=======
+/*   Updated: 2024/06/17 11:58:58 by sal-zuba         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 

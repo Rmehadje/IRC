@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:58:16 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/14 12:21:44 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:09:55 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <cerrno> 
 #include <cstring>
 #include <iostream>
+#include <fcntl.h>
 #include "Users.hpp"
 
 #define RED "\033[1;31m"
