@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:53:34 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:30:36 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:56:23 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,8 @@ void Server::handleMsg(Users *user, size_t i)
 		removeUserFromServer(user);
 	}
 	else {
-		std::cout << "MSG\n" << i << std::endl;
-		// std::string msg(_buffer, getBytesReceived());
-		// std::memset(this->_buffer, '\0', sizeof(this->_buffer));
+		std::string msg(buffer, getBytesReceived());
+		std::memset(this->buffer, '\0', sizeof(this->buffer));
 		// user->setCmdBuffer(msg);
 		// if (!checkStrSplit(user->getCmdBuffer(), "\r\n"))
 		// 	return ;

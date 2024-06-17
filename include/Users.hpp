@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:01:11 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:10:31 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:03:21 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ class	Users
 		int			Socket;
 		int			Status;
 		std::string buffer;
+		std::string	cmd;
 		//myb buffer
 	public:
 		Users(std::string hostname, int socket);
@@ -49,5 +50,5 @@ class	Users
 		void setMode(std::string mode);
 		void setSocket(int socket);
 		void setStatus(int status);
-		
+		void setBuffer(std::string msg);
 };

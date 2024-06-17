@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:51:49 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:21:06 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:04:44 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ Users::~Users()
 std::string Users::getNickname() const
 {
 	return this->Nickname;	
+}
+
+std::string	Users::getCmd() const
+{
+	return this->cmd;
 }
 
 std::string Users::getBuffer() const
@@ -65,6 +70,10 @@ int	Users::getStatus() const{
 	return (stat);
 }
 
+void	Users::setCmd(std::string msg)
+{
+	this->cmd += msg;
+}
 
 void	Users::setNickname(std::string nickname){
 	this->Nickname = nickname;
@@ -86,6 +95,11 @@ void	Users::setSocket(int	socket){
 }
 void	Users::setStatus(int status){
 	this->Status = status;
+}
+
+void	Users::setBuffer(std::string msg)
+{
+	this->buffer = msg;
 }
 
 Users::Users(const Users &cp){
