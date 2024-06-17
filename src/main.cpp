@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:20:28 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/14 12:24:56 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:21:39 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 	while (server.getStatus() == true)
 	{
 		server.init();
+		server.start();
 	}
 	return 0;
 }

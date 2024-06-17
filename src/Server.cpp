@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:53:34 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:08:51 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:30:36 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,56 @@ ssize_t Server::getBytesReceived()
 	return this->BytesReceived;
 }
 
+Users *Server::getUserByFd(int fd) {
+	for (std::vector<Users *>::iterator it = this->AllUsers.begin(); 
+			it != this->AllUsers.end(); ++it) {
+		if ((*it)->getSocket() == fd)
+			return *it;
+	}
+	return NULL;
+}
+
+
+void	Server::removePfds(struct pollfd sfd)
+{
+	for (std::vector<struct pollfd>::iterator it = this->Fds.begin(); it != this->Fds.end(); ++it) {
+		if ((*it).fd == sfd.fd && ((*it).events == sfd.events)) {
+			this->Fds.erase(it);
+			return ;
+		}
+	}
+}
+
+void  Server::addUser(Users *user)
+{
+   for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end();++it)
+      if ((*it)->getNickname() == user->getNickname())
+         return ;
+   this->AllUsers.push_back(user);
+}
+
+void	Server::removeUserFromServer(Users *user)
+{
+	for (std::vector<pollfd>::iterator it = this->Fds.begin(); it != this->Fds.end(); it++)
+	{
+		if ((*it).fd == this->ServerSocket)
+			continue ;
+		if ((*it).fd == user->getSocket()) 
+		{
+			this->Fds.erase(it);
+			break ;
+		}
+	}
+	for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end(); ++it) {
+		if ((*it) == user) 
+		{
+			this->AllUsers.erase(it);
+			break ;
+		}
+	}
+	delete user;
+}
+
 void Server::handleMsg(Users *user, size_t i)
 {
 	setBytesReceived(recv(user->getSocket(), this->buffer, sizeof(this->buffer), 0));
@@ -84,7 +134,7 @@ void Server::handleMsg(Users *user, size_t i)
 			std::cout << "Connection closed." << std::endl;
 		else
 			std::cerr << "Error: recv: " << strerror(errno) << std::endl;
-		// removeUserFromServer(user);
+		removeUserFromServer(user);
 	}
 	else {
 		std::cout << "MSG\n" << i << std::endl;

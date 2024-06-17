@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:24 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:08:35 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:26:00 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ class Server
 		int	addNewClient();
 		void	send_2usr(int fd);
 		void	removePfds(struct pollfd sfd);
+		void	removeUserFromServer(Users *user);
 		void	handleMsg(Users *user, size_t i);
 	
 	//Setters
