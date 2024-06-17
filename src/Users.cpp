@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:51:49 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/14 15:00:28 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:27:00 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,7 @@ Users::~Users()
 	close(Socket);
 }
 
+std::string Users::getBuffer() const
+{
+	return this->buffer;	
+}

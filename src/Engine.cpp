@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:29:14 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/06/14 14:56:48 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:24:47 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,21 @@ void  Server::start()
       }
    }
 }
+
+void	Server::send_2usr(int fd) 
+{
+	if (fd == this->_serverSocket || fd == -1)
+		return ;
+	Users *user = getUserByFd(fd);
+	std::string msg = user->getBuffer();
+	if (msg.empty())
+		return ;
+	if (send(fd, msg.c_str(), msg.size(), 0) != (long)msg.size())
+		std::cerr << "Error: send: did not send all data" << std::endl;
+	std::cout << GREEN << "SENT: " << DEFAULT << msg << std::endl;
+	user->clearBuff();
+}
+
 int   Server::addNewClient();
 {
 	struct sockaddr_in clientAdr;

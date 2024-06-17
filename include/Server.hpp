@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:24 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/14 14:50:04 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:24:23 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ class Server
 		void	addPfds(struct pollfd sfd);
 		void	addUser(Users *user);
 		int	addNewClient();
+		void	send_2usr(int fd);
 	
 	//Setters
 		void	setHost(std::string name);
