@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Users.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:01:11 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 11:27:13 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:41:06 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ class	Users
 		Users(const Users &cp);
 		Users &operator=(const Users &cp);
 
-		std::string getNickname();
-		std::string getUsername();
-		std::string getHostname();
-		std::string getRealname();
-		std::string getMode();
-		std::string getSocket();
-		std::string getStatus();
+		std::string getNickname() const;
+		std::string getUsername() const;
+		std::string getHostname() const;
+		std::string getRealname() const;
+		std::string getMode() const;
+		int			getSocket() const;
+		int			getStatus() const;
 		std::string		getBuffer() const;
 		
 		void setNickname(std::string nickname);
