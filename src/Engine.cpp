@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:29:14 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/06/17 12:25:01 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:11:22 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void  Server::start()
             else {
                user = getUserByFd(this->Fds[i].fd);
                if (user)
-                  handleMsg(user, i);
+                  handleMsg(user);
             }
          }
          if (i < this->Fds.size() && (this->Fds[i].revents & POLLOUT))

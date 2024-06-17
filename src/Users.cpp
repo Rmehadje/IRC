@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:51:49 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:40:33 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:59:32 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ Users &Users::operator=(const Users &cp){
 	return (*this);
 }
 
-void	clearCmd()
+void	Users::clearCmd()
 {
 	this->cmd.clear();
 }
