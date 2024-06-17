@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:51:49 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 11:46:54 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:06:50 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,28 @@ void	Users::setStatus(int status){
 
 Users::Users(const Users &cp){
 	if (this != &cp){
-		
+		setHostname(cp.getHostname());
+		setNickname(cp.getNickname());
+		setUsername(cp.getUsername());
+		setRealname(cp.getRealname());
+		setMode(cp.getMode());
+		setSocket(cp.getSocket());
+		setStatus(cp.getStatus());
 	}
+	std::cout << "copy constructor has been called" << std::endl;
+}
+
+Users &Users::operator=(const Users &cp){
+	if (this != &cp)
+	{
+		setHostname(cp.getHostname());
+		setNickname(cp.getNickname());
+		setUsername(cp.getUsername());
+		setRealname(cp.getRealname());
+		setMode(cp.getMode());
+		setSocket(cp.getSocket());
+		setStatus(cp.getStatus());
+	}
+	std::cout << "copy assignment constructor has been called" << std::endl;
+	return (*this);
 }
