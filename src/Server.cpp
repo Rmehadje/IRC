@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:53:34 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:39:33 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:10:58 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	Server::removeUserFromServer(Users *user)
 	delete user;
 }
 
-void Server::handleMsg(Users *user, size_t i)
+void Server::handleMsg(Users *user)
 {
 	setBytesReceived(recv(user->getSocket(), this->buffer, sizeof(this->buffer), 0));
 	if (getBytesReceived() <= 0) {
@@ -146,10 +146,10 @@ void Server::handleMsg(Users *user, size_t i)
 		std::string tmp = user->getCmd().substr(user->getCmd().rfind("\r\n") + 2);
 		user->clearCmd();
 		user->setCmd(tmp);
-		// for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
-		// 	Message cont = parsing(*it);
-		// 	executeCmd(cont, user);
-		// 	std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
-		// }
+		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
+			// Message cont = parsing(*it);
+			// executeCmd(cont, user);
+			std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
+		}
 	}
 }
