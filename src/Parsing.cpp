@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:21:02 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:37:23 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:56:14 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,25 @@ std::vector<std::string> MySplit(std::string str, std::string del)
 		}
 	}
     return tmp;
+}
+
+Command parse(std::string str)
+{
+	Command tmp;
+
+	int i = 0;
+	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\f'))
+		i++;
+	int j = i;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+		{
+			tmp.CmdName = str.substr(j, i - j);
+			break ;
+		}
+		i++;
+	}
+	tmp.Rest = str.substr(i + 1, str.length());
+	return tmp;
 }

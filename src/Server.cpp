@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:53:34 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 14:40:07 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:10:31 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,9 @@ void Server::handleMsg(Users *user)
 		user->clearCmd();
 		user->setCmd(tmp);
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
-			// Command cmd = parsing(*it);
+			Command cmd = parse(*it);
+			CheckCmd(cmd);
+			
 			// executeCmd(cont, user);
 			std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
 		}
