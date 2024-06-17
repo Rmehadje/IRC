@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:53:34 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 12:56:23 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:05:36 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void Server::handleMsg(Users *user, size_t i)
 	else {
 		std::string msg(buffer, getBytesReceived());
 		std::memset(this->buffer, '\0', sizeof(this->buffer));
-		// user->setCmdBuffer(msg);
+		user->setCmd(msg);
 		// if (!checkStrSplit(user->getCmdBuffer(), "\r\n"))
 		// 	return ;
 		// std::vector<std::string> vec = strSplitStr(user->getCmdBuffer(), "\r\n");

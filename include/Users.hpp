@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:01:11 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 13:03:21 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:06:13 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class	Users
 		int			getSocket() const;
 		int			getStatus() const;
 		std::string		getBuffer() const;
+		std::string		getCmd() const;
 		
 		void setNickname(std::string nickname);
 		void setUsername(std::string username);
@@ -51,4 +52,5 @@ class	Users
 		void setSocket(int socket);
 		void setStatus(int status);
 		void setBuffer(std::string msg);
+		void setCmd(std::string msg);
 };
