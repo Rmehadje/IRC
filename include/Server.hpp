@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:24 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 14:11:06 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:08:32 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ class Server
 		void	removePfds(struct pollfd sfd);
 		void	removeUserFromServer(Users *user);
 		void	handleMsg(Users *user);
+		void	executeCmd(Command msg, Users *user);
 	
 	//Setters
 		void	setHost(std::string name);

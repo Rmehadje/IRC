@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:53:34 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 15:10:31 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:41:46 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,54 @@ void Server::handleMsg(Users *user)
 		user->setCmd(tmp);
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
-			CheckCmd(cmd);
-			
-			// executeCmd(cont, user);
+			// CheckCmd(cmd.CmdName, user);
+			// executeCmd(cmd, user);
 			std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
+			std::cout << RED << cmd.CmdName << BLUE << cmd.Rest << DEFAULT << std::endl;
 		}
 	}
+}
+
+void Server::executeCmd(Command msg, Users *user)
+{
+	(void)user;
+	if (msg.CmdName == "CAP")
+		std::cout << "GOOD" << std::endl;
+		// c_cap(msg.parameters, user);
+	else if (msg.CmdName == "PASS")
+		std::cout << "GOOD" << std::endl;
+    	// c_pass(msg.parameters, user);
+	else if (msg.CmdName == "NICK")
+		std::cout << "GOOD" << std::endl;
+    	// c_nick(msg.parameters, user);
+	else if (msg.CmdName == "USER")
+		std::cout << "GOOD" << std::endl;
+    	// c_user(msg.parameters, user);
+	else if (msg.CmdName == "PING")
+		std::cout << "GOOD" << std::endl;
+    	// c_ping(msg.parameters, user);
+	else if (msg.CmdName == "JOIN")
+		std::cout << "GOOD" << std::endl;
+    	// c_join(msg.parameters, user);
+	else if (msg.CmdName == "PART")
+		std::cout << "GOOD" << std::endl;
+		// c_part(msg.parameters, user);
+	else if (msg.CmdName == "KICK")
+		std::cout << "GOOD" << std::endl;
+    	// c_kick(msg.parameters, user);
+  	else if (msg.CmdName == "INVITE")
+		std::cout << "GOOD" << std::endl;
+    	// c_invite(msg.parameters, user);
+	else if (msg.CmdName == "TOPIC")
+		std::cout << "GOOD" << std::endl;
+    	// c_topic(msg.parameters, user);
+	else if (msg.CmdName == "MODE")
+		std::cout << "GOOD" << std::endl;
+		// c_mode(msg.parameters, user);
+	else if (msg.CmdName == "PRIVMSG")
+		std::cout << "GOOD" << std::endl;
+		// c_privmsg(msg.parameters, user);
+	else if (msg.CmdName == "QUIT")
+		std::cout << "GOOD" << std::endl;
+		// c_quit(msg.parameters, user);
 }
