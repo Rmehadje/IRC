@@ -10,6 +10,7 @@ class	Users
 		std::string	Username;
 		std::string Hostname;
 		std::string Realname;
+		std::string	Password;
 		std::string Mode;
 		int			Socket;
 		int			Status;

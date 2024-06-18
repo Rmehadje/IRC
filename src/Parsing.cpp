@@ -76,12 +76,19 @@ Command parse(std::string str)
 	return tmp;
 }
 
-void	CheckCmd(std::string Name, Users *user)
+void	CheckCmd(Command cmd, Users *user)
 {
-	if (Name == "CAP" || Name == "PASS" || Name == "NICK" || Name == "JOIN" || Name == "USER" || Name == "PING"
-			|| Name == "PART" || Name == "KICK" || Name == "INVITE" || Name == "TOPIC" || Name == "MODE"
-			|| Name == "KICK" || Name == "PRIVMSG" || Name == "QUIT")
-				return ;
-	else
-		user->setBuffer("ERROR\n");
+	if (cmd.CmdName == "PASS")
+		CheckPass(cmd.Rest);
+}
+
+void	CheckPass(std::string pass)
+{
+	int i = 0;
+	while (pass[i])
+	{
+		if (!isalnum(pass[i]))
+			return ;
+		i++;
+	}
 }

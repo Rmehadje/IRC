@@ -29,4 +29,5 @@ int PortChecker(std::string port);
 bool	Check(std::string str, std::string find);
 std::vector<std::string> MySplit(std::string str, std::string del);
 Command parse(std::string str);
-void	CheckCmd(std::string Name, Users *user);
+void	CheckCmd(Command cmd, Users *user);
+void	CheckPass(std::string pass);

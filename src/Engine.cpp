@@ -135,5 +135,3 @@ int   Server::addNewClient()
    addUser(user);
 	return 0;
 }
-
-

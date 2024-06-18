@@ -136,7 +136,7 @@ void Server::handleMsg(Users *user)
 		user->setCmd(tmp);
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
-			// CheckCmd(cmd.CmdName, user);
+			CheckCmd(cmd, user);
 			// executeCmd(cmd, user);
 			std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
 			std::cout << RED << cmd.CmdName << BLUE << cmd.Rest << DEFAULT << std::endl;
