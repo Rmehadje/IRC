@@ -86,10 +86,7 @@ void	Server::removePfds(struct pollfd sfd)
 
 void  Server::addUser(Users *user)
 {
-   for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end();++it)
-      if ((*it)->getNickname() == user->getNickname())
-         return ;
-   this->AllUsers.push_back(user);
+  this->AllUsers.push_back(user);
 }
 
 void	Server::removeUserFromServer(Users *user)
@@ -136,9 +133,9 @@ void Server::handleMsg(Users *user)
 		user->setCmd(tmp);
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
-			CheckCmd(cmd, user);
-			// executeCmd(cmd, user);
-			std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
+			if (!CheckCmd(cmd))
+				executeCmd(cmd, user);
+			// std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
 			std::cout << RED << cmd.CmdName << BLUE << cmd.Rest << DEFAULT << std::endl;
 		}
 	}
@@ -151,7 +148,7 @@ void Server::executeCmd(Command msg, Users *user)
 		std::cout << "GOOD" << std::endl;
 		// c_cap(msg.parameters, user);
 	else if (msg.CmdName == "PASS")
-		std::cout << "GOOD" << std::endl;
+		std::cout << "HAYLA" << std::endl;
     	// c_pass(msg.parameters, user);
 	else if (msg.CmdName == "NICK")
 		std::cout << "GOOD" << std::endl;
