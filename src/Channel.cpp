@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:45:34 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/06/17 14:38:04 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:43:51 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,34 @@ int		Channel::getLimit() const{
 }
 
 void	Channel::addUsertoC(Users *user){
-	for (std::vector<Users *>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
-		if ((*it)->getNickname() == user->getNickname()){
+	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
+		if ((*it).nickName == user->getNickname()){
 			return ;
 		}
 	}
-	this->UserList.push_back(user);
+	C_Users tmp;
+	tmp.nickName = user->getNickname();
+	tmp.flag = 0;
+	this->UserList.push_back(tmp);
 }
 
 void	Channel::deleteUserfromC(Users *goner){
-	for (std::vector<Users *>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
-		if ((*it)->getNickname() == goner->getNickname()){
+	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
+		if ((*it).nickName == goner->getNickname()){
 			this->UserList.erase(it);
 			return ;
 		}
 	}
 }
 
-// flip to operator takes user makes him into operator or into a bozo
+void	Channel::fliptoOperator(Users	*user){
+	std::string N = user->getNickname();
+	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
+		if ((*it).nickName == N){
+			if ((*it).flag == 1)
+				(*it).flag = 0;
+			else
+				(*it).flag = 1;
+		}
+	}
+}

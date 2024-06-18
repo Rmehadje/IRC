@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:34:46 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 14:46:19 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:30:39 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,15 @@
 
 class Users;
 
+struct	C_Users{
+	std::string	nickName;
+	int	flag;
+};
+
 class Channel
 {
 	private:
-		std::map<std::string , int> Glist;
-		std::vector<Users *>	UserList;
+		std::vector<struct C_Users>	UserList;
 		int						limit;
 		std::string				Name;
 		std::string				Password;
@@ -61,4 +65,5 @@ class Channel
 
 		void	addUsertoC(Users *user);
 		void	deleteUserfromC(Users	*user);
+		void	fliptoOperator(Users	*user);
 };
