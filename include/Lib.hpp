@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:58:16 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 15:10:50 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:01:53 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #define GRAY "\033[1;30m"
 #define DEFAULT "\033[1;39m"
 
+class Users;
 struct Command
 {
 	std::string Rest;
@@ -40,4 +41,4 @@ int PortChecker(std::string port);
 bool	Check(std::string str, std::string find);
 std::vector<std::string> MySplit(std::string str, std::string del);
 Command parse(std::string str);
-void	CheckCmd(Command cmd);
+void	CheckCmd(std::string Name, Users *user);

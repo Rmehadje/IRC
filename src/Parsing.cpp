@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:21:02 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 14:56:14 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:34:44 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ Command parse(std::string str)
 	Command tmp;
 
 	int i = 0;
-	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\f'))
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	int j = i;
-	while (str[i])
+	while (str[i] && str[i] != '\0')
 	{
 		if (str[i] == ' ')
 		{
@@ -81,6 +81,19 @@ Command parse(std::string str)
 		}
 		i++;
 	}
-	tmp.Rest = str.substr(i + 1, str.length());
+	if (tmp.CmdName.empty())
+		tmp.CmdName = str.substr(j, str.length() - j);
+	if (tmp.CmdName.length() + j < str.length())
+		tmp.Rest = str.substr(i + 1, str.length());
 	return tmp;
+}
+
+void	CheckCmd(std::string Name, Users *user)
+{
+	if (Name == "CAP" || Name == "PASS" || Name == "NICK" || Name == "JOIN" || Name == "USER" || Name == "PING"
+			|| Name == "PART" || Name == "KICK" || Name == "INVITE" || Name == "TOPIC" || Name == "MODE"
+			|| Name == "KICK" || Name == "PRIVMSG" || Name == "QUIT")
+				return ;
+	else
+		user->setBuffer("ERROR\n");
 }
