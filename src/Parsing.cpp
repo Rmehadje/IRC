@@ -122,14 +122,20 @@ int	CheckNick(Command cmd)
 {
 	if (cmd.Rest.empty())
 		return -1;
-	int i = 0;
-	while (cmd.Rest[i])
+	int	i;
+	if (cmd.Rest.empty() || cmd.Rest.length() > 30 || cmd.Rest[0] == '#' || cmd.Rest[0] == '&' || cmd.Rest[0] == ':'
+			 || cmd.Rest[0] == '@' || isdigit(cmd.Rest[0]) || std::isspace(cmd.Rest[0]))
+		return -1;
+	i = 0;
+	while (i < (int)strlen(cmd.Rest.c_str()))
 	{
-		if (!isalnum(cmd.Rest[i]))
+		if (!isalnum(cmd.Rest[i]) && cmd.Rest[i] != '\\' && cmd.Rest[i] != '|'
+			&& cmd.Rest[i] != '[' && cmd.Rest[i] != ']' && cmd.Rest[i] != '{'
+			&& cmd.Rest[i] != '}' && cmd.Rest[i] != '-' && cmd.Rest[i] != '_')
 			return -1;
 		i++;
 	}
-	if (cmd.Rest.length() > 20 || cmd.Rest.length() < 7)
+	if (cmd.Rest.length() > 20 || cmd.Rest.length() < 4)
 		return -1;
 	return 0;
 }

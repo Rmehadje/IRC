@@ -131,13 +131,14 @@ void Server::handleMsg(Users *user)
 		std::string tmp = user->getCmd().substr(user->getCmd().rfind("\r\n") + 2);
 		user->clearCmd();
 		user->setCmd(tmp);
+		std::cout << "'"<<this->Password << "'"<<std::endl;
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
 			if (!CheckCmd(cmd))
 				executeCmd(cmd, user);
-			std::cout << "DONE: " << user->getNickname() << " " << user->getPassword() << std::endl;
+			// std::cout << "DONE: " << user->getNickname() << " " << user->getPassword() << std::endl;
 			// std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
-			// std::cout << RED << cmd.CmdName << BLUE << cmd.Rest << DEFAULT << std::endl;
+			std::cout << RED << user->getStatus() << DEFAULT << std::endl;
 		}
 	}
 }
@@ -167,7 +168,7 @@ void Server::executeCmd(Command msg, Users *user)
 	if (msg.CmdName == "CAP")
 		CapInit(msg, user);
 	else if (msg.CmdName == "PASS")
-				;
+			AddPtoUser(msg, user);
 	else if (msg.CmdName == "NICK")
 			AddNicktoUser(msg, user);
 	else if (msg.CmdName == "USER")

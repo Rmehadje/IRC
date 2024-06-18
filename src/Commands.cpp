@@ -16,12 +16,20 @@ void	Server::AddPtoUser(Command cmd, Users *user){
 }
 
 void	Server::AddNicktoUser(Command cmd, Users *user){
-	std::string Nick = cmd.Rest;
-	for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end(); it++){
-			if ((*it)->getNickname() == Nick){
-				std::cout << "this Nickname already exists, please chose a different one" << std::endl;
-			}
+	if (user->getStatus() >= 2)
+	{
+		std::string Nick = cmd.Rest;
+		for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end(); it++){
+				if ((*it)->getNickname() == Nick){
+					std::cout << "this Nickname already exists, please chose a different one" << std::endl;
+					return ;
+				}
+		}
+		user->setNickname(cmd.Rest);
+		if (user->getStatus() == 3 && user->getUsername() == "*")
+			return ;
+		user->setStatus(user->getStatus() + 1);
 	}
-	user->setNickname(cmd.Rest);
+	return ;
 }
 
