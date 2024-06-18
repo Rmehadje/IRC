@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Channel.hpp                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 12:34:46 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/18 11:17:53 by sal-zuba         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
 #pragma once
 
 #include <sstream>
@@ -43,6 +30,9 @@ class Channel
 	private:
 		std::vector<struct C_Users>	UserList;
 		int						limit;
+		// int						Limitf;
+		int						Topicf;
+		int						invitef;
 		std::string				Name;
 		std::string				Password;
 		std::string				Topic;
