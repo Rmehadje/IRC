@@ -1,13 +1,8 @@
 #include "../include/Server.hpp"
 
-void	Server::AddPtoUser(Command cmd, Users *user){
-	std::string pword = user->getPassword();
-	if (pword.empty() || user->getNickname() == "*"){
-		user->setPassword(cmd.Rest);
-	}
-	else{
-		std::cout << "YOU CANT CHANGE PASS BOZO" << std::endl;
-	}
+void	Server::AddPtoUser(Command cmd, Users *user)
+{
+	
 }
 
 void	Server::AddNicktoUser(Command cmd, Users *user){

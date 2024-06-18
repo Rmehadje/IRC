@@ -89,8 +89,9 @@ Command parse(std::string str)
 
 int	CheckCmd(Command cmd)
 {
+
 	if (cmd.CmdName == "PASS")
-		return CheckPass(cmd);
+		return 0;
 	if (cmd.CmdName == "NICK")
 		return CheckNick(cmd);
 	return 0;
@@ -132,18 +133,3 @@ int	CheckNick(Command cmd)
 	return 0;
 }
 
-int	CheckPass(Command cmd)
-{
-	int i = 0;
-	if (cmd.Rest.empty())
-		return -1;
-	while (cmd.Rest[i])
-	{
-		if (!isalnum(cmd.Rest[i]))
-			return -1;
-		i++;
-	}
-	if (cmd.Rest.length() > 20 || cmd.Rest.length() < 7)
-		return -1;
-	return 0;
-}

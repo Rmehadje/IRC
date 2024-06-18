@@ -150,7 +150,8 @@ void Server::executeCmd(Command msg, Users *user)
 		std::cout << "GOOD" << std::endl;
 		// c_cap(msg.parameters, user);
 	else if (msg.CmdName == "PASS")
-			AddPtoUser(msg, user);
+				;
+			// AddPtoUser(msg, user);
 	else if (msg.CmdName == "NICK")
 			AddNicktoUser(msg, user);
 	else if (msg.CmdName == "USER")
