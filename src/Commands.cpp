@@ -1,12 +1,17 @@
 #include "../include/Server.hpp"
 
 void	Server::AddPtoUser(Command cmd, Users *user){
-	std::string pword = user->getPassword();
-	if (pword.empty() || user->getNickname() == "*"){
-		user->setPassword(cmd.Rest);
+	std::string pword = cmd.Rest;
+	if (user->getStatus() == 1){
+		if (!pword.empty() && pword == this->Password){
+			user->setStatus(2);
+		}
+		else{
+			std::cout << "rwordone" << std::endl;
+		}
 	}
 	else{
-		std::cout << "YOU CANT CHANGE PASS BOZO" << std::endl;
+		std::cout << "rwordtwo" << std::endl;
 	}
 }
 
