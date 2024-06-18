@@ -84,7 +84,6 @@ Command parse(std::string str)
 	if (tmp.CmdName.length() < str.length())
 		tmp.Rest = str.substr(i + 1, str.length());
 	tmp.Rest = RSpaces(tmp.Rest);
-	std::cout << RED <<tmp.CmdName << DEFAULT <<std::endl;
 	return tmp;
 }
 
