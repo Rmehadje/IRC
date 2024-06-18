@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:24 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/18 11:14:37 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:18:12 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 #include "Channel.hpp"
 
 class Users;
-
+class Channel;
 class Server
 {
 	private:

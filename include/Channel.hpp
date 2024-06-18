@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:34:46 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 16:30:39 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:10:28 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ class Channel
 	private:
 		std::vector<struct C_Users>	UserList;
 		int						limit;
+		// int						Limitf;
+		int						Topicf;
+		int						invitef;
 		std::string				Name;
 		std::string				Password;
 		std::string				Topic;
