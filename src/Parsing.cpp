@@ -52,43 +52,98 @@ std::vector<std::string> MySplit(std::string str, std::string del)
     return tmp;
 }
 
+std::string	RCarriage(std::string str)
+{
+	std::string res;
+	for (size_t i = 0;i < str.length();i++)
+	{
+		if (str[i] != '\r')
+			res += str[i];
+	}
+	return res;
+}
+
 Command parse(std::string str)
 {
 	Command tmp;
 
 	int i = 0;
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-	int j = i;
+	str = RSpaces(str);
+	str = RCarriage(str);
 	while (str[i] && str[i] != '\0')
 	{
 		if (str[i] == ' ')
 		{
-			tmp.CmdName = str.substr(j, i - j);
+			tmp.CmdName = str.substr(0, i);
 			break ;
 		}
 		i++;
 	}
 	if (tmp.CmdName.empty())
-		tmp.CmdName = str.substr(j, str.length() - j);
-	if (tmp.CmdName.length() + j < str.length())
+		tmp.CmdName = str.substr(0, str.length());
+	if (tmp.CmdName.length() < str.length())
 		tmp.Rest = str.substr(i + 1, str.length());
+	tmp.Rest = RSpaces(tmp.Rest);
 	return tmp;
 }
 
-void	CheckCmd(Command cmd, Users *user)
+int	CheckCmd(Command cmd)
 {
 	if (cmd.CmdName == "PASS")
-		CheckPass(cmd.Rest);
+		return CheckPass(cmd);
+	if (cmd.CmdName == "NICK")
+		return CheckNick(cmd);
+	return 0;
 }
 
-void	CheckPass(std::string pass)
+std::string	RSpaces(std::string str)
 {
 	int i = 0;
-	while (pass[i])
+	std::string res;
+
+	res = str;
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+		i++;
+	if (i)
+		res = str.substr(i, str.length() - i);
+	i = 0;
+	while (res[i])
+		i++;
+	i--;
+	while (res[i] && (res[i] == ' ' || res[i] == '\t' || res[i] == '\n' || res[i] == '\r'))
+		i--;
+	res = res.substr(0, i + 1);
+	return res;
+}
+
+int	CheckNick(Command cmd)
+{
+	if (cmd.Rest.empty())
+		return -1;
+	int i = 0;
+	while (cmd.Rest[i])
 	{
-		if (!isalnum(pass[i]))
-			return ;
+		if (!isalnum(cmd.Rest[i]))
+			return -1;
 		i++;
 	}
+	if (cmd.Rest.length() > 20 || cmd.Rest.length() < 7)
+		return -1;
+	return 0;
+}
+
+int	CheckPass(Command cmd)
+{
+	int i = 0;
+	if (cmd.Rest.empty())
+		return -1;
+	while (cmd.Rest[i])
+	{
+		if (!isalnum(cmd.Rest[i]))
+			return -1;
+		i++;
+	}
+	if (cmd.Rest.length() > 20 || cmd.Rest.length() < 7)
+		return -1;
+	return 0;
 }

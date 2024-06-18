@@ -21,13 +21,17 @@
 class Users;
 struct Command
 {
-	std::string Rest;
 	std::string	CmdName;
+	std::string	Rest;
+	std::vector<std::string> params;
 };
 
 int PortChecker(std::string port);
 bool	Check(std::string str, std::string find);
 std::vector<std::string> MySplit(std::string str, std::string del);
 Command parse(std::string str);
-void	CheckCmd(Command cmd, Users *user);
-void	CheckPass(std::string pass);
+int	CheckCmd(Command cmd);
+int	CheckPass(Command cmd);
+std::string	RSpaces(std::string str);
+std::string	RCarriage(std::string str);
+int	CheckNick(Command cmd);
