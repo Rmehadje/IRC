@@ -13,7 +13,8 @@ void broadcast_quit_message(Users user, const std::string& message, std::vector<
     }
 }
 
-void c_quit(std::string param, Users user, std::vector<Users *>	AllUsers){
+void c_quit(Command cmd, Users user, std::vector<Users *>	AllUsers){
+    std::string param = cmd.Rest;
     std::string message =  user.getNickname() + "is exiting network with the message: \"" + param + "\" \r\n";
     broadcast_quit_message(user, message, AllUsers);
     close(user.getSocket());
@@ -44,8 +45,9 @@ bool isInChannel(const std::string& nickname, const std::vector<struct C_Users>&
     }
     return false;
 }
-void c_privmsg(std::string param, Users user, std::string target, std::vector<Users *>	AllUsers, std::vector<Channel *> AllChannels){
+void c_privmsg(Command cmd, Users user, std::string target, std::vector<Users *>	AllUsers, std::vector<Channel *> AllChannels){
 
+    std::string param = cmd.Rest;
     Channel *isChannel = CheckChannel(AllChannels, target);
     int isUser = CheckUser(AllUsers, target);
 
@@ -59,4 +61,9 @@ void c_privmsg(std::string param, Users user, std::string target, std::vector<Us
     }
     else if (isUser)
         send(isUser, param.c_str(), param.length(), 0);
+    //else
+        //error handeling with code number thingy 
 }
+
+//---------------MODE Command------------------//
+
