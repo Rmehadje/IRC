@@ -65,4 +65,8 @@ class Server
 		int	getPort() const;
 		Users*	getUserByFd(int fd);
 		ssize_t getBytesReceived();
+	
+	//Commands
+		void	AddPtoUser(Command cmd, Users *user);
+		void	AddNicktoUser(Command cmd, Users *user);
 };

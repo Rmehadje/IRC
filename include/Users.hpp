@@ -27,6 +27,7 @@ class	Users
 		std::string getUsername() const;
 		std::string getHostname() const;
 		std::string getRealname() const;
+		std::string getPassword() const;
 		std::string getMode() const;
 		int			getSocket() const;
 		int			getStatus() const;
@@ -37,6 +38,7 @@ class	Users
 		void setUsername(std::string username);
 		void setHostname(std::string hostname);
 		void setRealname(std::string realname);
+		void setPassword(std::string pass);
 		void setMode(std::string mode);
 		void setSocket(int socket);
 		void setStatus(int status);

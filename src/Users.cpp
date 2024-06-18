@@ -42,6 +42,9 @@ std::string	Users::getHostname() const{
 std::string	Users::getRealname() const{
 	return (this->Realname);
 }
+std::string	Users::getPassword() const{
+	return (this->Password);
+}
 
 std::string	Users::getMode() const{
 	return (this->Mode);
@@ -73,6 +76,9 @@ void	Users::setHostname(std::string hostname){
 }
 void	Users::setRealname(std::string realname){
 	this->Realname = realname;
+}
+void	Users::setPassword(std::string pass){
+	this->Password = pass;
 }
 void	Users::setMode(std::string mode){
 	this->Mode = mode;
