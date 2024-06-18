@@ -6,7 +6,7 @@
 /*   By: sal-zuba <sal-zuba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:24 by sal-zuba          #+#    #+#             */
-/*   Updated: 2024/06/17 16:08:32 by sal-zuba         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:14:37 by sal-zuba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 #include "Lib.hpp"
 #include "Users.hpp"
+#include "Channel.hpp"
 
 class Users;
 
@@ -45,6 +46,7 @@ class Server
 		ssize_t	BytesReceived;
 		int		ServerSocket;
 		std::vector<Users *>	AllUsers;
+		std::vector<Channel *> AllChannels;
 		Server();
 	public:
 		Server(int port, std::string password);
