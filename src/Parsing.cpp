@@ -89,7 +89,8 @@ Command parse(std::string str)
 
 int	CheckCmd(Command cmd)
 {
-
+	if (cmd.CmdName == "CAP")
+		return 0;
 	if (cmd.CmdName == "PASS")
 		return 0;
 	if (cmd.CmdName == "NICK")

@@ -142,16 +142,32 @@ void Server::handleMsg(Users *user)
 	}
 }
 
+void	Server::CapInit(Command cmd, Users *user)
+{
+	if (cmd.CmdName == "CAP" && user->getStatus() == 0)
+	{
+		if (cmd.Rest == "LS")
+		{
+			user->setStatus(1);
+			// user->setBuffer(RPL_CAP) rply cap end
+		}
+	}
+	else if (user->getStatus())
+	{
+		if (cmd.Rest == "LS")
+			;
+		// user->setBuffer(RPL_CAP);
+	}
+}
+
 void Server::executeCmd(Command msg, Users *user)
 {
 	(void)user;
 	std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
 	if (msg.CmdName == "CAP")
-		std::cout << "GOOD" << std::endl;
-		// c_cap(msg.parameters, user);
+		CapInit(msg, user);
 	else if (msg.CmdName == "PASS")
 				;
-			// AddPtoUser(msg, user);
 	else if (msg.CmdName == "NICK")
 			AddNicktoUser(msg, user);
 	else if (msg.CmdName == "USER")

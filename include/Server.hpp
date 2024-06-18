@@ -69,4 +69,5 @@ class Server
 	//Commands
 		void	AddPtoUser(Command cmd, Users *user);
 		void	AddNicktoUser(Command cmd, Users *user);
+		void	CapInit(Command cmd, Users *user);
 };
