@@ -135,8 +135,9 @@ void Server::handleMsg(Users *user)
 			Command cmd = parse(*it);
 			if (!CheckCmd(cmd))
 				executeCmd(cmd, user);
+			std::cout << "DONE: " << user->getNickname() << " " << user->getPassword() << std::endl;
 			// std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
-			std::cout << RED << cmd.CmdName << BLUE << cmd.Rest << DEFAULT << std::endl;
+			// std::cout << RED << cmd.CmdName << BLUE << cmd.Rest << DEFAULT << std::endl;
 		}
 	}
 }
@@ -144,15 +145,14 @@ void Server::handleMsg(Users *user)
 void Server::executeCmd(Command msg, Users *user)
 {
 	(void)user;
+	std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
 	if (msg.CmdName == "CAP")
 		std::cout << "GOOD" << std::endl;
 		// c_cap(msg.parameters, user);
 	else if (msg.CmdName == "PASS")
-		std::cout << "HAYLA" << std::endl;
-    	// c_pass(msg.parameters, user);
+			AddPtoUser(msg, user);
 	else if (msg.CmdName == "NICK")
-		std::cout << "GOOD" << std::endl;
-    	// c_nick(msg.parameters, user);
+			AddNicktoUser(msg, user);
 	else if (msg.CmdName == "USER")
 		std::cout << "GOOD" << std::endl;
     	// c_user(msg.parameters, user);

@@ -34,3 +34,4 @@ int	CheckCmd(Command cmd);
 int	CheckPass(Command cmd);
 std::string	RSpaces(std::string str);
 std::string	RCarriage(std::string str);
+int	CheckNick(Command cmd);

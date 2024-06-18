@@ -6,7 +6,7 @@ void	Server::AddPtoUser(Command cmd, Users *user){
 		user->setPassword(cmd.Rest);
 	}
 	else{
-		std::cout << "If you would like to change your Password, type REPASS <Your old Password> <Your new Password>" << std::endl;
+		std::cout << "YOU CANT CHANGE PASS BOZO" << std::endl;
 	}
 }
 

@@ -60,7 +60,6 @@ std::string	RCarriage(std::string str)
 		if (str[i] != '\r')
 			res += str[i];
 	}
-	std::cout << res << std::endl;
 	return res;
 }
 
@@ -85,6 +84,7 @@ Command parse(std::string str)
 	if (tmp.CmdName.length() < str.length())
 		tmp.Rest = str.substr(i + 1, str.length());
 	tmp.Rest = RSpaces(tmp.Rest);
+	std::cout << RED <<tmp.CmdName << DEFAULT <<std::endl;
 	return tmp;
 }
 
@@ -92,6 +92,8 @@ int	CheckCmd(Command cmd)
 {
 	if (cmd.CmdName == "PASS")
 		return CheckPass(cmd);
+	if (cmd.CmdName == "NICK")
+		return CheckNick(cmd);
 	return 0;
 }
 
@@ -115,9 +117,27 @@ std::string	RSpaces(std::string str)
 	return res;
 }
 
+int	CheckNick(Command cmd)
+{
+	if (cmd.Rest.empty())
+		return -1;
+	int i = 0;
+	while (cmd.Rest[i])
+	{
+		if (!isalnum(cmd.Rest[i]))
+			return -1;
+		i++;
+	}
+	if (cmd.Rest.length() > 20 || cmd.Rest.length() < 7)
+		return -1;
+	return 0;
+}
+
 int	CheckPass(Command cmd)
 {
 	int i = 0;
+	if (cmd.Rest.empty())
+		return -1;
 	while (cmd.Rest[i])
 	{
 		if (!isalnum(cmd.Rest[i]))
