@@ -31,7 +31,6 @@ bool	Check(std::string str, std::string find);
 std::vector<std::string> MySplit(std::string str, std::string del);
 Command parse(std::string str);
 int	CheckCmd(Command cmd);
-int	CheckPass(Command cmd);
 std::string	RSpaces(std::string str);
 std::string	RCarriage(std::string str);
 int	CheckNick(Command cmd);
