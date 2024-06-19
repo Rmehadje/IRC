@@ -97,14 +97,18 @@ void	Bot::EightBall(Users *user){
 		"no doubt in me.",
 		"maybe in another timeline.",
 		"Focus, and ask again when you know more.",};
-		int index;
-		index = std::rand() % responses.size();
+		std::random_device rd;
+      std::mt19937 gen(rd());
+      std::uniform_int_distribution<> dis(0, 19);
 		std::vector<std::string>::iterator it = responses.begin();
-		std::advance(it, index);
+		std::advance(it, dis(gen));
 }
 
 int	Bot::d20(Users *user){
+	std::random_device rd;
+   std::mt19937 gen(rd());
 	std::cout << "you have summoned the d20..." << std::endl;
-	return rand() % 20 + 1;
+   std::uniform_int_distribution<> dis(0, 19);
+	std::cout << dis(gen) << std::endl;
 }
 
