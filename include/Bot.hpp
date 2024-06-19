@@ -26,7 +26,7 @@ class Bot{
 		void	UserList(Users *user, std::vector<Users *>	&AllUsers);
 		void	ChannelList(Users *user, std::vector<Channel *> &AllChannels);
 		void	EightBall(Users *user);
-		void	d20(Users *user);
+		int	d20(Users *user);
 		void	Greetings(Users *user, Channel *channel);
 		void	polls(Users *user);
 		void	HallofQuotes(Users *user);

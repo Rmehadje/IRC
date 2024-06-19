@@ -102,3 +102,9 @@ void	Bot::EightBall(Users *user){
 		std::vector<std::string>::iterator it = responses.begin();
 		std::advance(it, index);
 }
+
+int	Bot::d20(Users *user){
+	std::cout << "you have summoned the d20..." << std::endl;
+	return rand() % 20 + 1;
+}
+
