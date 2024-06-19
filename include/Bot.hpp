@@ -30,5 +30,5 @@ class Bot{
 		void	Greetings(Users *user, Channel *channel);
 		void	polls(Users *user);
 		void	HallofQuotes(Users *user);
-		void	QuoteOfTheDay()
+		void	QuoteOfTheDay();
 };
