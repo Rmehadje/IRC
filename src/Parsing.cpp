@@ -87,7 +87,7 @@ Command parse(std::string str)
 	return tmp;
 }
 
-int	CheckCmd(Command cmd)
+int	CheckCmd(Command &cmd)
 {
 	if (cmd.CmdName == "CAP")
 		return 0;
@@ -95,6 +95,48 @@ int	CheckCmd(Command cmd)
 		return 0;
 	if (cmd.CmdName == "NICK")
 		return CheckNick(cmd);
+	if (cmd.CmdName == "USER")
+		return CheckUser(cmd);
+	return 0;
+}
+
+std::vector<std::string> Split(std::string str)
+{
+	std::vector<std::string> tmp;
+	int i = 0;
+	str = RSpaces(str);
+	int j = 0;
+	while (str[i])
+	{
+		while (str[i] && str[i] != ' ')
+			i++;
+		tmp.push_back(str.substr(j, i - j));
+		while (str[i] && str[i] == ' ')
+			i++;
+		j = i;
+	}
+	return tmp;
+}
+
+int	CheckUser(Command &cmd)
+{
+	cmd.params = Split(cmd.Rest);
+	if (cmd.params.size() != 4)
+		return -1;
+	std::vector<std::string>::iterator it = cmd.params.begin();
+	if ((*it).length() > USERLEN)
+		return -1;
+	it++;
+	if ((*it) != "0")
+		return -1;
+	it++;
+	if ((*it) != "*")
+		return -1;
+	it++;
+	if ((*it).find(":") != 0)
+		return -1;
+	if ((*it).length() <= 1)
+		return 1;
 	return 0;
 }
 
@@ -118,7 +160,7 @@ std::string	RSpaces(std::string str)
 	return res;
 }
 
-int	CheckNick(Command cmd)
+int	CheckNick(Command &cmd)
 {
 	if (cmd.Rest.empty())
 		return -1;

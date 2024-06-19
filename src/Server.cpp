@@ -131,14 +131,17 @@ void Server::handleMsg(Users *user)
 		std::string tmp = user->getCmd().substr(user->getCmd().rfind("\r\n") + 2);
 		user->clearCmd();
 		user->setCmd(tmp);
-		std::cout << "'"<<this->Password << "'"<<std::endl;
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
 			if (!CheckCmd(cmd))
 				executeCmd(cmd, user);
-			// std::cout << "DONE: " << user->getNickname() << " " << user->getPassword() << std::endl;
+			std::cout << "nickname:'" << user->getNickname() << "'" << std::endl;
+			std::cout << "status:'" << user->getStatus() << "'" << std::endl;
+			std::cout << "realname:'" << user->getRealname() << "'" << std::endl;
+			std::cout << "username:'" << user->getUsername() << "'" << std::endl;
+			std::cout << "----------------------" << std::endl;
+			std::cout << std::endl;
 			// std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
-			std::cout << RED << user->getStatus() << DEFAULT << std::endl;
 		}
 	}
 }
@@ -161,10 +164,30 @@ void	Server::CapInit(Command cmd, Users *user)
 	}
 }
 
+void	Server::RegisterUser(Command cmd, Users *user)
+{
+	if (user->getStatus() >= 2)
+	{
+		std::vector<std::string>::iterator it = cmd.params.begin();
+		std::string username = *it;
+		it = cmd.params.end();
+		it--;
+		std::string realname = *it;
+		realname = realname.substr(1, realname.length() - 1);
+		user->setRealname(realname);
+		user->setUsername(username);
+		if (user->getStatus() == 3 && user->getNickname() == "*")
+			return ;
+		user->setStatus(user->getStatus() + 1);
+	}
+	if (user->getStatus() == 4)
+		return ; //rpl_welcome;
+	return ;
+}
+
 void Server::executeCmd(Command msg, Users *user)
 {
-	(void)user;
-	std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
+	// std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
 	if (msg.CmdName == "CAP")
 		CapInit(msg, user);
 	else if (msg.CmdName == "PASS")
@@ -172,8 +195,7 @@ void Server::executeCmd(Command msg, Users *user)
 	else if (msg.CmdName == "NICK")
 			AddNicktoUser(msg, user);
 	else if (msg.CmdName == "USER")
-		std::cout << "GOOD" << std::endl;
-    	// c_user(msg.parameters, user);
+			RegisterUser(msg, user);
 	else if (msg.CmdName == "PING")
 		std::cout << "GOOD" << std::endl;
     	// c_ping(msg.parameters, user);

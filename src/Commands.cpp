@@ -30,6 +30,8 @@ void	Server::AddNicktoUser(Command cmd, Users *user){
 			return ;
 		user->setStatus(user->getStatus() + 1);
 	}
+	if (user->getStatus() == 4)
+		return ; //rpl_welcome;
 	return ;
 }
 

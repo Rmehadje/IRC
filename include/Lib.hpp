@@ -17,7 +17,8 @@
 #define ORANGE "\033[38;5;202m\033[22m"
 #define GRAY "\033[1;30m"
 #define DEFAULT "\033[1;39m"
-
+#define NICKLEN 30
+#define USERLEN 18
 class Users;
 struct Command
 {
@@ -30,7 +31,9 @@ int PortChecker(std::string port);
 bool	Check(std::string str, std::string find);
 std::vector<std::string> MySplit(std::string str, std::string del);
 Command parse(std::string str);
-int	CheckCmd(Command cmd);
+int	CheckCmd(Command &cmd);
 std::string	RSpaces(std::string str);
 std::string	RCarriage(std::string str);
-int	CheckNick(Command cmd);
+int	CheckNick(Command &cmd);
+int	CheckUser(Command &cmd);
+std::vector<std::string> Split(std::string str);
