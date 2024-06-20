@@ -101,6 +101,53 @@ std::vector<std::string> PrivSplit(std::string tmp)
 	return res;
 }
 
+int	OnlySpaces(std::string str)
+{
+	int i = 0;
+	if (str.empty())
+		return 1;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return 0;
+		i++;
+	}
+	return 1;
+}
+
+std::vector<std::string> KickSplit(std::string tmp)
+{
+	std::vector<std::string> res;
+	std::string channel;
+	std::string user;
+	std::string	reason;
+	int i = 0;
+	i = tmp.find(' ');
+	channel = tmp.substr(0, i);
+	res.push_back(channel);
+	tmp = tmp.substr(i + 1, tmp.length());
+	tmp = RSpaces(tmp);
+	if (tmp.find(' ') != std::string::npos)
+	{
+		i = tmp.find(' ');
+		user = tmp.substr(0, i);
+		if (OnlySpaces(user))
+			return res;
+		reason = tmp.substr(i + 1, tmp.length() - i);
+		reason = RSpaces(reason);
+		if (OnlySpaces(reason))
+			return res;
+		res.push_back(user);
+		res.push_back(reason);
+		return res;
+	}
+	user = tmp.substr(0, i + 1);
+	if (OnlySpaces(user))
+		return res;
+	res.push_back(user);
+	return res;
+}
+
 int	CheckMult(std::string str)
 {
 	int i = 0;
@@ -170,6 +217,23 @@ int	CheckPart(Command &cmd)
 	return 0;
 }
 
+int	CheckKick(Command &cmd)
+{
+	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
+		return -1;
+	std::vector<std::string> tmp = KickSplit(cmd.Rest);
+	if (tmp.size() < 2)
+		return -1;
+	if (tmp.size() == 3)
+	{
+		std::vector<std::string>::iterator it = tmp.end();
+		it--;
+		if ((*it).length() >= KICKLEN)
+			return -1;
+	}
+	return 0;
+}
+
 int	CheckCmd(Command &cmd)
 {
 	if (cmd.CmdName == "CAP")
@@ -190,6 +254,10 @@ int	CheckCmd(Command &cmd)
 		return CheckPart(cmd);
 	if (cmd.CmdName == "QUIT")
 		return 0;
+	if (cmd.CmdName == "PING")
+		return 0;
+	if (cmd.CmdName == "KICK")
+		return CheckKick(cmd);
 	return 0;
 }
 

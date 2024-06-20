@@ -19,6 +19,7 @@
 #define DEFAULT "\033[1;39m"
 #define NICKLEN 30
 #define USERLEN 18
+#define KICKLEN 255
 class Users;
 struct Command
 {
@@ -40,6 +41,9 @@ int	CheckPriv(Command &cmd);
 int	CheckInv(Command &cmd);
 int	CheckJoin(Command &cmd);
 int	CheckPart(Command &cmd);
+int	CheckKick(Command &cmd);
 int	CheckMult(std::string str);
+int	OnlySpaces(std::string str);
+std::vector<std::string> KickSplit(std::string tmp);
 std::vector<std::string> PrivSplit(std::string tmp);
 std::vector<std::string> Split(std::string str);

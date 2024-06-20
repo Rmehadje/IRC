@@ -186,6 +186,13 @@ void	Server::RegisterUser(Command cmd, Users *user)
 	return ;
 }
 
+void	Server::SendPong(Command msg, Users *user)
+{
+	if (msg.Rest.empty())
+		return user->setBuffer("");//RPL_PONG NO TOKEN
+	user->setBuffer(msg.Rest);//RPL_PONG WITH TOKEN
+}
+
 void Server::executeCmd(Command msg, Users *user)
 {
 	// std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
@@ -198,8 +205,7 @@ void Server::executeCmd(Command msg, Users *user)
 	else if (msg.CmdName == "USER")
 			RegisterUser(msg, user);
 	else if (msg.CmdName == "PING")
-		std::cout << "GOOD" << std::endl;
-    	// c_ping(msg.parameters, user);
+			SendPong(msg, user);
 	else if (msg.CmdName == "JOIN")
 		std::cout << "GOOD" << std::endl;
     	// c_join(msg.parameters, user);
