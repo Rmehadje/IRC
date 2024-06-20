@@ -87,6 +87,61 @@ Command parse(std::string str)
 	return tmp;
 }
 
+std::vector<std::string> PrivSplit(std::string tmp)
+{
+	std::vector<std::string> res;
+	std::string msg;
+	std::string users;
+	int i = 0;
+	i = tmp.find(' ');
+	msg = tmp.substr(i + 1, tmp.length() - i - 1);
+	users = tmp.substr(0, i + 1);
+	res.push_back(users);
+	res.push_back(msg);
+	return res;
+}
+
+int	CheckMult(std::string str)
+{
+	int i = 0;
+	while (str[i])
+	{
+		if (str[i] == '@' || str[i] == '#')
+		{
+			if (str[i + 1] && (str[i + 1] == '@' || str[i + 1] == '#'))
+				return -1;
+		}
+		i++;
+	}
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '@' || str[i] == '#')
+		{
+			if (i == (int)strlen(str.c_str()) - 1)
+				return -1;
+		}
+		i++;
+	}
+	return 0;
+}
+
+int	CheckPriv(Command &cmd)
+{
+	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
+		return -1;
+	// if (cmd.Rest[0] != '@' && cmd.Rest[0] != '#')
+	// 	return -1;
+	// if (CheckMult(cmd.Rest) == -1)
+	// 	return -1;
+	if (cmd.Rest.find(' ') == std::string::npos)
+		return -1;
+	std::vector<std::string> tmp = PrivSplit(cmd.Rest);
+	if (tmp.size() != 2)
+		return -1;
+	return 0;
+}
+
 int	CheckCmd(Command &cmd)
 {
 	if (cmd.CmdName == "CAP")
@@ -97,6 +152,8 @@ int	CheckCmd(Command &cmd)
 		return CheckNick(cmd);
 	if (cmd.CmdName == "USER")
 		return CheckUser(cmd);
+	if (cmd.CmdName == "PRIVMSG")
+		return CheckPriv(cmd);
 	return 0;
 }
 

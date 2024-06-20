@@ -25,8 +25,8 @@ void	Server::AddNicktoUser(Command cmd, Users *user){
 					return ;
 				}
 		}
-		std::string tmp = "@" + cmd.Rest;
-		user->setNickname(tmp);
+		// std::string tmp = "@" + cmd.Rest;
+		user->setNickname(cmd.Rest);
 		if (user->getStatus() == 3 && user->getUsername() == "*")
 			return ;
 		user->setStatus(user->getStatus() + 1);

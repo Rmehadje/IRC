@@ -133,14 +133,15 @@ void Server::handleMsg(Users *user)
 		user->setCmd(tmp);
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
-			if (!CheckCmd(cmd))
-				executeCmd(cmd, user);
-			std::cout << "nickname:'" << user->getNickname() << "'" << std::endl;
-			std::cout << "status:'" << user->getStatus() << "'" << std::endl;
-			std::cout << "realname:'" << user->getRealname() << "'" << std::endl;
-			std::cout << "username:'" << user->getUsername() << "'" << std::endl;
-			std::cout << "----------------------" << std::endl;
-			std::cout << std::endl;
+			std::cout << CheckCmd(cmd) << std::endl;
+			// if (!CheckCmd(cmd))
+			// 	executeCmd(cmd, user);
+			// std::cout << "nickname:'" << user->getNickname() << "'" << std::endl;
+			// std::cout << "status:'" << user->getStatus() << "'" << std::endl;
+			// std::cout << "realname:'" << user->getRealname() << "'" << std::endl;
+			// std::cout << "username:'" << user->getUsername() << "'" << std::endl;
+			// std::cout << "----------------------" << std::endl;
+			// std::cout << std::endl;
 			// std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
 		}
 	}
