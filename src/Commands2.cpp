@@ -68,9 +68,8 @@ bool isInChannel(const std::string& nickname, const std::vector<struct C_Users>&
 void c_privmsg(Command cmd, Users user, std::vector<Users *> AllUsers, std::vector<Channel *> AllChannels){
     Channel *isChannel;
     int isUser;
-    std::string param = cmd.Rest;
-    std::vector<std::string> paramList = split(param, " ");
-    std::vector<std::string> target = split(paramList[0], ",");
+    std::string param = cmd.params[1];
+    std::vector<std::string> target = split(cmd.params[0], ",");
     for (std::vector<std::string>::const_iterator it = target.begin(); it != target.end(); ++it){
         isChannel = CheckChannel(AllChannels, *it);
         isUser = CheckUser(AllUsers, *it);
@@ -94,3 +93,4 @@ void c_privmsg(Command cmd, Users user, std::vector<Users *> AllUsers, std::vect
 
 //---------------MODE Command------------------//
 
+//check mode.cpp
