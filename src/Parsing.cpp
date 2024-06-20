@@ -154,6 +154,22 @@ int	CheckInv(Command &cmd)
 	return 0;
 }
 
+int	CheckJoin(Command &cmd)
+{
+	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
+		return -1;
+	std::vector<std::string> tmp = Split(cmd.Rest);
+	return 0;
+}
+
+int	CheckPart(Command &cmd)
+{
+	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
+		return -1;
+	std::vector<std::string> tmp = Split(cmd.Rest);
+	return 0;
+}
+
 int	CheckCmd(Command &cmd)
 {
 	if (cmd.CmdName == "CAP")
@@ -168,6 +184,12 @@ int	CheckCmd(Command &cmd)
 		return CheckPriv(cmd);
 	if (cmd.CmdName == "INVITE")
 		return CheckInv(cmd);
+	if (cmd.CmdName == "JOIN")
+		return CheckJoin(cmd);
+	if (cmd.CmdName == "PART")
+		return CheckPart(cmd);
+	if (cmd.CmdName == "QUIT")
+		return 0;
 	return 0;
 }
 

@@ -38,6 +38,8 @@ int	CheckNick(Command &cmd);
 int	CheckUser(Command &cmd);
 int	CheckPriv(Command &cmd);
 int	CheckInv(Command &cmd);
+int	CheckJoin(Command &cmd);
+int	CheckPart(Command &cmd);
 int	CheckMult(std::string str);
 std::vector<std::string> PrivSplit(std::string tmp);
 std::vector<std::string> Split(std::string str);
