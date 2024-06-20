@@ -28,7 +28,6 @@ class Bot{
 		void	EightBall(Users *user);
 		int	d20(Users *user);
 		void	Greetings(Users *user, Channel *channel);
+		void	QuoteOfTheDay(Users *user);
 		void	polls(Users *user);
-		void	HallofQuotes(Users *user);
-		void	QuoteOfTheDay();
 };
