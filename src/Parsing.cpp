@@ -142,6 +142,18 @@ int	CheckPriv(Command &cmd)
 	return 0;
 }
 
+int	CheckInv(Command &cmd)
+{
+	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
+		return -1;
+	if (cmd.Rest.find(' ') == std::string::npos)
+		return -1;
+	std::vector<std::string> tmp = Split(cmd.Rest);
+	if (tmp.size() != 2)
+		return -1;
+	return 0;
+}
+
 int	CheckCmd(Command &cmd)
 {
 	if (cmd.CmdName == "CAP")
@@ -154,6 +166,8 @@ int	CheckCmd(Command &cmd)
 		return CheckUser(cmd);
 	if (cmd.CmdName == "PRIVMSG")
 		return CheckPriv(cmd);
+	if (cmd.CmdName == "INVITE")
+		return CheckInv(cmd);
 	return 0;
 }
 

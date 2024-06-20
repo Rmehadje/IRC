@@ -37,6 +37,7 @@ std::string	RCarriage(std::string str);
 int	CheckNick(Command &cmd);
 int	CheckUser(Command &cmd);
 int	CheckPriv(Command &cmd);
+int	CheckInv(Command &cmd);
 int	CheckMult(std::string str);
 std::vector<std::string> PrivSplit(std::string tmp);
 std::vector<std::string> Split(std::string str);
