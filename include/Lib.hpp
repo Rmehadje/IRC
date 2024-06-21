@@ -44,6 +44,7 @@ int	CheckPart(Command &cmd);
 int	CheckKick(Command &cmd);
 int	CheckMult(std::string str);
 int	OnlySpaces(std::string str);
+int	CheckMode(Command &cmd);
 std::vector<std::string> KickSplit(std::string tmp);
 std::vector<std::string> PrivSplit(std::string tmp);
 std::vector<std::string> Split(std::string str);

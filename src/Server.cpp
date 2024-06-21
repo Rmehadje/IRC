@@ -134,6 +134,8 @@ void Server::handleMsg(Users *user)
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
 			std::cout << CheckCmd(cmd) << std::endl;
+			for (std::vector<std::string>::iterator it = cmd.params.begin(); it != cmd.params.end();it++)
+				std::cout << "!" << *it << "!" << std::endl;
 			// if (!CheckCmd(cmd))
 			// 	executeCmd(cmd, user);
 			// std::cout << "nickname:'" << user->getNickname() << "'" << std::endl;

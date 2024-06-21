@@ -234,6 +234,47 @@ int	CheckKick(Command &cmd)
 	return 0;
 }
 
+int	CheckMode(Command &cmd)
+{
+	int i = 0;
+	std::string channel;
+	std::string mode;
+	std::string arg;
+
+	if (OnlySpaces(cmd.Rest))
+		return -1;
+	if (cmd.Rest.find(' ') == std::string::npos)
+	{
+		cmd.params.push_back(cmd.Rest);
+		return 0;
+	}
+	i = cmd.Rest.find(' ');
+	channel = cmd.Rest.substr(0, i);
+	cmd.params.push_back(channel);
+	cmd.Rest = cmd.Rest.substr(i + 1, cmd.Rest.length() - i);
+	cmd.Rest = RSpaces(cmd.Rest);
+	if (cmd.Rest.find(' ') == std::string::npos)
+	{
+		if (OnlySpaces(cmd.Rest))
+			return 0;
+		if (cmd.Rest.length() != 2)
+			return -1;//RPL unk mode chr
+		cmd.params.push_back(cmd.Rest);
+		return 0;
+	}
+	i = cmd.Rest.find(' ');
+	mode = cmd.Rest.substr(0, i);
+	if (mode.length() != 2)
+		return -1;//RPL unk mode chr
+	cmd.params.push_back(mode);
+	arg = cmd.Rest.substr(i + 1, cmd.Rest.length() -  i);
+	arg = RSpaces(arg);
+	if (OnlySpaces(arg))
+		return 0;
+	cmd.params.push_back(arg);
+	return 0;
+}
+
 int	CheckCmd(Command &cmd)
 {
 	if (cmd.CmdName == "CAP")
@@ -258,6 +299,8 @@ int	CheckCmd(Command &cmd)
 		return 0;
 	if (cmd.CmdName == "KICK")
 		return CheckKick(cmd);
+	if (cmd.CmdName == "MODE")
+		return CheckMode(cmd);
 	return 0;
 }
 
