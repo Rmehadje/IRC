@@ -5,6 +5,7 @@ Channel::Channel(std::string name){
 	Password = "random";
 	Topic = "random";
 	limit = -1;
+	Mode = "-iltk";
 }
 
 Channel::Channel(const	Channel &cp){

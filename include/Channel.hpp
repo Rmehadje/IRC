@@ -32,6 +32,7 @@ class Channel
 		// int						Limitf;
 		int						Topicf;
 		int						invitef;
+		std::string				Mode;
 		std::string				Name;
 		std::string				Password;
 		std::string				Topic;
