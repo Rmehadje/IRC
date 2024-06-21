@@ -28,7 +28,6 @@ struct	C_Users{
 class Channel
 {
 	private:
-		std::vector<struct C_Users>	UserList;
 		int						limit;
 		// int						Limitf;
 		int						Topicf;
@@ -47,6 +46,7 @@ class Channel
 		void	setTopic(std::string topic);
 		void	setLimit(int	limit);
 		
+		std::vector<struct C_Users>	UserList;
 		std::string	getName() const;
 		std::string	getPassword() const;
 		std::string	getTopic() const;
