@@ -94,3 +94,23 @@ void c_privmsg(Command cmd, Users user, std::vector<Users *> AllUsers, std::vect
 //---------------MODE Command------------------//
 
 //check mode.cpp
+
+// -------------TOPIC Command------------------//
+
+void c_topic(Command cmd, Users user, std::vector<Channel*> AllChanels)
+{
+    std::string ChannelName;
+    if (cmd.params[1] != "")
+        ChannelName = cmd.params[1];
+    else{
+        // code thingy
+        return;
+    }
+    Channel *Channel= CheckChannel(AllChanels, ChannelName);
+    if (Channel = NULL)
+    {
+        //code thingy
+        return;
+    }
+    Channel->setTopic(cmd.params[0]);
+}
