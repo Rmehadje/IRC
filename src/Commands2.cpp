@@ -114,3 +114,38 @@ void c_topic(Command cmd, Users user, std::vector<Channel*> AllChanels)
     }
     Channel->setTopic(cmd.params[0]);
 }
+
+//----------------INVITE Command-----------------//
+
+Users* CheckUserin(std::vector<Users*>& allUsers, std::string& target) {
+    for (std::vector<Users*>::const_iterator it = allUsers.begin(); it != allUsers.end(); ++it) {
+        if ((*it)->getNickname() == target)
+            return *it;
+    }
+    return NULL;
+}
+
+void c_invite(Command cmd, Users user, std::vector<Users*> AllUsers, std::vector<Channel*> AllChanel)
+{
+    std::string channel = cmd.params[1];
+    std::string target = cmd.params[0];
+
+    Channel *cnl = CheckChannel(AllChanel, channel);
+    if (!cnl)
+        // return(ERR_NOSUCHCHANNEL);
+        return;
+    if (!isInChannel(user.getNickname(), cnl->UserList))
+        // return("RR_NOTONCHANNEL");
+        return;
+    if (cnl->getinvitef())
+        // return(ERR_CHANOPRIVSNEEDED);
+        return;
+    if (isInChannel(target, cnl->UserList))
+        // return(ERR_USERONCHANNEL);
+        return;
+    Users *tar = CheckUserin(AllUsers, target);
+    cnl->addUsertoC(tar);
+    std::string msg = user.getNickname() + " has invited you to " + channel;
+    send(tar->getSocket(), msg.c_str(), msg.length(), 0);
+
+}
