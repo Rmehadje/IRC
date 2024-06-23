@@ -222,14 +222,18 @@ void Server::executeCmd(Command msg, Users *user)
     	// c_invite(msg.parameters, user);
 	else if (msg.CmdName == "TOPIC")
 		std::cout << "GOOD" << std::endl;
+		// c_topic(msg.parameters,user, AllChanels)
     	// c_topic(msg.parameters, user);
 	else if (msg.CmdName == "MODE")
 		std::cout << "GOOD" << std::endl;
 		// c_mode(msg.parameters, user);
+		// c_mode(msg.parameters, AllUsers, AllChannels)
 	else if (msg.CmdName == "PRIVMSG")
 		std::cout << "GOOD" << std::endl;
 		// c_privmsg(msg.parameters, user);
+		// c_privmsg(cmd, user, AllUsers, AllChannels)
 	else if (msg.CmdName == "QUIT")
 		std::cout << "GOOD" << std::endl;
 		// c_quit(msg.parameters, user);
+		// c_quit(msg.parameters,user, AllUsers)
 }
