@@ -52,6 +52,7 @@ class Channel
 		std::string	getPassword() const;
 		std::string	getTopic() const;
 		int			getLimit() const;
+		int			getinvitef() const;
 
 
 		void	addUsertoC(Users *user);
