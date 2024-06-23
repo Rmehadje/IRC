@@ -53,6 +53,11 @@ int		Channel::getLimit() const{
 	return (lim);
 }
 
+int		Channel::getinvitef() const{
+	int	inf = this->invitef;
+	return (inf);
+}
+
 void	Channel::addUsertoC(Users *user){
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
 		if ((*it).nickName == user->getNickname()){
