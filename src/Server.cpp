@@ -149,44 +149,6 @@ void Server::handleMsg(Users *user)
 	}
 }
 
-void	Server::CapInit(Command cmd, Users *user)
-{
-	if (cmd.CmdName == "CAP" && user->getStatus() == 0)
-	{
-		if (cmd.Rest == "LS")
-		{
-			user->setStatus(1);
-			// user->setBuffer(RPL_CAP) rply cap end
-		}
-	}
-	else if (user->getStatus())
-	{
-		if (cmd.Rest == "LS")
-			;
-		// user->setBuffer(RPL_CAP);
-	}
-}
-
-void	Server::RegisterUser(Command cmd, Users *user)
-{
-	if (user->getStatus() >= 2)
-	{
-		std::vector<std::string>::iterator it = cmd.params.begin();
-		std::string username = *it;
-		it = cmd.params.end();
-		it--;
-		std::string realname = *it;
-		realname = realname.substr(1, realname.length() - 1);
-		user->setRealname(realname);
-		user->setUsername(username);
-		if (user->getStatus() == 3 && user->getNickname() == "*")
-			return ;
-		user->setStatus(user->getStatus() + 1);
-	}
-	if (user->getStatus() == 4)
-		return ; //rpl_welcome;
-	return ;
-}
 
 void	Server::SendPong(Command msg, Users *user)
 {

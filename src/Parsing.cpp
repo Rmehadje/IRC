@@ -285,7 +285,7 @@ int	CheckCmd(Command &cmd, Users *user)
 	if (cmd.CmdName == "NICK")
 		return CheckNick(cmd, user);
 	if (cmd.CmdName == "USER")
-		return CheckUser(cmd);
+		return CheckUser(cmd, user);
 	if (cmd.CmdName == "PRIVMSG")
 		return CheckPriv(cmd);
 	if (cmd.CmdName == "INVITE")
@@ -344,25 +344,25 @@ std::vector<std::string> Split(std::string str)
 	return tmp;
 }
 
-int	CheckUser(Command &cmd)
+int	CheckUser(Command &cmd, Users *user)
 {
+	if (user->getStatus() < 2)
+		return (ERR_NOTREGISTERED(user->getHostname()), -1);
 	cmd.params = Split(cmd.Rest);
 	if (cmd.params.size() != 4)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
 	std::vector<std::string>::iterator it = cmd.params.begin();
 	if ((*it).length() > USERLEN)
-		return -1;
+		return (user->setBuffer(ERR_INPUTTOOLONG(user->getHostname())), -1);
 	it++;
 	if ((*it) != "0")
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
 	it++;
 	if ((*it) != "*")
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
 	it++;
-	if ((*it).find(":") != 0)
-		return -1;
 	if ((*it).length() <= 1)
-		return 1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
 	return 0;
 }
 
@@ -388,6 +388,8 @@ std::string	RSpaces(std::string str)
 
 int	CheckNick(Command &cmd, Users *user)
 {
+	if (user->getStatus() < 2)
+		return (ERR_NOTREGISTERED(user->getHostname()), -1);
 	if (cmd.Rest.empty())
 		return (user->setBuffer(ERR_NONICKNAMEGIVEN(user->getHostname())), -1);
 	int	i;
