@@ -114,6 +114,8 @@ void c_topic(Command cmd, Users *user, std::vector<Channel*> AllChanels)
     Channel *Channel= CheckChannel(AllChanels, ChannelName);
     if (Channel = NULL)
         return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), ChannelName)));
+    if (user->getMode().find("t"))
+        return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), ChannelName)));
     if (cmd.params[1] != ""){
         if (!isInChannel(user->getNickname(), Channel->UserList))
             return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), Channel->getName())));
@@ -155,8 +157,8 @@ void c_invite(Command cmd, Users *user, std::vector<Users*> AllUsers, std::vecto
         return;
     if (isInChannel(target, cnl->UserList))
                 return(user->setBuffer(ERR_USERONCHANNEL(user->getHostname(), target, channel)));
-
-        return;
+    if (!user->getMode().find("i") && cnl->getMode().find("i"))
+                return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), channel)));
     Users *tar = CheckUserin(AllUsers, target);
     cnl->addUsertoC(tar);
     return(user->setBuffer(ERR_USERONCHANNEL(user->getHostname(), target, channel)));
