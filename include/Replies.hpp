@@ -22,7 +22,7 @@
 #define ERR_NOTREGISTERED(src)								":" + src + " 451 :You have not registered\r\n"
 #define ERR_NEEDMOREPARAMS(src, cmd)						":" + src + " 461 " + cmd + " :Not enough parameters\r\n"
 #define ERR_ALREADYREGISTERED(src)							":" + src + " 462 :You may not reregister\r\n"
-#define ERR_PASSWDMISMATCH(src)								":" + src + " 464 :Password incorrect\r\n"
+#define ERR_PASSWDMISMATCH(src)								":" + src + " 464 " "PASS" + " :Password incorrect\r\n"
 #define ERR_CHANNELISFULL(src, chan)						":" + src + " 471 " + chan + " :Cannot join channel (+l)\r\n"
 #define ERR_UKNOWNMODE(src, mode)							":" + src + " 472 " + mode + " :is unknown mode char to me\r\n"
 #define ERR_INVITEONLYCHAN(src, chan)						":" + src + " 473 " + chan + " :Cannot join channel (+i)\r\n"
