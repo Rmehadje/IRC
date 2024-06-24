@@ -39,6 +39,12 @@
 #define RPL_NOTOPERATORANYMORE(src, chan)					":" + src + " :You are no longer an IRC operator in " + chan + "\r\n"
 #define RPL_BECOMINGOPERATOR(src, chan)					":" + src + " :You are now an IRC operator in " + chan + "\r\n"
 #define RPL_CAP(src)												":" + src + " CAP * LS : you may enter PASS now...\r\n"
+#define RPL_NICKCHANGE(src, nick)							":" + src + " Your new nickname has been set to " + nick + "\r\n"
+#define RPL_QUIT(src, nick, host)							":" + src + " " + nick + " has quit\r\n"
+#define RPL_KICK(src, chan, nick, user)					":" + src + " " + user + " has kicked " + nick + " from " + chan + "\r\n"
+#define RPL_PART(src, chan, nick)							":" + src + " " + nick + " has parted from " + chan + "\r\n"
+#define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + "Welcome to the IRC_server network " + nick +  "." + user + "@" + host + "\r\n"
+#define RPL_UMODEIS(src, nick, mode)						":" + src + " 221 " + nick + " " + mode + "\r\n"
 #define RPL_()
 #define RPL_()
 #define RPL_()
