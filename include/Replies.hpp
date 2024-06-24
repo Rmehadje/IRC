@@ -38,7 +38,7 @@
 #define RPL_USER(src, user)									":" + src + " :Your username is now set to: " + user + "\r\n"
 #define RPL_NOTOPERATORANYMORE(src, chan)					":" + src + " :You are no longer an IRC operator in " + chan + "\r\n"
 #define RPL_BECOMINGOPERATOR(src, chan)					":" + src + " :You are now an IRC operator in " + chan + "\r\n"
-#define RPL_()
+#define RPL_CAP(src)												":" + src + " CAP * LS : you may enter PASS now...\r\n"
 #define RPL_()
 #define RPL_()
 #define RPL_()
