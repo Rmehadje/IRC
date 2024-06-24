@@ -5,6 +5,7 @@ Channel::Channel(std::string name){
 	Password = "random";
 	Topic = "random";
 	limit = -1;
+	Mode = "-iltk";
 }
 
 Channel::Channel(const	Channel &cp){
@@ -56,6 +57,11 @@ std::string Channel::getQuote() const{
 int		Channel::getLimit() const{
 	int	lim = this->limit;
 	return (lim);
+}
+
+int		Channel::getinvitef() const{
+	int	inf = this->invitef;
+	return (inf);
 }
 
 void	Channel::addUsertoC(Users *user){
