@@ -301,6 +301,25 @@ int	CheckCmd(Command &cmd)
 		return CheckKick(cmd);
 	if (cmd.CmdName == "MODE")
 		return CheckMode(cmd);
+	if (cmd.CmdName == "TOPIC")
+		return CheckTopic(cmd);
+	return 0;
+}
+
+int	CheckTopic(Command &cmd)
+{
+	if (cmd.Rest.length() == 0)
+		return -1;
+	if (cmd.Rest.find(' ') == std::string::npos)
+	{
+		cmd.params.push_back(cmd.Rest);
+		return 0;
+	}
+	int i = cmd.Rest.find(' ');
+	std::string chan = cmd.Rest.substr(0, i);
+	cmd.params.push_back(chan);
+	std::string topic = cmd.Rest.substr(i + 1, cmd.Rest.length() - i);
+	cmd.params.push_back(topic);
 	return 0;
 }
 

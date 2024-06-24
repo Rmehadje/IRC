@@ -107,4 +107,5 @@ void	Channel::CheckifOP(Users *user, Channel *channel){
 				std::cout << N << " is not an operator" << std::endl;
 		}
 	}
+	(void)channel;
 }
