@@ -54,6 +54,7 @@ class Channel
 		std::string	getPassword() const;
 		std::string	getTopic() const;
 		std::string	getQuote() const;
+		std::string	getMode() const;
 		int			getLimit() const;
 		int			getinvitef() const;
 

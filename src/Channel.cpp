@@ -54,6 +54,11 @@ std::string	Channel::getTopic() const{
 std::string Channel::getQuote() const{
 	return (this->Quote);
 }
+
+std::string Channel::getMode() const{
+	return (this->Mode);
+}
+
 int		Channel::getLimit() const{
 	int	lim = this->limit;
 	return (lim);
