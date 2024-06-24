@@ -8,7 +8,7 @@
 #define ERR_NOSUCHNICK(src, nick, chan)					":" + src + " 401 " + nick + " " + chan + " :No such Nick/channel\r\n"
 #define ERR_NOSUCHSERVER(src, serv)							":" + src + " 402 " + serv + " :No such server\r\n"
 #define ERR_NOSUCHCHANNEL(src, chan)						":" + src + " 403 " + chan + " :No such channel\r\n"
-#define ERR_CANNOTSENDTOCHAN(src, chan)					":" + src + " 404 " + chan + " :Cannot send to channel\r\n" \
+#define ERR_CANNOTSENDTOCHAN(src, chan)					":" + src + " 404 " + chan + " :Cannot send to channel\r\n"
 #define ERR_TOOMANYCHANNELS(src, chan)						":" + src + " 405 " + chan + " :You have joined too many channels\r\n"
 #define ERR_NOTEXTTOSEND(src, nick)							":" + src + " 412 " + nick + " :No text to send\r\n"
 #define ERR_INPUTTOOLONG(src, nick)							":" + src + " 417 " + nick + " :Input line too long\r\n"
