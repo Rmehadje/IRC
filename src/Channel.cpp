@@ -38,6 +38,9 @@ void	Channel::setTopic(std::string topic){
 void	Channel::setLimit(int limit){
 	this->limit = limit;
 }
+void	Channel::setQuote(std::string Quote){
+	this->Quote = Quote;
+}
 std::string	Channel::getName() const{
 	return (this->Name);
 }
@@ -46,6 +49,9 @@ std::string	Channel::getPassword() const{
 }
 std::string	Channel::getTopic() const{
 	return (this->Topic);
+}
+std::string Channel::getQuote() const{
+	return (this->Quote);
 }
 int		Channel::getLimit() const{
 	int	lim = this->limit;
@@ -81,6 +87,18 @@ void	Channel::fliptoOperator(Users	*user){
 				(*it).flag = 0;
 			else
 				(*it).flag = 1;
+		}
+	}
+}
+
+void	Channel::CheckifOP(Users *user, Channel *channel){
+	std::string N = user->getNickname();
+	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
+		if ((*it).nickName == N){
+			if ((*it).flag == 1)
+				std::cout << N << " is an operator" << std::endl;
+			else
+				std::cout << N << " is not an operator" << std::endl;
 		}
 	}
 }

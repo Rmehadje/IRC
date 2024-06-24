@@ -1,7 +1,7 @@
 #include "../include/Bot.hpp"
 
 Bot::Bot(std::string name){
-	name = "The Butler";
+	name = "The knight";
 }
 
 Bot::~Bot() {}
@@ -28,7 +28,7 @@ std::string	Bot::getBotName() const{
 
 void	Bot::Greetings(Users *user, Channel *channel)
 {
-	std::cout << "Everyone welcome " << user->getNickname() << " to the channel ^-^ !" << std::endl; 
+	std::cout << "Good folks, allow me to introduce " << user->getNickname() << " to our esteemed gathering here in "<< << "let us ensure they are made to feel like home within our noble walls." << std::endl; 
 }
 
 void	Bot::HelpCommands(Users *user){
@@ -96,15 +96,17 @@ void	Bot::EightBall(Users *user){
 		"doubtful.",
 		"no doubt in me.",
 		"maybe in another timeline.",
+		"It would mean farewell.",
+		"it would bring novelty.",
 		"Focus, and ask again when you know more.",};
 		std::random_device rd;
       std::mt19937 gen(rd());
-      std::uniform_int_distribution<> dis(0, 19);
+      std::uniform_int_distribution<> dis(0, 21);
 		std::vector<std::string>::iterator it = responses.begin();
 		std::advance(it, dis(gen));
 }
 
-int	Bot::d20(Users *user){
+void	Bot::d20(Users *user){
 	std::random_device rd;
    std::mt19937 gen(rd());
 	std::cout << "you have summoned the d20..." << std::endl;
@@ -112,3 +114,8 @@ int	Bot::d20(Users *user){
 	std::cout << dis(gen) << std::endl;
 }
 
+void	QuoteofTheDay(Users *user, Channel *channel){
+	if channel->UserList
+
+	} 
+}

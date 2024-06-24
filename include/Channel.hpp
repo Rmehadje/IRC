@@ -36,6 +36,7 @@ class Channel
 		std::string				Name;
 		std::string				Password;
 		std::string				Topic;
+		std::string				Quote;
 	public:
 		Channel(std::string name);
 		Channel(const Channel &cp);
@@ -46,14 +47,17 @@ class Channel
 		void	setPassword(std::string password);
 		void	setTopic(std::string topic);
 		void	setLimit(int	limit);
+		void	setQuote(std::string Quote);
 		
 		std::string	getName() const;
 		std::string	getPassword() const;
 		std::string	getTopic() const;
+		std::string	getQuote() const;
 		int			getLimit() const;
 
 
 		void	addUsertoC(Users *user);
 		void	deleteUserfromC(Users	*user);
 		void	fliptoOperator(Users	*user);
+		void	CheckifOP(Users *user, Channel *channel);
 };
