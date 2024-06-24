@@ -3,6 +3,8 @@
 
 void	Server::AddPtoUser(Command cmd, Users *user){
 	std::string pword = cmd.Rest;
+	if (user->getStatus() == 0)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
 	if (user->getStatus() == 1){
 		if (!pword.empty() && pword == this->Password){
 			user->setStatus(2);
@@ -20,6 +22,8 @@ void	Server::AddPtoUser(Command cmd, Users *user){
 }
 
 void	Server::AddNicktoUser(Command cmd, Users *user){
+	if (user->getStatus() < 2)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
 	if (user->getStatus() >= 2)
 	{
 		std::string Nick = cmd.Rest;
@@ -42,23 +46,21 @@ void	Server::AddNicktoUser(Command cmd, Users *user){
 
 void	Server::CapInit(Command cmd, Users *user)
 {
-	if (cmd.CmdName == "CAP" && user->getStatus() == 0)
+	if (cmd.CmdName == "CAP")
 	{
 		if (cmd.Rest == "LS")
 		{
-			user->setStatus(1);
+			if (user->getStatus() == 0)
+				user->setStatus(1);
 			user->setBuffer(RPL_CAP(user->getHostname()));
 		}
-	}
-	else if (user->getStatus())
-	{
-		if (cmd.Rest == "LS")
-			user->setBuffer(RPL_CAP(user->getHostname()));
 	}
 }
 
 void	Server::RegisterUser(Command cmd, Users *user)
 {
+	if (user->getStatus() < 2)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
 	if (user->getStatus() >= 2)
 	{
 		std::vector<std::string>::iterator it = cmd.params.begin();
@@ -66,14 +68,14 @@ void	Server::RegisterUser(Command cmd, Users *user)
 		it = cmd.params.end();
 		it--;
 		std::string realname = *it;
-		realname = realname.substr(1, realname.length() - 1);
 		user->setRealname(realname);
 		user->setUsername(username);
+		user->setBuffer(RPL_USER(user->getHostname(), user->getUsername()));
 		if (user->getStatus() == 3 && user->getNickname() == "*")
 			return ;
 		user->setStatus(user->getStatus() + 1);
 	}
 	if (user->getStatus() == 4)
-		return ; //rpl_welcome;
+		return (user->setBuffer(RPL_WELCOME(this->getHost(), user->getUsername(), user->getHostname(), user->getNickname())));
 	return ;
 }

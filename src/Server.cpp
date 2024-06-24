@@ -133,18 +133,9 @@ void Server::handleMsg(Users *user)
 		user->setCmd(tmp);
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
-			// std::cout << CheckCmd(cmd) << std::endl;
-			// for (std::vector<std::string>::iterator it = cmd.params.begin(); it != cmd.params.end();it++)
-				// std::cout << "!" << *it << "!" << std::endl;
+			std::cout <<"Recv"<< *it << std::endl;
 			if (!CheckCmd(cmd, user))
 				executeCmd(cmd, user);
-			// std::cout << "nickname:'" << user->getNickname() << "'" << std::endl;
-			// std::cout << "status:'" << user->getStatus() << "'" << std::endl;
-			// std::cout << "realname:'" << user->getRealname() << "'" << std::endl;
-			// std::cout << "username:'" << user->getUsername() << "'" << std::endl;
-			// std::cout << "----------------------" << std::endl;
-			// std::cout << std::endl;
-			// std::cout << YELLOW << "Received: " << DEFAULT << *it << std::endl;
 		}
 	}
 }
@@ -154,12 +145,12 @@ void	Server::SendPong(Command msg, Users *user)
 {
 	if (msg.Rest.empty())
 		return user->setBuffer("");//RPL_PONG NO TOKEN
-	user->setBuffer(msg.Rest);//RPL_PONG WITH TOKEN
+	user->setBuffer(msg.Rest + "\r\n");//RPL_PONG WITH TOKEN
 }
 
 void Server::executeCmd(Command msg, Users *user)
 {
-	// std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
+	std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
 	if (msg.CmdName == "CAP")
 		CapInit(msg, user);
 	else if (msg.CmdName == "PASS")

@@ -347,7 +347,7 @@ std::vector<std::string> Split(std::string str)
 int	CheckUser(Command &cmd, Users *user)
 {
 	if (user->getStatus() < 2)
-		return (ERR_NOTREGISTERED(user->getHostname()), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	cmd.params = Split(cmd.Rest);
 	if (cmd.params.size() != 4)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
@@ -389,7 +389,7 @@ std::string	RSpaces(std::string str)
 int	CheckNick(Command &cmd, Users *user)
 {
 	if (user->getStatus() < 2)
-		return (ERR_NOTREGISTERED(user->getHostname()), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty())
 		return (user->setBuffer(ERR_NONICKNAMEGIVEN(user->getHostname())), -1);
 	int	i;

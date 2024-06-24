@@ -19,7 +19,7 @@
 #define ERR_USERNOTINCHANNEL(src, nick, chan)			":" + src + " 441 " + nick + " " + chan + " :The user does not belong to this channel\r\n" 
 #define ERR_NOTONCHANNEL(src, chan)							":" + src + " 442 " + chan + " :You're not on that channel\r\n"
 #define ERR_USERONCHANNEL(src, nick, chan)				":" + src + " 443 " + nick + " " + chan + " :is already on channel\r\n"
-#define ERR_NOTREGISTERED(src)								":" + src + " 451 :You have not registered\r\n"
+#define ERR_NOTREGISTERED(src)								":" + src + " 451 :You have not Registerd\r\n"
 #define ERR_NEEDMOREPARAMS(src, cmd)						":" + src + " 461 " + cmd + " :Not enough parameters\r\n"
 #define ERR_ALREADYREGISTERED(src)							":" + src + " 462 :You may not reregister\r\n"
 #define ERR_PASSWDMISMATCH(src)								":" + src + " 464 " "PASS" + " :Password incorrect\r\n"

@@ -92,7 +92,7 @@ void	Users::setStatus(int status){
 
 void	Users::setBuffer(std::string msg)
 {
-	this->buffer = msg;
+	this->buffer += msg;
 }
 
 Users::Users(const Users &cp){
