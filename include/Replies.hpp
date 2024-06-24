@@ -11,7 +11,7 @@
 #define ERR_CANNOTSENDTOCHAN(src, chan)					":" + src + " 404 " + chan + " :Cannot send to channel\r\n"
 #define ERR_TOOMANYCHANNELS(src, chan)						":" + src + " 405 " + chan + " :You have joined too many channels\r\n"
 #define ERR_NOTEXTTOSEND(src, nick)							":" + src + " 412 " + nick + " :No text to send\r\n"
-#define ERR_INPUTTOOLONG(src, nick)							":" + src + " 417 " + nick + " :Input line too long\r\n"
+#define ERR_INPUTTOOLONG(src)									":" + src + " 417 :Input line too long\r\n"
 #define ERR_UNKNOWNCOMMAND(src, cmd, nick)				":" + src + " 421 " + nick + " " + cmd + " :Uknown command\r\n"
 #define ERR_NONICKNAMEGIVEN(src)								":" + src + " 431 :No nickname given\r\n"
 #define ERR_ERRONEUSNICKNAME(src, nick)					":" + src + " 432 " + nick + " :Erroneus nickname\r\n"
