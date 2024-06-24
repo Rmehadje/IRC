@@ -138,24 +138,26 @@ Users* CheckUserin(std::vector<Users*>& allUsers, std::string& target) {
     return NULL;
 }
 
-void c_invite(Command cmd, Users user, std::vector<Users*> AllUsers, std::vector<Channel*> AllChanel)
+void c_invite(Command cmd, Users *user, std::vector<Users*> AllUsers, std::vector<Channel*> AllChanel)
 {
     std::string channel = cmd.params[1];
     std::string target = cmd.params[0];
 
+    if (user->getStatus() < 2)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
     Channel *cnl = CheckChannel(AllChanel, channel);
     if (!cnl)
-        return(user.setBuffer(ERR_NOSUCHCHANNEL(user.getHostname(), channel)));
-    if (!isInChannel(user.getNickname(), cnl->UserList))
-        return(user.setBuffer(ERR_NOSUCHCHANNEL(user.getHostname(), channel)));
+        return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), channel)));
+    if (!isInChannel(user->getNickname(), cnl->UserList))
+        return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), channel)));
     if (cnl->getinvitef())
-        return(user.setBuffer(ERR_CHANOPRIVSNEEDED(user.getHostname(), channel)));
+        return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), channel)));
         return;
     if (isInChannel(target, cnl->UserList))
-                return(user.setBuffer(ERR_USERONCHANNEL(user.getHostname(), target, channel)));
+                return(user->setBuffer(ERR_USERONCHANNEL(user->getHostname(), target, channel)));
 
         return;
     Users *tar = CheckUserin(AllUsers, target);
     cnl->addUsertoC(tar);
-    return(user.setBuffer(ERR_USERONCHANNEL(user.getHostname(), target, channel)));
+    return(user->setBuffer(ERR_USERONCHANNEL(user->getHostname(), target, channel)));
 }
