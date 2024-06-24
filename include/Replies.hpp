@@ -31,6 +31,19 @@
 #define ERR_CHANOPRIVSNEEDED(src, chan)					":" + src + " 482 " + chan + " :You're not channel operator\r\n"
 #define ERR_UMODEUNKNOWNFLAG(src)							":" + src + " 501 :Unknown MODE flag\r\n"
 #define ERR_USERDONTMATCH(src)								":" + src + " 502 :Cant change mode for other users\r\n"
+
+//replies
+#define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick "\r\n"					
+#define RPL_PASS(src)											":" + src + " :Password is correct, you may continue the registration\r\n"
+#define RPL_HOST(src)
+#define RPL_()
+#define RPL_()
+#define RPL_()
+#define RPL_()
+#define RPL_()
+#define RPL_()
+
+
 #define ERR_()
 #define ERR_()
 #define ERR_()
