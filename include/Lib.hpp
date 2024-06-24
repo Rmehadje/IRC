@@ -35,7 +35,7 @@ Command parse(std::string str);
 int	CheckCmd(Command &cmd, Users *user);
 std::string	RSpaces(std::string str);
 std::string	RCarriage(std::string str);
-int	CheckNick(Command &cmd);
+int	CheckNick(Command &cmd, Users *user);
 int	CheckUser(Command &cmd);
 int	CheckPriv(Command &cmd);
 int	CheckInv(Command &cmd);

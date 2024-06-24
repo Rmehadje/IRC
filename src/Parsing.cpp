@@ -283,7 +283,7 @@ int	CheckCmd(Command &cmd, Users *user)
 	if (cmd.CmdName == "PASS")
 		return 0;
 	if (cmd.CmdName == "NICK")
-		return CheckNick(cmd);
+		return CheckNick(cmd, user);
 	if (cmd.CmdName == "USER")
 		return CheckUser(cmd);
 	if (cmd.CmdName == "PRIVMSG")
@@ -386,25 +386,23 @@ std::string	RSpaces(std::string str)
 	return res;
 }
 
-int	CheckNick(Command &cmd)
+int	CheckNick(Command &cmd, Users *user)
 {
 	if (cmd.Rest.empty())
-		return -1;
+		return (user->setBuffer(ERR_NONICKNAMEGIVEN(user->getHostname())), -1);
 	int	i;
-	if (cmd.Rest.empty() || cmd.Rest.length() > 30 || cmd.Rest[0] == '#' || cmd.Rest[0] == '&' || cmd.Rest[0] == ':'
-			 || cmd.Rest[0] == '@' || isdigit(cmd.Rest[0]) || std::isspace(cmd.Rest[0]))
-		return -1;
+	if (cmd.Rest.length() > NICKLEN || cmd.Rest[0] == '#' || cmd.Rest[0] == '&' || cmd.Rest[0] == ':'
+			 || cmd.Rest[0] == '@' || isdigit(cmd.Rest[0]) || std::isspace(cmd.Rest[0] || cmd.Rest.length() < 3))
+		return ((user->setBuffer(ERR_ERRONEUSNICKNAME(user->getHostname(), cmd.Rest))),-1);
 	i = 0;
 	while (i < (int)strlen(cmd.Rest.c_str()))
 	{
 		if (!isalnum(cmd.Rest[i]) && cmd.Rest[i] != '\\' && cmd.Rest[i] != '|'
 			&& cmd.Rest[i] != '[' && cmd.Rest[i] != ']' && cmd.Rest[i] != '{'
 			&& cmd.Rest[i] != '}' && cmd.Rest[i] != '-' && cmd.Rest[i] != '_')
-			return -1;
+			return ((user->setBuffer(ERR_ERRONEUSNICKNAME(user->getHostname(), cmd.Rest))),-1);
 		i++;
 	}
-	if (cmd.Rest.length() > 20 || cmd.Rest.length() < 4)
-		return -1;
 	return 0;
 }
 
