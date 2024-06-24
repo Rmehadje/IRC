@@ -1,4 +1,5 @@
 #include "../include/Server.hpp"
+#include "../include/Replies.hpp"
 
 Server::Server(){}
 
@@ -150,7 +151,10 @@ void	Server::SendPong(Command msg, Users *user)
 
 void Server::executeCmd(Command msg, Users *user)
 {
-	std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
+	std::cout << user->getStatus() << std::endl;
+	if (user->getStatus() != 4 && (msg.CmdName != "PING" && msg.CmdName != "CAP" && msg.CmdName != "NICK" && msg.CmdName != "USER" && msg.CmdName != "PASS"))
+		return user->setBuffer(ERR_NOTREGISTERED(getHost()));
+	// std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
 	if (msg.CmdName == "CAP")
 		CapInit(msg, user);
 	else if (msg.CmdName == "PASS")

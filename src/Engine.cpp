@@ -91,15 +91,15 @@ void	Server::send_2usr(int fd)
 	if (msg.empty())
 		return ;
    std::vector<std::string> res = MySplit(msg, "\r\n");
-   for (std::vector<std::string>::iterator it = res.begin();it != res.end();it++)
-   {
-      std::cout << BLUE << *it << DEFAULT << std::endl;
-	   (*it) = (*it) + "\r\n";
-      if (send(fd, (*it).c_str(), (*it).size(), 0) != (long)(*it).size())
+   // for (std::vector<std::string>::iterator it = res.begin();it != res.end();it++)
+   // {
+      // std::cout << BLUE << *it << DEFAULT << std::endl;
+	   // (*it) = (*it) + "\r\n";
+      if (send(fd, msg.c_str(), msg.size(), 0) != (long)msg.size())
 		   std::cerr << "Error: send: did not send all data" << std::endl;
       else
-	      std::cout << GREEN << "SENT: " << DEFAULT << *it << std::endl;
-   }
+	      std::cout << GREEN << "SENT: " << DEFAULT << msg << std::endl;
+   // }
 	user->clearBuffer();
 }
 
