@@ -2,8 +2,16 @@
 #include "../include/Server.hpp"
 #include "../include/Users.hpp"
 #include "../include/Lib.hpp"
+#include "../include/Replies.hpp"
 #include <cstring>
 
+Channel* CheckChannel(const std::vector<Channel*>& allChannels, const std::string& target) {
+    for (std::vector<Channel*>::const_iterator it = allChannels.begin(); it != allChannels.end(); ++it) {
+        if ((*it)->getName() == target)
+            return *it;
+    }
+    return NULL;
+}
 Users* CheckUser(std::vector<Users*>& allUsers, std::string& target) {
     for (std::vector<Users*>::const_iterator it = allUsers.begin(); it != allUsers.end(); ++it) {
         if ((*it)->getNickname() == target)
@@ -12,6 +20,15 @@ Users* CheckUser(std::vector<Users*>& allUsers, std::string& target) {
     return NULL;
 }
 
+void removeMode(std::string &currentModes, const std::string &modeString) {
+    // Remove modes specified in modeString from currentModes
+    for (std::string::const_iterator it = modeString.begin(); it != modeString.end(); ++it) {
+        size_t pos = currentModes.find(*it);
+        if (pos != std::string::npos) {
+            currentModes.erase(pos, 1);
+        }
+    }
+}
 
 void setMode(std::string &currentModes, const std::string &modeString, const std::vector<std::string> &modeArgs) {
     // Simplified mode setting: only supports single character modes and no arguments
@@ -34,46 +51,20 @@ void setMode(std::string &currentModes, const std::string &modeString, const std
     }
 }
 
-void removeMode(std::string &currentModes, const std::string &modeString) {
-    // Remove modes specified in modeString from currentModes
-    for (std::string::const_iterator it = modeString.begin(); it != modeString.end(); ++it) {
-        size_t pos = currentModes.find(*it);
-        if (pos != std::string::npos) {
-            currentModes.erase(pos, 1);
-        }
-    }
-}
 
-void c_mode(Command cmd, std::vector<Users *> AllUsers, std::vector<Channel *> AllChannels) {
+void c_mode(Command cmd, Users *user, std::vector<Users *> AllUsers, std::vector<Channel *> AllChannels) {
     std::string target = cmd.params[0];
     std::string modeString = cmd.params[1];
     std::vector<std::string> param = cmd.params;
-
     if (target[0] == '#') { // Channel mode still in progress
-        // if (std::find(AllChannels.begin(), AllChannels.end(), target) != AllChannels.end()) {
-        //     std::cout << "Error " << "ERR_NOSUCHCHANNEL" << ": No such channel\n";
-        //     return;
-        // }
-
-        // if (param.empty()) {
-        //     std::cout << "Current modes for " << "target" << ": " << currentModes << "\n";
-        // } else {
-        //     setMode(currentModes, modeString, param);
-        //     std::cout << "Updated modes for " << target << ": " << currentModes << "\n";
-        // }
-    } else { // User mode
-        if (!CheckUser(AllUsers, target)) {
-            std::cout << "Error " << "ERR_NOSUCHNICK" << ": No such nick\n";
-            return;
-        }
-
-        Users *User = CheckUser(AllUsers, target);
-        std::string currentModes = User->getMode();
-        if (modeString.empty()) {
-            std::cout << "Current modes for " << target << ": " << currentModes << "\n";
+        Channel *channel = CheckChannel(AllChannels, target);
+        if (channel == NULL)
+            return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), target)));
+        std::string currentModes = channel->getMode();
+        if (param.empty()) {
+            return(user->setBuffer(RPL_CHANNELMODEIS(user->getHostname(), target)));
         } else {
             setMode(currentModes, modeString, param);
-            std::cout << "Updated modes for " << target << ": " << currentModes << "\n";
+            return(user->setBuffer(RPL_CHANNELMODEIS(user->getHostname(), target)));
         }
-    }
 }
