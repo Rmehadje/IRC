@@ -93,7 +93,7 @@ void	Server::send_2usr(int fd)
 	if (send(fd, msg.c_str(), msg.size(), 0) != (long)msg.size())
 		std::cerr << "Error: send: did not send all data" << std::endl;
 	std::cout << GREEN << "SENT: " << DEFAULT << msg << std::endl;
-	// user->clearBuff();
+	user->clearBuffer();
 }
 
 int   Server::addNewClient()

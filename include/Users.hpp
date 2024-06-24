@@ -45,5 +45,6 @@ class	Users
 		void setBuffer(std::string msg);
 		void setCmd(std::string msg);
 
+		void	clearBuffer();
 		void	clearCmd();
 };

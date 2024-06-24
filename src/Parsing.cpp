@@ -1,4 +1,5 @@
 #include "../include/Lib.hpp"
+#include "../include/Replies.hpp"
 
 int PortChecker(std::string Port)
 {
@@ -275,7 +276,7 @@ int	CheckMode(Command &cmd)
 	return 0;
 }
 
-int	CheckCmd(Command &cmd)
+int	CheckCmd(Command &cmd, Users *user)
 {
 	if (cmd.CmdName == "CAP")
 		return 0;
@@ -303,6 +304,8 @@ int	CheckCmd(Command &cmd)
 		return CheckMode(cmd);
 	if (cmd.CmdName == "TOPIC")
 		return CheckTopic(cmd);
+	else
+		user->setBuffer(ERR_UNKNOWNCOMMAND(user->getHostname(), cmd.CmdName, user->getNickname()));
 	return 0;
 }
 

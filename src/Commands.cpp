@@ -1,4 +1,5 @@
 #include "../include/Server.hpp"
+#include "../include/Replies.hpp"
 
 void	Server::AddPtoUser(Command cmd, Users *user){
 	std::string pword = cmd.Rest;
@@ -7,11 +8,11 @@ void	Server::AddPtoUser(Command cmd, Users *user){
 			user->setStatus(2);
 		}
 		else{
-			std::cout << "rwordone" << std::endl;
+			user->setBuffer(ERR_PASSWDMISMATCH(user->getHostname()));
 		}
 	}
-	else{
-		std::cout << "rwordtwo" << std::endl;
+	else if (user->getStatus() > 2){
+		user->setBuffer(ERR_ALREADYREGISTERED(user->getHostname()));
 	}
 }
 

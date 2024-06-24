@@ -127,3 +127,8 @@ void	Users::clearCmd()
 {
 	this->cmd.clear();
 }
+
+void	Users::clearBuffer()
+{
+	this->buffer.clear();
+}
