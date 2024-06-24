@@ -11,7 +11,7 @@ void	Server::AddPtoUser(Command cmd, Users *user){
 			user->setBuffer(RPL_PASS(user->getHostname()));
 		}
 		else if (pword.empty())
-			user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName));
+			user->setBuffer((user->getHostname(), cmd.CmdName));
 		else {
 			user->setBuffer(ERR_PASSWDMISMATCH(user->getHostname()));
 		}
