@@ -33,10 +33,11 @@
 #define ERR_USERDONTMATCH(src)								":" + src + " 502 :Cant change mode for other users\r\n"
 
 //replies
-#define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick "\r\n"					
+#define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"					
 #define RPL_PASS(src)											":" + src + " :Password is correct, you may continue the registration\r\n"
-#define RPL_HOST(src)
-#define RPL_()
+#define RPL_USER(src, user)									":" + src + " :Your username is now set to: " + user + "\r\n"
+#define RPL_NOTOPERATORANYMORE(src, chan)					":" + src + " :You are no longer an IRC operator in " + chan + "\r\n"
+#define RPL_BECOMINGOPERATOR(src, chan)					":" + src + " :You are now an IRC operator in " + chan + "\r\n"
 #define RPL_()
 #define RPL_()
 #define RPL_()
