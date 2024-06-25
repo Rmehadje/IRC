@@ -218,24 +218,24 @@ int	CheckPart(Command &cmd)
 	return 0;
 }
 
-int	CheckKick(Command &cmd)
+int	CheckKick(Command &cmd, Users *user)
 {
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	std::vector<std::string> tmp = KickSplit(cmd.Rest);
 	if (tmp.size() < 2)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (tmp.size() == 3)
 	{
 		std::vector<std::string>::iterator it = tmp.end();
 		it--;
 		if ((*it).length() >= KICKLEN)
-			return -1;
+			return (user->setBuffer(ERR_INPUTTOOLONG(user->getHostname())), -1);
 	}
 	return 0;
 }
 
-int	CheckMode(Command &cmd)
+int	CheckMode(Command &cmd, Users *user)
 {
 	int i = 0;
 	std::string channel;
@@ -243,7 +243,7 @@ int	CheckMode(Command &cmd)
 	std::string arg;
 
 	if (OnlySpaces(cmd.Rest))
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
 	{
 		cmd.params.push_back(cmd.Rest);
@@ -259,14 +259,14 @@ int	CheckMode(Command &cmd)
 		if (OnlySpaces(cmd.Rest))
 			return 0;
 		if (cmd.Rest.length() != 2)
-			return -1;//RPL unk mode chr
+			return (user->setBuffer(ERR_UKNOWNMODE(user->getHostname(), cmd.Rest)), -1);
 		cmd.params.push_back(cmd.Rest);
 		return 0;
 	}
 	i = cmd.Rest.find(' ');
 	mode = cmd.Rest.substr(0, i);
 	if (mode.length() != 2)
-		return -1;//RPL unk mode chr
+		return (user->setBuffer(ERR_UKNOWNMODE(user->getHostname(), cmd.Rest)), -1);
 	cmd.params.push_back(mode);
 	arg = cmd.Rest.substr(i + 1, cmd.Rest.length() -  i);
 	arg = RSpaces(arg);
@@ -310,20 +310,20 @@ int	CheckCmd(Command &cmd, Users *user)
 	if (cmd.CmdName == "PING")
 		return 0;
 	if (cmd.CmdName == "KICK")
-		return CheckKick(cmd);
+		return CheckKick(cmd, user);
 	if (cmd.CmdName == "MODE")
-		return CheckMode(cmd);
+		return CheckMode(cmd, user);
 	if (cmd.CmdName == "TOPIC")
-		return CheckTopic(cmd);
+		return CheckTopic(cmd, user);
 	else
 		user->setBuffer(ERR_UNKNOWNCOMMAND(user->getHostname(), cmd.CmdName, user->getNickname()));
 	return 0;
 }
 
-int	CheckTopic(Command &cmd)
+int	CheckTopic(Command &cmd, Users *user)
 {
 	if (cmd.Rest.length() == 0)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
 	{
 		cmd.params.push_back(cmd.Rest);

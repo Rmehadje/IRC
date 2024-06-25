@@ -79,3 +79,10 @@ void	Server::RegisterUser(Command cmd, Users *user)
 		return (user->setBuffer(RPL_WELCOME(this->getHost(), user->getUsername(), user->getHostname(), user->getNickname())));
 	return ;
 }
+
+void	Server::SendPong(Command msg, Users *user)
+{
+	if (msg.Rest.empty())
+		return user->setBuffer("");
+	user->setBuffer(msg.Rest + "\r\n");
+}
