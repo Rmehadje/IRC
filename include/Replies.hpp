@@ -41,6 +41,7 @@
 #define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + "Welcome to the IRC_server network " + nick +  "." + user + "@" + host + "\r\n"
 #define RPL_UMODEIS(src, nick, mode)						":" + src + " 221 " + nick + " " + mode + "\r\n"
 #define RPL_CHANNELMODEIS(src, chan, modest, modea)	":" + src + " 324 " + chan + " " + modest + " " + modea + "\r\n"
+#define RPL_NOTOPIC(src, chan)								":" + src + " 331 " + chan + " :No topic is set\r\n"
 #define RPL_TOPIC(src, chan, topic)							":" + src + " 332 " + chan + " " + topic + "\r\n"
 
 
