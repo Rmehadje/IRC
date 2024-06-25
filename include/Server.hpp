@@ -58,6 +58,8 @@ class Server
 		void	setHost(std::string name);
 		void	setStatus(bool flag);
 		void	setBytesReceived(int BytesReceived);
+		void	setAllUsers(std::vector<Users *> user);
+		void	setAllChannels(std::vector<Channel *> vec);
 
 	//Getters
 		std::string getHost() const;
@@ -65,6 +67,8 @@ class Server
 		int	getPort() const;
 		Users*	getUserByFd(int fd);
 		ssize_t getBytesReceived();
+		std::vector<Users *> getVectorU() const;
+		std::vector<Channel *> getVectorCh() const;
 	
 	//Commands
 		void	AddPtoUser(Command cmd, Users *user);

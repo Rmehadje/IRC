@@ -65,6 +65,22 @@ ssize_t Server::getBytesReceived()
 	return this->BytesReceived;
 }
 
+void	Server::setAllUsers(std::vector<Users *> user){
+	AllUsers = user;
+}
+
+void	Server::setAllChannels(std::vector<Channel *> vec){
+	AllChannels = vec;
+}
+
+std::vector<Users *> Server::getVectorU() const{
+	return this->AllUsers;
+}
+
+std::vector<Channel *> Server::getVectorCh() const{
+	return this->AllChannels;
+}
+
 Users *Server::getUserByFd(int fd) {
 	for (std::vector<Users *>::iterator it = this->AllUsers.begin(); 
 			it != this->AllUsers.end(); ++it) {
