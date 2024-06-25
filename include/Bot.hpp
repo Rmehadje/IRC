@@ -28,7 +28,4 @@ class Bot{
 		void	EightBall(Users *user);
 		void	d20(Users *user);
 		void	Greetings(Users *user, Channel *channel);
-		void	QuoteOfTheDay(Users *user, Channel *channel);
-		void	polls(Users *user);
-		void	WallofShame(Users *user);
 };

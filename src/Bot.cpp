@@ -28,7 +28,7 @@ std::string	Bot::getBotName() const{
 
 void	Bot::Greetings(Users *user, Channel *channel)
 {
-	std::cout << "Good folks, allow me to introduce " << user->getNickname() << " to our esteemed gathering here in "<< << "let us ensure they are made to feel like home within our noble walls." << std::endl; 
+	std::cout << "Good folks, allow me to introduce " << user->getNickname() << " to our gathering here in "<< channel->getName() << "let us ensure they are made to feel like home within our noble walls." << std::endl; 
 }
 
 void	Bot::HelpCommands(Users *user){
@@ -112,10 +112,4 @@ void	Bot::d20(Users *user){
 	std::cout << "you have summoned the d20..." << std::endl;
    std::uniform_int_distribution<> dis(0, 19);
 	std::cout << dis(gen) << std::endl;
-}
-
-void	QuoteofTheDay(Users *user, Channel *channel){
-	if channel->UserList
-
-	} 
 }
