@@ -34,27 +34,28 @@ std::string	Bot::getBotName() const{
 
 void	Bot::HelpCommands(Users *user){
 	std::string Help = "You ask and you shall receive, here is the list of commands:\n\n"
-	"TOPIC: 	 <Channel>  <TOPIC>,   the TOPIC command serves the purpose of giving you the possibility of changing the Topic, or see the topic set for the channel\n"
-	"KICK:  	 <Channel>  <user>, 	  the KICK command ejects a user from the Channel.\n"
-	"INVITE:  <NickName> <Channel>, the INVITE command hands you the power of inviting your peers to the Channel.\n"
-	"PRIVMSG: <target>   <message>, It is quite self explanatory, this command is used to send a private message to someone.\n\n"
+	"TOPIC:   <Channel> <TOPIC>,                       The TOPIC command serves the purpose of giving you the possibility of changing the Topic, or see the topic set for the channel\n"
+	"KICK:    <Channel> <user>,                            The KICK command ejects a user from the Channel.\n"
+	"INVITE:  <NickName> <Channel>,                 The INVITE command hands you the power of inviting your peers to the Channel.\n"
+	"PRIVMSG: <target>   <message>,                 It is quite self explanatory, this command is used to send a private message to someone.\n\n"
 	"MODE: this is used to change Channel modes, for this you would need to be the OP, here are the modes available:\n"
-	"		+i: #Channel <+i>						set or remove the invite-only for the channel.\n"
-	"		+t: #Channel <+t>						set or remove the Topic restrictions for the OP.\n"
-	"		+k: #Channel <+K> <PassWord>					set or remove Channel Password.\n"
-	"		+l: #Channel <+l> <int>						set or remove the limit of users in one Channel.\n"
-	"		+o: #Channel <+/-o> <NickName>					set or remove the OP privilages to a user.\n\n"
+	"+i: #Channel <+i>                                         Set or remove the invite-only for the channel.\n"
+	"+t: #Channel <+t>                                        Set or remove the Topic restrictions for the OP.\n"
+	"+k: #Channel <+K> <PassWord>                 Set or remove Channel Password.\n"
+	"+l: #Channel <+l> <int>                              Set or remove the limit of users in one Channel.\n"
+	"+o: #Channel <+/-o> <NickName>            Set or remove the OP privilages to a user.\n\n"
 	"As mentioned before, some of these commands require you to be the OP, you can't use KICK and MODE if you are a user, unless some restrtictions have been softened for you.";
 	user->setBuffer(RPL_BOT_HC(user->getHostname(), Help));
 }
 
-// void	Bot::BotCommands(Users *user){
-// 	std::cout << "If you would like to know what i can do, here is a list of my capabilities: " << std::endl;
-// 	std::cout << "User list: (write UL) gives you all the users that are in the same server as you." << std::endl;
-// 	std::cout << "Channel list: (write CL), shows you all the available Channels created by you or other users." << std::endl;
-// 	std::cout << "EightBall : (write Eightball), you summon my capabilities of second sight by advising you wether you should, or should not act upon what you ask me." << std::endl;
-// 	std::cout << "d20: (write d20), permits you to test your luck out of 20." << std::endl;
-// }
+void	Bot::BotCommands(Users *user){
+	std::string Help = "If you would like to know what i can do, here is a list of my capabilities: \n"
+	"User list: (write <BOT UL>) gives you all the users that are in the same server as you.\n"
+	"Channel list: (write <BOT CL>), shows you all the available Channels created by you or other users.\n"
+	"EightBall: (write <BOT Eightball>), you summon my capabilities of second sight by advising you wether you should, or should not act upon what you ask me.\n"
+	"d20: (write <BOT d20>), permits you to test your luck out of 20.\n";
+	user->setBuffer(RPL_BOT_BC(user->getHostname(), Help));
+}
 
 // void	Bot::UserList(Users *user, std::vector<Users *>	&AllUsers){
 // 	std::cout << "here is the list for every user in the server:" << std::endl;
@@ -125,6 +126,6 @@ void	Bot::executeBot(Command cmd, Users *user){
 // 		UserList(user, getVectorU());
 	if (cmd.Rest == "HELPC")
 		HelpCommands(user);
-// 	else if (cmd.Rest == "BOTC")
-// 		BotCommands(user);
+	else if (cmd.Rest == "BOTC")
+		BotCommands(user);
 }
