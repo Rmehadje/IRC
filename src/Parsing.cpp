@@ -276,8 +276,19 @@ int	CheckMode(Command &cmd)
 	return 0;
 }
 
+int	CheckBot(Command &cmd, Users *user)
+{
+	if (user->getStatus() != 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+	if (cmd.Rest.empty())
+		return (user->setBuffer(ERR_UNKNOWNCOMMAND(user->getHostname(), cmd.CmdName, user->getNickname())), -1);
+	return 0;
+}
+
 int	CheckCmd(Command &cmd, Users *user)
 {
+	if (cmd.CmdName == "BOT")
+		return CheckBot(cmd, user);
 	if (cmd.CmdName == "CAP")
 		return 0;
 	if (cmd.CmdName == "PASS")

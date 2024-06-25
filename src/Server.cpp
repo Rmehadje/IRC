@@ -165,6 +165,10 @@ void Server::executeCmd(Command msg, Users *user)
 			RegisterUser(msg, user);
 	else if (msg.CmdName == "PING")
 			SendPong(msg, user);
+	else if (msg.CmdName == "QUIT")
+		c_quit(msg ,user);
+	else if (msg.CmdName == "BOT")
+		executeBot(msg, user);
 	else if (msg.CmdName == "JOIN")
 		std::cout << "GOOD" << std::endl;
     	// c_join(msg.parameters, user);
@@ -189,7 +193,5 @@ void Server::executeCmd(Command msg, Users *user)
 		std::cout << "GOOD" << std::endl;
 		// c_privmsg(msg.parameters, user);
 		// c_privmsg(cmd, user, AllUsers, AllChannels)
-	else if (msg.CmdName == "QUIT")
-		c_quit(msg ,user);
 		// c_quit(msg.parameters, user);
 }
