@@ -3,6 +3,8 @@
 #include "Server.hpp"
 #include <ctime>
 #include <random>
+#include <vector>
+#include <string>
 
 // class Command;
 class Users;
