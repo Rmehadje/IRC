@@ -4,7 +4,7 @@ CC = c++
 RM = rm -rf
 CFLAGS =  -std=c++98 -MD -Wall -Wextra -Werror
 
-SRC = main Parsing Engine Server Users Channel Commands
+SRC = main Parsing Engine Server Users Channel Commands Commands2
 
 SRC_DIR = src/
 OBJ_DIR = objects/

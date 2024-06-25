@@ -190,7 +190,6 @@ void Server::executeCmd(Command msg, Users *user)
 		// c_privmsg(msg.parameters, user);
 		// c_privmsg(cmd, user, AllUsers, AllChannels)
 	else if (msg.CmdName == "QUIT")
-		std::cout << "GOOD" << std::endl;
+		c_quit(msg ,user);
 		// c_quit(msg.parameters, user);
-		// c_quit(msg.parameters,user, AllUsers);
 }

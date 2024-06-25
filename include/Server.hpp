@@ -72,4 +72,6 @@ class Server
 		void	CapInit(Command cmd, Users *user);
 		void	RegisterUser(Command cmd, Users *user);
 		void	SendPong(Command cmd, Users *user);
+		void broadcast_quit_message(Users *user, const std::string& message);
+		void c_quit(Command cmd, Users *user);
 };
