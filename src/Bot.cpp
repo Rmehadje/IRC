@@ -127,6 +127,11 @@ void	Bot::d20(Users *user){
 }
 
 void	Bot::executeBot(Command cmd, Users *user, std::vector<Users *>users, std::vector<Channel *>Channels){
+	if (cmd.Rest.find("Eightball") != std::string::npos)
+	{
+		int i = cmd.Rest.find(' ');
+		cmd.Rest = cmd.Rest.substr(0, i);
+	}
 	if (cmd.Rest == "HELPC")
 		HelpCommands(user);
 	else if (cmd.Rest == "UL")
