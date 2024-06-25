@@ -1,5 +1,6 @@
 #include "../include/Bot.hpp"
 #include "../include/Replies.hpp"
+#include "../include/Server.hpp"
 
 Bot::Bot(std::string name){
 	name = "The knight";
@@ -57,24 +58,25 @@ void	Bot::BotCommands(Users *user){
 	user->setBuffer(RPL_BOT_BC(user->getHostname(), Help));
 }
 
-// void	Bot::UserList(Users *user, std::vector<Users *>	&AllUsers){
-// 	std::cout << "here is the list for every user in the server:" << std::endl;
-// 	for (std::vector <Users *>::iterator it = AllUsers.begin(); it != AllUsers.end(); it++){
-// 		std::cout << (*it)->getNickname() << std::endl;
-// 	}
-// }
+void	Bot::UserList(Users *user, std::vector<Users *>	&AllUsers){
+	std::string Help = "here is the list for every user in the server:";
+	std::string userlist;
+	for (std::vector <Users *>::iterator it = AllUsers.begin(); it != AllUsers.end(); it++){
+		user->setBuffer(RPL_BOT_UL(Help, (*it)->getHostname(), (*it)->getNickname()));
+	}
+}
 
-// void	Bot::ChannelList(Users *user, std::vector<Channel *> &AllChannels){
-// 	if (AllChannels.empty()){
-// 		std::cout << "There are no Channels available currently, feel free to create one!" << std::endl;
-// 	}
-// 	else{
-// 		std::cout << "here is the list for every every channel in the server:" << std::endl;
-// 		for (std::vector<Channel *>::iterator it = AllChannels.begin(); it != AllChannels.end(); it++){
-// 			std::cout << (*it)->getName() << std::endl;
-// 	}
-// 	}
-// }
+void	Bot::ChannelList(Users *user, std::vector<Channel *> &AllChannels){
+	if (AllChannels.empty()){
+		std::string Help = "There are no Channels available currently, feel free to create one!";
+	}
+	else{
+		std::cout << "here is the list for every every channel in the server:" << std::endl;
+		for (std::vector<Channel *>::iterator it = AllChannels.begin(); it != AllChannels.end(); it++){
+			user->setBuffer(RPL_BOT_CL((*it)=>gethostname(), (*it)->getName()));
+	}
+	}
+}
 
 // void	Bot::EightBall(Users *user){
 // 	std::vector<std::string> responses = {
@@ -122,10 +124,10 @@ void	Bot::executeBot(Command cmd, Users *user){
 // 		EightBall(user);
 // 	else if (cmd.Rest == "CL")
 // 		ChannelList(user, getVectorCh());
-// 	else if (cmd.Rest == "UL")
-// 		UserList(user, getVectorU());
 	if (cmd.Rest == "HELPC")
 		HelpCommands(user);
+	else if (cmd.Rest == "UL")
+		UserList(user, getVectorU());
 	else if (cmd.Rest == "BOTC")
 		BotCommands(user);
 }

@@ -28,7 +28,7 @@
 #define ERR_USERDONTMATCH(src)								":" + src + " 502 :Cant change mode for other users\r\n"
 
 //replies
-#define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"					
+#define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"
 #define RPL_PASS(src)											":" + src + " :Password is correct, you may continue the registration\r\n"
 #define RPL_USER(src, user)									":" + src + " :Your username is now set to: " + user + "\r\n"
 #define RPL_NOTOPERATORANYMORE(src, chan)					":" + src + " :You are no longer an IRC operator in " + chan + "\r\n"
@@ -41,6 +41,7 @@
 #define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + "Welcome to the IRC_server network " + nick +  "." + user + "@" + host + "\r\n"
 #define RPL_UMODEIS(src, nick, mode)						":" + src + " 221 " + nick + " " + mode + "\r\n"
 #define RPL_CHANNELMODEIS(src, chan, modest, modea)	":" + src + " 324 " + chan + " " + modest + " " + modea + "\r\n"
+#define RPL_TOPIC(src, chan, topic)							":" + src + " 332 " + chan + " " + topic + "\r\n"
 
 
 
@@ -50,6 +51,8 @@
 #define BOTRPL_()
 #define RPL_BOT_HC(src, msg)								":" + src + " " + msg + "\r\n"
 #define RPL_BOT_BC(src, msg)								":" + src + " " + msg + "\r\n"
+#define RPL_BOT_UL(help, src, msg)						":" + help + " " + src + " " + msg + "\r\n"
+#define RPL_BOT_CL(src, msg)								":" + src + " " + msg + "\r\n"
 #define RPL_()
 
 
