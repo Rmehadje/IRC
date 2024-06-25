@@ -115,54 +115,24 @@ void	Bot::EightBall(Users *user){
     std::string randomResponse = responses[random_index];
     user->setBuffer(RPL_BOT_EB(randomResponse));
 }
-// 	std::vector<std::string> responses = {
-// 		"it appears so.",
-// 		"you'll learn from this.",
-// 		"it may not go as planned.",
-// 		"think further about it.",
-// 		"i wouldn't know.",
-// 		"i shouldn't say.",
-// 		"it is favorable.",
-// 		"perhaps another time.",
-// 		"guarenteed.",
-// 		"the time is right.",
-// 		"don't let that distract you.",
-// 		"you have other things to worry about.",
-// 		"very well.",
-// 		"there is a chance.",
-// 		"it could be done.",
-// 		"I would not do that.",
-// 		"doubtful.",
-// 		"no doubt in me.",
-// 		"maybe in another timeline.",
-// 		"It would mean farewell.",
-// 		"it would bring novelty.",
-// 		"Focus, and ask again when you know more.",};
-// 		std::random_device rd;
-//       std::mt19937 gen(rd());
-//       std::uniform_int_distribution<> dis(0, 21);
-// 		std::vector<std::string>::iterator it = responses.begin();
-// 		std::advance(it, dis(gen));
-// 		std::string randomResponse = responses[dis(gen)];
-// 		user->setBuffer(RPL_BOT_EB(randomResponse));
-// }
 
 void	Bot::d20(Users *user){
 	std::random_device rd;
    std::mt19937 gen(rd());
 	std::string str = "you have summoned the d20...";
-   std::uniform_int_distribution<> dis(0, 19);
-	str += dis(gen);
+   std::uniform_int_distribution<> dis(1, 20);
+	int dice = dis(gen);
+	str += std::to_string(dice);
 	user->setBuffer(RPL_BOT_D20(str));
 }
 
 void	Bot::executeBot(Command cmd, Users *user, std::vector<Users *>users, std::vector<Channel *>Channels){
-	if (cmd.Rest == "d20")
-		d20(user);
 	if (cmd.Rest == "HELPC")
 		HelpCommands(user);
 	else if (cmd.Rest == "UL")
 		UserList(user, users);
+	else if (cmd.Rest == "d20")
+		d20(user);
 	else if (cmd.Rest == "Eightball")
 		EightBall(user);
 	else if (cmd.Rest == "CL")
