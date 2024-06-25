@@ -174,52 +174,57 @@ int	CheckMult(std::string str)
 	return 0;
 }
 
-int	CheckPriv(Command &cmd)
+int	CheckPriv(Command &cmd, Users *user)
 {
+	if (user->getStatus() < 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return -1;
-	// if (cmd.Rest[0] != '@' && cmd.Rest[0] != '#')
-	// 	return -1;
-	// if (CheckMult(cmd.Rest) == -1)
-	// 	return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	std::vector<std::string> tmp = PrivSplit(cmd.Rest);
 	if (tmp.size() != 2)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	return 0;
 }
 
-int	CheckInv(Command &cmd)
+int	CheckInv(Command &cmd, Users *user)
 {
+	if (user->getStatus() < 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	std::vector<std::string> tmp = Split(cmd.Rest);
 	if (tmp.size() != 2)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	return 0;
 }
 
-int	CheckJoin(Command &cmd)
-{
+int	CheckJoin(Command &cmd, Users *user)
+{	if (user->getStatus() < 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	std::vector<std::string> tmp = Split(cmd.Rest);
 	return 0;
 }
 
-int	CheckPart(Command &cmd)
+int	CheckPart(Command &cmd, Users *user)
 {
+	if (user->getStatus() < 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return -1;
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	std::vector<std::string> tmp = Split(cmd.Rest);
 	return 0;
 }
 
 int	CheckKick(Command &cmd, Users *user)
 {
+	if (user->getStatus() < 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	std::vector<std::string> tmp = KickSplit(cmd.Rest);
@@ -242,6 +247,8 @@ int	CheckMode(Command &cmd, Users *user)
 	std::string mode;
 	std::string arg;
 
+	if (user->getStatus() < 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (OnlySpaces(cmd.Rest))
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
@@ -298,13 +305,13 @@ int	CheckCmd(Command &cmd, Users *user)
 	if (cmd.CmdName == "USER")
 		return CheckUser(cmd, user);
 	if (cmd.CmdName == "PRIVMSG")
-		return CheckPriv(cmd);
+		return CheckPriv(cmd, user);
 	if (cmd.CmdName == "INVITE")
-		return CheckInv(cmd);
+		return CheckInv(cmd, user);
 	if (cmd.CmdName == "JOIN")
-		return CheckJoin(cmd);
+		return CheckJoin(cmd, user);
 	if (cmd.CmdName == "PART")
-		return CheckPart(cmd);
+		return CheckPart(cmd, user);
 	if (cmd.CmdName == "QUIT")
 		return 0;
 	if (cmd.CmdName == "PING")
@@ -322,6 +329,8 @@ int	CheckCmd(Command &cmd, Users *user)
 
 int	CheckTopic(Command &cmd, Users *user)
 {
+	if (user->getStatus() < 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.length() == 0)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)

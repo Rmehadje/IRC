@@ -37,10 +37,10 @@ std::string	RSpaces(std::string str);
 std::string	RCarriage(std::string str);
 int	CheckNick(Command &cmd, Users *user);
 int	CheckUser(Command &cmd, Users *user);
-int	CheckPriv(Command &cmd);
-int	CheckInv(Command &cmd);
-int	CheckJoin(Command &cmd);
-int	CheckPart(Command &cmd);
+int	CheckPriv(Command &cmd, Users *user);
+int	CheckInv(Command &cmd, Users *user);
+int	CheckJoin(Command &cmd, Users *user);
+int	CheckPart(Command &cmd, Users *user);
 int	CheckKick(Command &cmd, Users *user);
 int	CheckMult(std::string str);
 int	OnlySpaces(std::string str);
@@ -50,3 +50,5 @@ int	CheckBot(Command &cmd, Users *user);
 std::vector<std::string> KickSplit(std::string tmp);
 std::vector<std::string> PrivSplit(std::string tmp);
 std::vector<std::string> Split(std::string str);
+
+
