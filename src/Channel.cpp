@@ -6,6 +6,9 @@ Channel::Channel(std::string name){
 	Topic = "random";
 	limit = -1;
 	Mode = "-iltk";
+	Limitf  = false;
+	Topicf = false;
+	Invitef = false;
 }
 
 Channel::Channel(const	Channel &cp){
@@ -64,10 +67,20 @@ int		Channel::getLimit() const{
 	return (lim);
 }
 
-int		Channel::getinvitef() const{
-	int	inf = this->invitef;
-	return (inf);
+bool	Channel::getLimitf() const
+{
+	return this->Limitf;
 }
+
+bool Channel::getInvitef() const
+{
+	return this->Invitef;
+}
+
+bool	Channel::getTopicf() const{
+	return this->Topicf;
+}
+
 
 void	Channel::addUsertoC(Users *user){
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
@@ -102,15 +115,13 @@ void	Channel::fliptoOperator(Users	*user){
 	}
 }
 
-void	Channel::CheckifOP(Users *user, Channel *channel){
+bool	Channel::CheckifOP(Users *user, Channel *channel){
 	std::string N = user->getNickname();
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
 		if ((*it).nickName == N){
 			if ((*it).flag == 1)
-				std::cout << N << " is an operator" << std::endl;
-			else
-				std::cout << N << " is not an operator" << std::endl;
+				return true;
 		}
 	}
-	(void)channel;
+	return false;
 }

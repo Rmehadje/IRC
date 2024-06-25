@@ -86,3 +86,55 @@ void	Server::SendPong(Command msg, Users *user)
 		return user->setBuffer("");
 	user->setBuffer(msg.Rest + "\r\n");
 }
+
+static Channel* CheckChannel(const std::vector<Channel*>& allChannels, const std::string& target) {
+    for (std::vector<Channel*>::const_iterator it = allChannels.begin(); it != allChannels.end(); ++it) {
+        if ((*it)->getName() == target)
+            return *it;
+    }
+    return NULL;
+}
+
+static bool	isInChannel(std::string name, std::vector<struct C_Users> Users)
+{
+	for(std::vector<struct C_Users>::iterator it = Users.begin();it != Users.end();it++)
+	{
+		if (name == (*it).nickName)
+			return true;
+	}
+	return false;
+}
+
+void c_topic(Command cmd, Users *user, std::vector<Channel*> AllChanels)
+{
+   std::string ChannelName = cmd.params[0];
+   Channel *Channel= CheckChannel(AllChanels, ChannelName);
+   if (Channel = NULL)
+        return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), ChannelName)));
+	if (!isInChannel(user->getNickname(), Channel->UserList))
+		return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), Channel->getName())));
+	if (cmd.params.size() == 1)
+	{
+		if (Channel->getTopic().empty())
+			return user->setBuffer(RPL_NOTOPIC(user->getHostname(), Channel->getName()));
+		return user->setBuffer(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic()));
+	}
+	else
+	{
+		if (!Channel->getTopicf())
+		{
+			Channel->setTopic(cmd.params[1]);
+			return user->setBuffer(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic()));
+		}
+		else
+		{
+			if (!Channel->CheckifOP(user, Channel))
+				return (user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), Channel->getName())));
+			else
+			{
+				Channel->setTopic(cmd.params[1]);
+				return (user->setBuffer(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic())));
+			}
+		}
+	}
+}

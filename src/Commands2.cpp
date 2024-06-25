@@ -104,30 +104,6 @@ void Server::c_quit(Command cmd, Users *user){
 
 // //check mode.cpp
 
-// // -------------TOPIC Command------------------//
-
-// void c_topic(Command cmd, Users *user, std::vector<Channel*> AllChanels)
-// {
-//     std::string ChannelName;
-//     Channel *Channel= CheckChannel(AllChanels, ChannelName);
-//     if (Channel = NULL)
-//         return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), ChannelName)));
-//     if (user->getMode().find("t"))
-//         return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), ChannelName)));
-//     if (cmd.params[1] != ""){
-//         if (!isInChannel(user->getNickname(), Channel->UserList))
-//             return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), Channel->getName())));
-//         if (!Channel->getTopic().empty())
-//             return(user->setBuffer(RPL_TOPIC(user->getHostname(),Channel->getName(), Channel->getTopic())));
-//         else
-//             return(user->setBuffer(ERR_NOTOPIC(user->getHostname(),Channel->getName())));
-//     }
-
-//     ChannelName = cmd.params[1];
-//     Channel->setTopic(cmd.params[0]);
-//     return(user->setBuffer(RPL_TOPIC(user->getHostname(),Channel->getName(), Channel->getTopic())));
-// }
-
 // //----------------INVITE Command-----------------//
 
 // Users* CheckUserin(std::vector<Users*>& allUsers, std::string& target) {

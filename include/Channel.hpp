@@ -29,9 +29,9 @@ class Channel
 {
 	private:
 		int						limit;
-		// int						Limitf;
-		int						Topicf;
-		int						invitef;
+		bool						Limitf;
+		bool						Topicf;
+		bool						Invitef;
 		std::string				Mode;
 		std::string				Name;
 		std::string				Password;
@@ -57,10 +57,13 @@ class Channel
 		std::string	getMode() const;
 		int			getLimit() const;
 		int			getinvitef() const;
+		bool	getLimitf() const;
+		bool	getTopicf() const;
+		bool	getInvitef() const;
 
 
 		void	addUsertoC(Users *user);
 		void	deleteUserfromC(Users	*user);
 		void	fliptoOperator(Users	*user);
-		void	CheckifOP(Users *user, Channel *channel);
+		bool	CheckifOP(Users *user, Channel *channel);
 };
