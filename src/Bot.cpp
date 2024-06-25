@@ -32,28 +32,26 @@ void	Bot::Greetings(Users *user, Channel *channel)
 }
 
 void	Bot::HelpCommands(Users *user){
-	std::cout << "You ask and you shall receive, here is the list of commands: " << std::endl;
-	std::cout << "TOPIC: <Channel> [<TOPIC>], the TOPIC command serves the purpose of giving you the possibility of changing the Topic, or see the topic set for the channel." << std::endl;
-	std::cout << "KICK: <channel> <user>, the KICK command ejects a user from the Channel." << std::endl;
-	std::cout << "INVITE: <NickName> <Channel>, the INVITE command hands you the power of inviting your peers to the Channel." << std::endl;
-	std::cout << "PRIVMSG: <target> <message>, it is quite self explanatory, this command is used to send a private message to someone." << std::endl;
-	std::cout << "MODE: this is used to change Channel modes, for this you would need to be the OP, here are the modes available: " << std::endl;
-	std::cout << "+i: set or remove the invite-only for the channel." << std::endl;
-	std::cout << "+t: set or remove the Topic restrictions for the OP." << std::endl;
-	std::cout << "+k: set or remove Channel Password." << std::endl;
-	std::cout << "+l: set or remove the limit of users in one Channel." << std::endl;
-	std::cout << "+o: set or remove the OP privilages to a user." << std::endl;
-	std::cout << "As mentioned before, some of these commands require you to be the OP, you can't use KICK and MODE if you are a user, unless some restrtictions have been softened for you." << std::endl;
+	std::string Help = "You ask and you shall receive, here is the list of commands:\n\n"
+	"TOPIC: 	 <Channel>  <TOPIC>,   the TOPIC command serves the purpose of giving you the possibility of changing the Topic, or see the topic set for the channel\n"
+	"KICK:  	 <Channel>  <user>, 	  the KICK command ejects a user from the Channel.\n"
+	"INVITE:  <NickName> <Channel>, the INVITE command hands you the power of inviting your peers to the Channel.\n"
+	"PRIVMSG: <target>   <message>, It is quite self explanatory, this command is used to send a private message to someone.\n\n"
+	"MODE: this is used to change Channel modes, for this you would need to be the OP, here are the modes available:\n"
+	"		+i: #Channel <+i>						set or remove the invite-only for the channel.\n"
+	"		+t: #Channel <+t>						set or remove the Topic restrictions for the OP.\n"
+	"		+k: #Channel <+K> <PassWord>					set or remove Channel Password.\n"
+	"		+l: #Channel <+l> <int>						set or remove the limit of users in one Channel.\n"
+	"		+o: #Channel <+/-o> <NickName>					set or remove the OP privilages to a user.\n\n"
+	"As mentioned before, some of these commands require you to be the OP, you can't use KICK and MODE if you are a user, unless some restrtictions have been softened for you.";
 }
 
 void	Bot::BotCommands(Users *user){
 	std::cout << "If you would like to know what i can do, here is a list of my capabilities: " << std::endl;
-	std::cout << "User list: (command) gives you all the users that are in the same server as you." << std::endl;
-	std::cout << "Channel list: (command), shows you all the available Channels created by you or other users." << std::endl;
-	std::cout << "EightBall : (command), you summon my capabilities of second sight by advising you wether you should, or should not act upon what you ask me." << std::endl;
-	std::cout << "d20: (command), permits you to test your luck out of 20." << std::endl;
-	std::cout << "polls: (command), this will set a poll in the channel you're in, your peers are able to vote on your ideas." << std::endl;
-	std::cout << "HallofQuotes: (command), not sure if i will do this one." << std::endl;
+	std::cout << "User list: (write UL) gives you all the users that are in the same server as you." << std::endl;
+	std::cout << "Channel list: (write CL), shows you all the available Channels created by you or other users." << std::endl;
+	std::cout << "EightBall : (write Eightball), you summon my capabilities of second sight by advising you wether you should, or should not act upon what you ask me." << std::endl;
+	std::cout << "d20: (write d20), permits you to test your luck out of 20." << std::endl;
 }
 
 void	Bot::UserList(Users *user, std::vector<Users *>	&AllUsers){
@@ -112,4 +110,19 @@ void	Bot::d20(Users *user){
 	std::cout << "you have summoned the d20..." << std::endl;
    std::uniform_int_distribution<> dis(0, 19);
 	std::cout << dis(gen) << std::endl;
+}
+
+void	Bot::executeBot(Command cmd, Users *user){
+	if (cmd.Rest == "d20")
+		d20(user);
+	else if (cmd.Rest == "Eightball")
+		EightBall(user);
+	else if (cmd.Rest == "CL")
+		ChannelList(user, getVectorCh());
+	else if (cmd.Rest == "UL")
+		UserList(user, getVectorU());
+	else if (cmd.Rest == "HELPC")
+		HelpCommands(user);
+	else if (cmd.Rest == "BOTC")
+		BotCommands(user);
 }
