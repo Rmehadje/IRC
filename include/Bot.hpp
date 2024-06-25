@@ -4,7 +4,7 @@
 #include <ctime>
 #include <random>
 
-class Command;
+// class Command;
 class Users;
 class Server;
 

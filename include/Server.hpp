@@ -19,8 +19,10 @@
 #include "Lib.hpp"
 #include "Users.hpp"
 #include "Channel.hpp"
+#include "Bot.hpp"
 
 class Users;
+class Bot;
 class Channel;
 class Server
 {
@@ -36,6 +38,7 @@ class Server
 		std::vector<Users *>	AllUsers;
 		std::vector<Channel *> AllChannels;
 		Server();
+		Bot	*Knight;
 	public:
 		Server(int port, std::string password);
 		~Server();
