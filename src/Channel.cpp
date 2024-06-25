@@ -82,6 +82,20 @@ bool	Channel::getTopicf() const{
 }
 
 
+std::vector<Users *> Channel::getAllUsersInChan(std::vector<Users *> AllUsers)
+{
+	std::vector<Users *> InChan;
+	for (std::vector<Users *>::iterator it = AllUsers.begin();it != AllUsers.end();it++)
+	{
+		for (std::vector<struct C_Users>::iterator t = UserList.begin();t != UserList.end();t++)
+		{
+			if ((*it)->getNickname() == t->nickName)
+				InChan.push_back(*it);
+		}
+	}
+	return InChan;
+}
+
 void	Channel::addUsertoC(Users *user){
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
 		if ((*it).nickName == user->getNickname()){
@@ -124,4 +138,11 @@ bool	Channel::CheckifOP(Users *user){
 		}
 	}
 	return false;
+}
+
+void	Channel::brodcastMsg(std::string msg, std::vector<Users *> users)
+{
+	std::vector<Users *> InChan = getAllUsersInChan(users);
+	for (std::vector<Users *>::iterator it = InChan.begin();it != InChan.end();it++)
+		(*it)->setBuffer(msg);
 }

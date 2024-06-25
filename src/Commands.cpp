@@ -105,10 +105,10 @@ static bool	isInChannel(std::string name, std::vector<struct C_Users> Users)
 	return false;
 }
 
-void c_topic(Command cmd, Users *user, std::vector<Channel*> AllChanels)
+void Server::c_topic(Command cmd, Users *user)
 {
    std::string ChannelName = cmd.params[0];
-   Channel *Channel= CheckChannel(AllChanels, ChannelName);
+   Channel *Channel= CheckChannel(AllChannels, ChannelName);
    if (Channel == NULL)
         return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), ChannelName)));
 	if (!isInChannel(user->getNickname(), Channel->UserList))
@@ -124,7 +124,8 @@ void c_topic(Command cmd, Users *user, std::vector<Channel*> AllChanels)
 		if (!Channel->getTopicf())
 		{
 			Channel->setTopic(cmd.params[1]);
-			return user->setBuffer(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic()));
+			return Channel->brodcastMsg(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic()), AllUsers);
+			// return user->setBuffer(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic()));
 		}
 		else
 		{
@@ -133,7 +134,8 @@ void c_topic(Command cmd, Users *user, std::vector<Channel*> AllChanels)
 			else
 			{
 				Channel->setTopic(cmd.params[1]);
-				return (user->setBuffer(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic())));
+				return Channel->brodcastMsg(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic()), AllUsers);
+				// return (user->setBuffer(RPL_TOPIC(user->getHostname(), Channel->getName(), Channel->getTopic())));
 			}
 		}
 	}

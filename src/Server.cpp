@@ -101,6 +101,16 @@ void	Server::removePfds(struct pollfd sfd)
 	}
 }
 
+Users *Server::getUserByNn(std::string nname)
+{
+	for (std::vector<Users *>::iterator it = this->AllUsers.begin();it != this->AllUsers.end();it++) {
+		if ((*it)->getNickname() == nname)
+			return *it;
+	}
+	return NULL;
+}
+
+
 void  Server::addUser(Users *user)
 {
   this->AllUsers.push_back(user);
@@ -176,7 +186,8 @@ void Server::executeCmd(Command msg, Users *user)
 	else if (msg.CmdName == "QUIT")
 		c_quit(msg ,user);
 	else if (msg.CmdName == "BOT")
-		Knight->executeBot(msg, user, this->AllUsers, this->AllChannels);
+		;
+		// Knight->executeBot(msg, user, this->AllUsers, this->AllChannels);
 	else if (msg.CmdName == "JOIN")
 		std::cout << "GOOD" << std::endl;
     	// c_join(msg.parameters, user);
@@ -190,7 +201,7 @@ void Server::executeCmd(Command msg, Users *user)
 		std::cout << "GOOD" << std::endl;
     	// c_invite(msg.parameters, user);
 	else if (msg.CmdName == "TOPIC")
-		std::cout << "GOOD" << std::endl;
+		c_topic(msg, user);
 		// c_topic(msg.parameters,user, AllChanels)
     	// c_topic(msg.parameters, user);
 	else if (msg.CmdName == "MODE")

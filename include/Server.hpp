@@ -72,6 +72,7 @@ class Server
 		ssize_t getBytesReceived();
 		std::vector<Users *> getVectorU() const;
 		std::vector<Channel *> getVectorCh() const;
+		Users *getUserByNn(std::string nname);
 	
 	//Commands
 		void	AddPtoUser(Command cmd, Users *user);
@@ -81,4 +82,5 @@ class Server
 		void	SendPong(Command cmd, Users *user);
 		void broadcast_quit_message(Users *user, const std::string& message);
 		void c_quit(Command cmd, Users *user);
+		void	c_topic(Command cmd, Users *user);
 };

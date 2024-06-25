@@ -60,10 +60,13 @@ class Channel
 		bool	getLimitf() const;
 		bool	getTopicf() const;
 		bool	getInvitef() const;
+		std::vector<Users *> getAllUsersInChan(std::vector<Users *> Allusers);
 
 
 		void	addUsertoC(Users *user);
+
 		void	deleteUserfromC(Users	*user);
 		void	fliptoOperator(Users	*user);
 		bool	CheckifOP(Users *user);
+		void	brodcastMsg(std::string msg, std::vector<Users *> users);
 };
