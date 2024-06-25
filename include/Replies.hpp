@@ -54,8 +54,8 @@
 #define RPL_BOT_BC(src, msg)								":" + src + " " + msg + "\r\n"
 #define RPL_BOT_UL(help)									": " + help + " \r\n"
 #define RPL_BOT_CL(help)									": " + help + " \r\n"
-#define RPL_BOT_EB(help)									": " + help + "\r\n"
-#define RPL_BOT_()
+#define RPL_BOT_EB(help)									": " + help + " \r\n"
+#define RPL_BOT_D20(help)									": " + help + " \r\n"
 #define RPL_BOT_()
 #define RPL_BOT_()
 #define RPL_BOT_()
