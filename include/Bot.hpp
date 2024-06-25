@@ -29,6 +29,5 @@ class Bot{
 		void	ChannelList(Users *user, std::vector<Channel *> &AllChannels);
 		void	EightBall(Users *user);
 		void	d20(Users *user);
-		void	Greetings(Users *user, Channel *channel);
 		void	executeBot(Command cmd, Users *user,std::vector<Users *>users, std::vector<Channel *>Channels);
 };

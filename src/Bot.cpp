@@ -28,11 +28,6 @@ std::string	Bot::getBotName() const{
 	return (this->name);
 }
 
-// void	Bot::Greetings(Users *user, Channel *channel)
-// {
-// 	std::cout << "Good folks, allow me to introduce " << user->getNickname() << " to our gathering here in "<< channel->getName() << "let us ensure they are made to feel like home within our noble walls." << std::endl; 
-// }
-
 void	Bot::HelpCommands(Users *user){
 	std::string Help = "You ask and you shall receive, here is the list of commands:\n\n"
 	"TOPIC:   <Channel> <TOPIC>,                       The TOPIC command serves the purpose of giving you the possibility of changing the Topic, or see the topic set for the channel\n"
