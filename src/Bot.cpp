@@ -41,7 +41,7 @@ void	Bot::HelpCommands(Users *user){
 	"- +l: #Channel <+l> <int>                              Set or remove the limit of users in one Channel.\n"
 	"- +o: #Channel <+/-o> <NickName>            Set or remove the OP privilages to a user.\n\n"
 	"- As mentioned before, some of these commands require you to be the OP, you can't use KICK and MODE if you are a user, unless some restrtictions have been softened for you.";
-	user->setBuffer(RPL_BOT_HC(user->getHostname(), Help));
+	user->setBuffer(RPL_BOT_HC(Help));
 }
 
 void	Bot::BotCommands(Users *user){
@@ -139,4 +139,6 @@ void	Bot::executeBot(Command cmd, Users *user, std::vector<Users *>users, std::v
 		ChannelList(user, Channels);
 	else if (cmd.Rest == "BOTC")
 		BotCommands(user);
+	else
+		user->setBuffer(ERR_UNKNOWNCOMMAND(user->getHostname(), cmd.Rest, user->getNickname()));
 }

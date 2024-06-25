@@ -28,6 +28,7 @@
 #define ERR_USERDONTMATCH(src)								":" + src + " 502 :Cant change mode for other users\r\n"
 
 //replies
+#define RPL_PRIVMSG(src_nick, src_usr, src_host, dis_nick, msg)			":" + src_nick + "!" + src_usr + "@" + src_host + " PRIVMSG " + dis_nick + " :" + msg + "\r\n"
 #define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"
 #define RPL_PASS(src)											":" + src + " :Password is correct, you may continue the registration\r\n"
 #define RPL_USER(src, user)									":" + src + " :Your username is now set to: " + user + "\r\n"
@@ -49,8 +50,8 @@
 //Bot replies
 
 
-#define BOTRPL_()
-#define RPL_BOT_HC(src, msg)								":" + src + " " + msg + "\r\n"
+#define RPL_BOT()
+#define RPL_BOT_HC(msg)										"- The knight:  " + msg + "\r\n"
 #define RPL_BOT_BC(src, msg)								":" + src + " " + msg + "\r\n"
 #define RPL_BOT_UL(help)									": " + help + " \r\n"
 #define RPL_BOT_CL(help)									": " + help + " \r\n"
