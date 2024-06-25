@@ -182,8 +182,8 @@ int	CheckPriv(Command &cmd, Users *user)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
-	std::vector<std::string> tmp = PrivSplit(cmd.Rest);
-	if (tmp.size() != 2)
+	cmd.params = PrivSplit(cmd.Rest);
+	if (cmd.params.size() != 2)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	return 0;
 }

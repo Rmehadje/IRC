@@ -81,6 +81,15 @@ std::vector<Channel *> Server::getVectorCh() const{
 	return this->AllChannels;
 }
 
+Channel *Server::getChannel(const std::string cname) {
+	for (std::vector<Channel *>::iterator it = this->AllChannels.begin();
+			it != this->AllChannels.end(); ++it) {
+		if ((*it)->getName() == cname)
+			return *it;
+	}
+	return NULL;
+}
+
 Users *Server::getUserByFd(int fd) {
 	for (std::vector<Users *>::iterator it = this->AllUsers.begin(); 
 			it != this->AllUsers.end(); ++it) {
@@ -208,8 +217,7 @@ void Server::executeCmd(Command msg, Users *user)
 		// c_mode(msg.parameters, user);
 		// c_mode(msg.parameters, AllUsers, AllChannels)
 	else if (msg.CmdName == "PRIVMSG")
-		std::cout << "GOOD" << std::endl;
-		// c_privmsg(msg.parameters, user);
+		c_privmsg(msg, user);
 		// c_privmsg(cmd, user, AllUsers, AllChannels)
 		// c_quit(msg.parameters, user);
 }

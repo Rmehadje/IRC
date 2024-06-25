@@ -73,6 +73,7 @@ class Server
 		std::vector<Users *> getVectorU() const;
 		std::vector<Channel *> getVectorCh() const;
 		Users *getUserByNn(std::string nname);
+		Channel *getChannel(const std::string cname);
 	
 	//Commands
 		void	AddPtoUser(Command cmd, Users *user);
@@ -83,4 +84,5 @@ class Server
 		void broadcast_quit_message(Users *user, const std::string& message);
 		void c_quit(Command cmd, Users *user);
 		void	c_topic(Command cmd, Users *user);
+		void	c_privmsg(Command cmd, Users *user);
 };

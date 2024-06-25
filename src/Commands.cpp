@@ -140,3 +140,71 @@ void Server::c_topic(Command cmd, Users *user)
 		}
 	}
 }
+
+
+std::vector<std::string> getTargets(std::string targets)
+{
+	std::vector<std::string> res;
+	std::string tmp;
+	if (targets.find(',') == std::string::npos)
+		return (res.push_back(RSpaces(targets)), res);
+	int i = 0;
+	while (targets[i])
+	{
+		int j = 0;
+		if (targets.find(',') != std::string::npos)
+		{
+			i = targets.find(',');
+			tmp = targets.substr(j, i);
+			if (!tmp.empty())
+				res.push_back(tmp);
+			targets = targets.substr(i + 1, targets.length() - i + 1);
+			targets = RSpaces(targets);
+		}
+		else
+		{
+			targets = RSpaces(targets);
+			res.push_back(targets);
+			break ;
+		}
+	}
+	return res;
+}
+
+void	Server::c_privmsg(Command cmd, Users *user)
+{
+	std::vector<std::string> targets = getTargets(cmd.params[0]);
+	if (targets.size() == 0)
+		return ;
+	for (std::vector<std::string>::iterator it = targets.begin();it != targets.end();it++)
+	{
+		if (OnlySpaces(*it))
+		{
+			user->setBuffer(ERR_NOSUCHNICK(user->getHostname(), user->getNickname(), *it));
+			continue;
+		}
+		if ((*it)[0] == '#')
+		{
+			if (getChannel(*it) == NULL)
+			{
+				user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), *it));
+				continue;
+			}
+			if (!isInChannel(user->getNickname(), getChannel(*it)->UserList))
+			{
+				user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), *it));
+				continue;
+			}
+			getChannel(*it)->brodcastMsg(cmd.params[1], AllUsers);
+		}
+		else
+		{
+			if (!getUserByNn(*it))
+			{
+				user->setBuffer(ERR_NOSUCHNICK(user->getHostname(), user->getNickname(), *it));
+				continue;
+			}
+			getUserByNn(*it)->setBuffer(RPL_PRIVMSG(user->getNickname(), user->getUsername(), user->getHostname(), *it, cmd.params[1]));
+		}
+	}
+}

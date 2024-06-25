@@ -28,8 +28,7 @@
 #define ERR_USERDONTMATCH(src)								":" + src + " 502 :Cant change mode for other users\r\n"
 
 //replies
-#define RPL_PRIVMSG(src_nick, src_usr, src_host, dis_nick, msg)			":" + src_nick + "!" + src_usr + "@" + src_host + " PRIVMSG " + dis_nick + " :" + msg + "\r\n"
-#define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"
+#define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"					
 #define RPL_PASS(src)											":" + src + " :Password is correct, you may continue the registration\r\n"
 #define RPL_USER(src, user)									":" + src + " :Your username is now set to: " + user + "\r\n"
 #define RPL_NOTOPERATORANYMORE(src, chan)					":" + src + " :You are no longer an IRC operator in " + chan + "\r\n"
@@ -42,25 +41,16 @@
 #define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + "Welcome to the IRC_server network " + nick +  "." + user + "@" + host + "\r\n"
 #define RPL_UMODEIS(src, nick, mode)						":" + src + " 221 " + nick + " " + mode + "\r\n"
 #define RPL_CHANNELMODEIS(src, chan, modest, modea)	":" + src + " 324 " + chan + " " + modest + " " + modea + "\r\n"
-#define RPL_NOTOPIC(src, chan)								":" + src + " 331 " + chan + " :No topic is set\r\n"
-#define RPL_TOPIC(src, chan, topic)							":" + src + " 332 " + chan + " " + topic + "\r\n"
 
 
 
 //Bot replies
 
 
-#define RPL_BOT()
-#define RPL_BOT_HC(msg)										"- The knight:  " + msg + "\r\n"
+#define BOTRPL_()
+#define RPL_BOT_HC(src, msg)								":" + src + " " + msg + "\r\n"
 #define RPL_BOT_BC(src, msg)								":" + src + " " + msg + "\r\n"
-#define RPL_BOT_UL(help)									": " + help + " \r\n"
-#define RPL_BOT_CL(help)									": " + help + " \r\n"
-#define RPL_BOT_EB(help)									": " + help + " \r\n"
-#define RPL_BOT_D20(help)									": " + help + " \r\n"
-#define RPL_BOT_WELCOME(nick)								nick + ": Welcome to the server! my name is The Knight, if you need any help please type <BOT BOTC> or <BOT HELPC>, I will do my best to assist you\r\n"
-#define RPL_BOT_CWELCOME(nick, chan)					": Good folks, allow me to introduce " + nick + " to our gathering here in " + chan + ", let us ensure they are made to feel like home within our noble walls\r\n"
-#define RPL_BOT_()
-#define RPL_BOT_()
+#define RPL_()
 
 
 #define ERR_()
