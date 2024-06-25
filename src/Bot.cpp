@@ -60,54 +60,58 @@ void	Bot::BotCommands(Users *user){
 
 void	Bot::UserList(Users *user, std::vector<Users *>	&AllUsers){
 	std::string Help = "here is the list for every user in the server:";
-	std::string userlist;
 	for (std::vector <Users *>::iterator it = AllUsers.begin(); it != AllUsers.end(); it++){
-		user->setBuffer(RPL_BOT_UL(Help, (*it)->getHostname(), (*it)->getNickname()));
+		Help += (*it)->getNickname();
+		Help += " / ";
 	}
+		user->setBuffer(RPL_BOT_UL(Help));
 }
 
 void	Bot::ChannelList(Users *user, std::vector<Channel *> &AllChannels){
+	std::string everychannel;
 	if (AllChannels.empty()){
-		std::string Help = "There are no Channels available currently, feel free to create one!";
+		everychannel = "There are no Channels available currently, feel free to create one!";
 	}
 	else{
-		std::cout << "here is the list for every every channel in the server:" << std::endl;
+		everychannel = "here is the list for every every channel in the server: ";
 		for (std::vector<Channel *>::iterator it = AllChannels.begin(); it != AllChannels.end(); it++){
-			user->setBuffer(RPL_BOT_CL((*it)=>gethostname(), (*it)->getName()));
+			everychannel += (*it)->getName();
+			everychannel += " / ";
 	}
 	}
+	user->setBuffer(RPL_BOT_CL(everychannel));
 }
 
-// void	Bot::EightBall(Users *user){
-// 	std::vector<std::string> responses = {
-// 		"it appears so.",
-// 		"you'll learn from this.",
-// 		"it may not go as planned.",
-// 		"think further about it.",
-// 		"i wouldn't know.",
-// 		"i shouldn't say.",
-// 		"it is favorable.",
-// 		"perhaps another time.",
-// 		"guarenteed.",
-// 		"the time is right.",
-// 		"don't let that distract you.",
-// 		"you have other things to worry about.",
-// 		"very well.",
-// 		"there is a chance.",
-// 		"it could be done.",
-// 		"I would not do that.",
-// 		"doubtful.",
-// 		"no doubt in me.",
-// 		"maybe in another timeline.",
-// 		"It would mean farewell.",
-// 		"it would bring novelty.",
-// 		"Focus, and ask again when you know more.",};
-// 		std::random_device rd;
-//       std::mt19937 gen(rd());
-//       std::uniform_int_distribution<> dis(0, 21);
-// 		std::vector<std::string>::iterator it = responses.begin();
-// 		std::advance(it, dis(gen));
-// }
+void	Bot::EightBall(Users *user){
+	std::vector<std::string> responses = {
+		"it appears so.",
+		"you'll learn from this.",
+		"it may not go as planned.",
+		"think further about it.",
+		"i wouldn't know.",
+		"i shouldn't say.",
+		"it is favorable.",
+		"perhaps another time.",
+		"guarenteed.",
+		"the time is right.",
+		"don't let that distract you.",
+		"you have other things to worry about.",
+		"very well.",
+		"there is a chance.",
+		"it could be done.",
+		"I would not do that.",
+		"doubtful.",
+		"no doubt in me.",
+		"maybe in another timeline.",
+		"It would mean farewell.",
+		"it would bring novelty.",
+		"Focus, and ask again when you know more.",};
+		std::random_device rd;
+      std::mt19937 gen(rd());
+      std::uniform_int_distribution<> dis(0, 21);
+		std::vector<std::string>::iterator it = responses.begin();
+		std::advance(it, dis(gen));
+}
 
 // void	Bot::d20(Users *user){
 // 	std::random_device rd;
@@ -117,17 +121,17 @@ void	Bot::ChannelList(Users *user, std::vector<Channel *> &AllChannels){
 // 	std::cout << dis(gen) << std::endl;
 // }
 
-void	Bot::executeBot(Command cmd, Users *user){
+void	Bot::executeBot(Command cmd, Users *user, std::vector<Users *>users, std::vector<Channel *>Channels){
 // 	if (cmd.Rest == "d20")
 // 		d20(user);
 // 	else if (cmd.Rest == "Eightball")
 // 		EightBall(user);
-// 	else if (cmd.Rest == "CL")
-// 		ChannelList(user, getVectorCh());
 	if (cmd.Rest == "HELPC")
 		HelpCommands(user);
 	else if (cmd.Rest == "UL")
-		UserList(user, getVectorU());
+		UserList(user, users);
+	else if (cmd.Rest == "CL")
+		ChannelList(user, Channels);
 	else if (cmd.Rest == "BOTC")
 		BotCommands(user);
 }

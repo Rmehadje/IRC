@@ -65,5 +65,5 @@ class Channel
 		void	addUsertoC(Users *user);
 		void	deleteUserfromC(Users	*user);
 		void	fliptoOperator(Users	*user);
-		bool	CheckifOP(Users *user, Channel *channel);
+		bool	CheckifOP(Users *user);
 };

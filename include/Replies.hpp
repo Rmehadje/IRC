@@ -52,8 +52,8 @@
 #define BOTRPL_()
 #define RPL_BOT_HC(src, msg)								":" + src + " " + msg + "\r\n"
 #define RPL_BOT_BC(src, msg)								":" + src + " " + msg + "\r\n"
-#define RPL_BOT_UL(help, src, msg)						":" + help + " " + src + " " + msg + "\r\n"
-#define RPL_BOT_CL(src, msg)								":" + src + " " + msg + "\r\n"
+#define RPL_BOT_UL(help)									": " + help + " \r\n"
+#define RPL_BOT_CL(help)									": " + help + " \r\n"
 #define RPL_()
 
 

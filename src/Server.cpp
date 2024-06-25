@@ -176,7 +176,7 @@ void Server::executeCmd(Command msg, Users *user)
 	else if (msg.CmdName == "QUIT")
 		c_quit(msg ,user);
 	else if (msg.CmdName == "BOT")
-		Knight->executeBot(msg, user);
+		Knight->executeBot(msg, user, this->AllUsers, this->AllChannels);
 	else if (msg.CmdName == "JOIN")
 		std::cout << "GOOD" << std::endl;
     	// c_join(msg.parameters, user);

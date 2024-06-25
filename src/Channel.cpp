@@ -115,7 +115,7 @@ void	Channel::fliptoOperator(Users	*user){
 	}
 }
 
-bool	Channel::CheckifOP(Users *user, Channel *channel){
+bool	Channel::CheckifOP(Users *user){
 	std::string N = user->getNickname();
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
 		if ((*it).nickName == N){

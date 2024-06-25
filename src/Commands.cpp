@@ -109,7 +109,7 @@ void c_topic(Command cmd, Users *user, std::vector<Channel*> AllChanels)
 {
    std::string ChannelName = cmd.params[0];
    Channel *Channel= CheckChannel(AllChanels, ChannelName);
-   if (Channel = NULL)
+   if (Channel == NULL)
         return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), ChannelName)));
 	if (!isInChannel(user->getNickname(), Channel->UserList))
 		return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), Channel->getName())));
@@ -128,7 +128,7 @@ void c_topic(Command cmd, Users *user, std::vector<Channel*> AllChanels)
 		}
 		else
 		{
-			if (!Channel->CheckifOP(user, Channel))
+			if (!Channel->CheckifOP(user))
 				return (user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), Channel->getName())));
 			else
 			{
