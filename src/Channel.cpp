@@ -96,8 +96,23 @@ bool	Channel::getPasswordf() const{
 	return this->Passf;
 }
 
-int	Channel::getNumberofUsers(std::vector<struct C_Users>	UserList){
+int	Channel::getNumberofUsers(){
 	return UserList.size();
+}
+
+std::string Channel::getAllUsersInChanList(std::vector<Users *> AllUsers)
+{
+	std::string list;
+	for (std::vector<Users *>::iterator it = AllUsers.begin();it != AllUsers.end();it++)
+	{
+		for (std::vector<struct C_Users>::iterator t = UserList.begin();t != UserList.end();t++)
+		{
+			if ((*it)->getNickname() == t->nickName)
+				list += (*it)->getNickname();
+				list += " / ";
+		}
+	}
+	return list;
 }
 
 std::vector<Users *> Channel::getAllUsersInChan(std::vector<Users *> AllUsers)

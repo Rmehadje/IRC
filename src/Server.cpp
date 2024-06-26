@@ -60,6 +60,11 @@ void	Server::setBytesReceived(int BytesReceived)
 	this->BytesReceived = BytesReceived;
 }
 
+void	Server::AddChanToServ(Channel *channel)
+{
+	AllChannels.push_back(channel);
+}
+
 ssize_t Server::getBytesReceived()
 {
 	return this->BytesReceived;
@@ -207,7 +212,8 @@ void Server::executeCmd(Command msg, Users *user)
 		std::cout << "GOOD" << std::endl;
     	// c_invite(msg.parameters, user);
 	else if (msg.CmdName == "TOPIC")
-		c_topic(msg, user);
+			;
+		// c_topic(msg, user);
 		// c_topic(msg.parameters,user, AllChanels)
     	// c_topic(msg.parameters, user);
 	else if (msg.CmdName == "MODE")

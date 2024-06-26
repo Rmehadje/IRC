@@ -66,6 +66,8 @@ class Channel
 		bool	getTopicf() const;
 		bool	getInvitef() const;
 		std::vector<Users *> getAllUsersInChan(std::vector<Users *> Allusers);
+		int	getNumberofUsers();
+		std::string getAllUsersInChanList(std::vector<Users *> AllUsers);
 
 
 		void	addUsertoC(Users *user);
@@ -74,5 +76,4 @@ class Channel
 		void	fliptoOperator(Users	*user);
 		bool	CheckifOP(Users *user);
 		void	brodcastMsg(std::string msg, std::vector<Users *> users);
-		int	getNumberofUsers(std::vector<struct C_Users>	UserList);
 };

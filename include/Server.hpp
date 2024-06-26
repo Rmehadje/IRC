@@ -56,6 +56,7 @@ class Server
 		void	removeUserFromServer(Users *user);
 		void	handleMsg(Users *user);
 		void	executeCmd(Command msg, Users *user);
+		void	AddChanToServ(Channel *channel);
 	
 	//Setters
 		void	setHost(std::string name);
@@ -86,4 +87,5 @@ class Server
 		void	c_topic(Command cmd, Users *user);
 		void	c_privmsg(Command cmd, Users *user);
 		void	join(Command, Users *user);
+
 };

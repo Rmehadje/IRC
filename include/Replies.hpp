@@ -28,6 +28,8 @@
 #define ERR_USERDONTMATCH(src)								":" + src + " 502 :Cant change mode for other users\r\n"
 
 //replies
+#define RPL_NAMERPLY(host, nick, chan, list)				":" + host + " 353 " + nick + " = " + chan + " :" + list + "\r\n"
+#define RPL_ENDOFNAMES(host, nick, chan)              ":" + host + " 366 " + nick + " " + chan + " :End of /NAMES list\r\n"
 #define RPL_PRIVMSG(src_nick, src_usr, src_host, dis_nick, msg)			":" + src_nick + "!" + src_usr + "@" + src_host + " PRIVMSG " + dis_nick + " :" + msg + "\r\n"
 #define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"
 #define RPL_PASS(src)											":" + src + " :Password is correct, you may continue the registration\r\n"
@@ -42,9 +44,10 @@
 #define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + nick + " :Welcome to the IRC_server network " + nick + "!" + user + "@" + host + "\r\n"
 #define RPL_UMODEIS(src, nick, mode)						":" + src + " 221 " + nick + " " + mode + "\r\n"
 #define RPL_CHANNELMODEIS(src, chan, modest, modea)	":" + src + " 324 " + chan + " " + modest + " " + modea + "\r\n"
-#define RPL_NOTOPIC(src, chan)								":" + src + " 331 " + chan + " :No topic is set\r\n"
-#define RPL_TOPIC(src, chan, topic)							":" + src + " 332 " + chan + " " + topic + "\r\n"
+#define RPL_NOTOPIC(src,nick, chan)								":" + src + " 331 " + nick + " " + chan + " :No topic is set\r\n"
+#define RPL_TOPIC(host, nick, chan, topic)				":" + host + " 332 " + nick + " " + chan + " :" + topic + "\r\n"
 #define RPL_NICKCHANGE(oldnick, user, host, newnick)  ":" + oldnick + "!" + user + "@" + host + " NICK :" + newnick + "\r\n"
+#define RPL_JOIN(nick, user, user_host, chan)							":" + nick + "!" + user + "@" + user_host + " JOIN :" + chan + "\r\n"
 
 
 //Bot replies
