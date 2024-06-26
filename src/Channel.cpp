@@ -102,15 +102,16 @@ int	Channel::getNumberofUsers(){
 
 std::string Channel::getAllUsersInChanList(std::vector<Users *> AllUsers)
 {
-	std::string list;
+	std::string list = "";
 	for (std::vector<Users *>::iterator it = AllUsers.begin();it != AllUsers.end();it++)
 	{
 		for (std::vector<struct C_Users>::iterator t = UserList.begin();t != UserList.end();t++)
 		{
-			if ((*it)->getNickname() == t->nickName)
+			if ((*it)->getNickname() == t->user->getNickname())
 			{
-				list += (*it)->getNickname();
-				list += " / ";
+						list += " @" + (*t).user->getNickname();
+						if (t + 1 != UserList.end())
+							list += " ";
 			}
 		}
 	}
@@ -124,7 +125,7 @@ std::vector<Users *> Channel::getAllUsersInChan(std::vector<Users *> AllUsers)
 	{
 		for (std::vector<struct C_Users>::iterator t = UserList.begin();t != UserList.end();t++)
 		{
-			if ((*it)->getNickname() == t->nickName)
+			if ((*it)->getNickname() == t->user->getNickname())
 				InChan.push_back(*it);
 		}
 	}
@@ -133,29 +134,39 @@ std::vector<Users *> Channel::getAllUsersInChan(std::vector<Users *> AllUsers)
 
 void	Channel::addUsertoC(Users *user){
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
-		if ((*it).nickName == user->getNickname()){
+		if ((*it).user->getNickname() == user->getNickname()){
 			return ;
 		}
 	}
 	C_Users tmp;
-	tmp.nickName = user->getNickname();
+	tmp.user = user;
 	tmp.flag = 0;
 	this->UserList.push_back(tmp);
 }
 
 void	Channel::deleteUserfromC(Users *goner){
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
-		if ((*it).nickName == goner->getNickname()){
+		if ((*it).user->getNickname()== goner->getNickname()){
 			this->UserList.erase(it);
 			return ;
 		}
 	}
 }
 
+bool	Channel::UserIsInC(Users *user)
+{
+	for (std::vector<struct C_Users>::iterator it = UserList.begin();it != UserList.end();it++)
+	{
+		if (user == (*it).user)
+			return true;
+	}
+	return false;
+}
+
 void	Channel::fliptoOperator(Users	*user){
 	std::string N = user->getNickname();
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
-		if ((*it).nickName == N){
+		if ((*it).user->getNickname() == N){
 			if ((*it).flag == 1)
 				(*it).flag = 0;
 			else
@@ -167,7 +178,7 @@ void	Channel::fliptoOperator(Users	*user){
 bool	Channel::CheckifOP(Users *user){
 	std::string N = user->getNickname();
 	for (std::vector<struct C_Users>::iterator it = this->UserList.begin(); it != this->UserList.end(); it++){
-		if ((*it).nickName == N){
+		if ((*it).user->getNickname() == N){
 			if ((*it).flag == 1)
 				return true;
 		}
@@ -180,4 +191,15 @@ void	Channel::brodcastMsg(std::string msg, std::vector<Users *> users)
 	std::vector<Users *> InChan = getAllUsersInChan(users);
 	for (std::vector<Users *>::iterator it = InChan.begin();it != InChan.end();it++)
 		(*it)->setBuffer(msg);
+}
+
+void	Channel::brodcastMsgPriv(std::string msg, std::vector<Users *> users, Users *user)
+{
+	std::vector<Users *> InChan = getAllUsersInChan(users);
+	for (std::vector<Users *>::iterator it = InChan.begin();it != InChan.end();it++)
+	{
+		if ((*it) == user)
+			continue;
+		(*it)->setBuffer(msg);
+	}
 }

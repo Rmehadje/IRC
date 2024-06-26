@@ -21,7 +21,7 @@
 class Users;
 
 struct	C_Users{
-	std::string	nickName;
+	Users *user;
 	int	flag;
 };
 
@@ -71,9 +71,10 @@ class Channel
 
 
 		void	addUsertoC(Users *user);
-
+		bool	UserIsInC(Users *user);
 		void	deleteUserfromC(Users	*user);
 		void	fliptoOperator(Users	*user);
 		bool	CheckifOP(Users *user);
 		void	brodcastMsg(std::string msg, std::vector<Users *> users);
+		void	brodcastMsgPriv(std::string msg, std::vector<Users *> users, Users *user);
 };

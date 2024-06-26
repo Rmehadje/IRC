@@ -109,15 +109,15 @@ void	Server::SendPong(Command msg, Users *user)
 //     return NULL;
 // }
 
-static bool	isInChannel(std::string name, std::vector<struct C_Users> Users)
-{
-	for(std::vector<struct C_Users>::iterator it = Users.begin();it != Users.end();it++)
-	{
-		if (name == (*it).nickName)
-			return true;
-	}
-	return false;
-}
+// static bool	isInChannel(std::string name, std::vector<struct C_Users> Users)
+// {
+// 	for(std::vector<struct C_Users>::iterator it = Users.begin();it != Users.end();it++)
+// 	{
+// 		if (name == (*it).nickName)
+// 			return true;
+// 	}
+// 	return false;
+// }
 
 // void Server::c_topic(Command cmd, Users *user)
 // {
@@ -204,12 +204,12 @@ void	Server::c_privmsg(Command cmd, Users *user)
 				user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), *it));
 				continue;
 			}
-			if (!isInChannel(user->getNickname(), getChannel(*it)->UserList))
+			if (!getChannel(*it)->UserIsInC(user))
 			{
 				user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), *it));
 				continue;
 			}
-			getChannel(*it)->brodcastMsg(cmd.params[1], AllUsers);
+			getChannel(*it)->brodcastMsgPriv(RPL_PRIVMSG(user->getSrc(), *it, cmd.params[1]), AllUsers, user);
 		}
 		else
 		{
@@ -218,7 +218,7 @@ void	Server::c_privmsg(Command cmd, Users *user)
 				user->setBuffer(ERR_NOSUCHNICK(user->getHostname(), user->getNickname(), *it));
 				continue;
 			}
-			getUserByNn(*it)->setBuffer(RPL_PRIVMSG(user->getNickname(), user->getUsername(), user->getHostname(), *it, cmd.params[1]));
+			getUserByNn(*it)->setBuffer(RPL_PRIVMSG(user->getSrc(), *it, cmd.params[1]));
 		}
 	}
 }
@@ -246,6 +246,11 @@ void	Server::join(Command cmd, Users *user)
 			user->setBuffer(RPL_JOIN(user->getNickname(), user->getUsername(), user->getHostname(), chan->getName()));
 		}
 		else {
+			if (chan->UserIsInC(user))
+			{
+				user->setBuffer(ERR_USERONCHANNEL(this->getHost(), user->getNickname(), user->getNickname(), chan->getName()));
+				continue;
+			}
 			if (chan->getLimitf())
 			{
 				if (chan->getLimit() >= chan->getNumberofUsers())
@@ -267,7 +272,7 @@ void	Server::join(Command cmd, Users *user)
 					if (chan->getPassword() == key) {
 						chan->addUsertoC(user);
 						chan->brodcastMsg(RPL_JOIN(user->getNickname(), user->getUsername(), user->getHostname(), chan->getName()), AllUsers);
-						chan->brodcastMsg(RPL_BOT_CWELCOME(user->getNickname(), chan->getName()), AllUsers);
+						// chan->brodcastMsg(RPL_BOT_CWELCOME(user->getNickname(), chan->getName()), AllUsers);
 						if (chan->getTopic().empty())
 							user->setBuffer(RPL_NOTOPIC(this->getHost(), user->getNickname(), chan->getName()));
 						else
@@ -284,14 +289,13 @@ void	Server::join(Command cmd, Users *user)
 			else {
 				chan->addUsertoC(user);
 				chan->brodcastMsg(RPL_JOIN(user->getNickname(), user->getUsername(), user->getHostname(), chan->getName()), AllUsers);
-				chan->brodcastMsg(RPL_BOT_CWELCOME(user->getNickname(), chan->getName()), AllUsers);
+				// chan->brodcastMsg(RPL_BOT_CWELCOME(user->getNickname(), chan->getName()), AllUsers);
 				if (chan->getTopic().empty())
 					user->setBuffer(RPL_NOTOPIC(this->getHost(), user->getNickname(), chan->getName()));
 				else
 					user->setBuffer(RPL_TOPIC(this->getHost(), user->getNickname(), chan->getName(), chan->getTopic()));
 				user->setBuffer(RPL_NAMERPLY(this->getHost(), user->getNickname(), chan->getName(), chan->getAllUsersInChanList(AllUsers)));
 				user->setBuffer(RPL_ENDOFNAMES(this->getHost(), user->getNickname(), chan->getName()));
-
 			}
 
 			}

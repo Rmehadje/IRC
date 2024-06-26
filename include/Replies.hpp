@@ -13,7 +13,7 @@
 #define ERR_NICKNAMEINUSE(src, nick)						":" + src + " 433 " + nick + " :Nickname is already in use\r\n"
 #define ERR_USERNOTINCHANNEL(src, nick, chan)			":" + src + " 441 " + nick + " " + chan + " :The user does not belong to this channel\r\n" 
 #define ERR_NOTONCHANNEL(src, chan)							":" + src + " 442 " + chan + " :You're not on that channel\r\n"
-#define ERR_USERONCHANNEL(src, nick, chan)				":" + src + " 443 " + nick + " " + chan + " :is already on channel\r\n"
+#define ERR_USERONCHANNEL(src, nick, tnick, chan)		":" + src + " 443 " + nick + " " + tnick + " " + chan + " :is already on channel\r\n"
 #define ERR_NOTREGISTERED(source)							":" + source + " 451 :You have not registered\r\n"
 #define ERR_NEEDMOREPARAMS(src, cmd)						":" + src + " 461 " + cmd + " :Not enough parameters\r\n"
 #define ERR_ALREADYREGISTERED(src)							":" + src + " 462 :You may not reregister\r\n"
@@ -30,7 +30,7 @@
 //replies
 #define RPL_NAMERPLY(host, nick, chan, list)				":" + host + " 353 " + nick + " = " + chan + " :" + list + "\r\n"
 #define RPL_ENDOFNAMES(host, nick, chan)              ":" + host + " 366 " + nick + " " + chan + " :End of /NAMES list\r\n"
-#define RPL_PRIVMSG(src_nick, src_usr, src_host, dis_nick, msg)			":" + src_nick + "!" + src_usr + "@" + src_host + " PRIVMSG " + dis_nick + " :" + msg + "\r\n"
+#define RPL_PRIVMSG(src, dis_nick, msg)					":" + src + " PRIVMSG " + dis_nick + " :" + msg + "\r\n"
 #define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"
 #define RPL_PASS(src)											":" + src + " :Password is correct, you may continue the registration\r\n"
 #define RPL_USER(src, user)									":" + src + " :Your username is now set to: " + user + "\r\n"

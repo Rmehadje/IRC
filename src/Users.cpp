@@ -60,6 +60,12 @@ int	Users::getStatus() const{
 	return (stat);
 }
 
+std::string Users::getSrc()
+{
+	std::string src = this->getNickname() + "!" + this->getUsername() + "@" + this->getHostname();
+	return (src);
+}
+
 void	Users::setCmd(std::string msg)
 {
 	this->cmd += msg;

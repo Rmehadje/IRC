@@ -33,6 +33,7 @@ class	Users
 		int			getStatus() const;
 		std::string		getBuffer() const;
 		std::string		getCmd() const;
+		std::string 	getSrc();
 		
 		void setNickname(std::string nickname);
 		void setUsername(std::string username);
