@@ -35,7 +35,7 @@
 #define RPL_NOTOPERATORANYMORE(src, chan)					":" + src + " :You are no longer an IRC operator in " + chan + "\r\n"
 #define RPL_BECOMINGOPERATOR(src, chan)					":" + src + " :You are now an IRC operator in " + chan + "\r\n"
 #define RPL_CAP(src)												":" + src + " CAP * LS : you may enter PASS now...\r\n"
-#define RPL_NICKCHANGE(src, nick)							":" + src + " Your new nickname has been set to " + nick + "\r\n"
+// #define RPL_NICKCHANGE(src, nick)							":" + src + " Your new nickname has been set to " + nick + "\r\n"
 #define RPL_QUIT(src, nick, reply)							":" + src + " " + nick + " " + reply + "\r\n"
 #define RPL_KICK(src, chan, nick, user)					":" + src + " " + user + " has kicked " + nick + " from " + chan + "\r\n"
 #define RPL_PART(src, chan, nick)							":" + src + " " + nick + " has parted from " + chan + "\r\n"
@@ -44,7 +44,7 @@
 #define RPL_CHANNELMODEIS(src, chan, modest, modea)	":" + src + " 324 " + chan + " " + modest + " " + modea + "\r\n"
 #define RPL_NOTOPIC(src, chan)								":" + src + " 331 " + chan + " :No topic is set\r\n"
 #define RPL_TOPIC(src, chan, topic)							":" + src + " 332 " + chan + " " + topic + "\r\n"
-
+#define RPL_NICKCHANGE(oldnick, user, host, newnick)  ":" + oldnick + "!" + user + "@" + host + " NICK :" + newnick + "\r\n"
 
 
 //Bot replies

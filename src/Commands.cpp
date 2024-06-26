@@ -24,7 +24,19 @@ void	Server::AddPtoUser(Command cmd, Users *user){
 void	Server::AddNicktoUser(Command cmd, Users *user){
 	if (user->getStatus() < 2)
 		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
-	if (user->getStatus() >= 2)
+	if (user->getStatus() == 4 && user->getNickname() != "*")
+	{
+		std::string Nick = cmd.Rest;
+		for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end(); it++){
+				if ((*it)->getNickname() == Nick){
+					user->setBuffer(ERR_NICKNAMEINUSE(user->getHostname(), Nick));
+					return ;
+				}
+		}
+		user->setBuffer(RPL_NICKCHANGE(user->getNickname(), user->getUsername(), user->getHostname(), cmd.Rest));
+		return user->setNickname(cmd.Rest);
+	}
+	if (user->getStatus() >= 2 && user->getStatus() < 4)
 	{
 		std::string Nick = cmd.Rest;
 		for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end(); it++){
@@ -59,6 +71,8 @@ void	Server::CapInit(Command cmd, Users *user)
 
 void	Server::RegisterUser(Command cmd, Users *user)
 {
+	if (user->getStatus() == 4 && user->getUsername() != "*")
+		return user->setBuffer(ERR_ALREADYREGISTERED(this->getHost()));
 	if (user->getStatus() < 2)
 		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
 	if (user->getStatus() >= 2)
