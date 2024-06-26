@@ -29,7 +29,7 @@
 
 //replies
 #define RPL_NAMERPLY(host, nick, chan, list)				":" + host + " 353 " + nick + " = " + chan + " :" + list + "\r\n"
-#define RPL_ENDOFNAMES(host, nick, chan)              ":" + host + " 366 " + nick + " " + chan + " :End of /NAMES list\r\n"
+#define RPL_ENDOFNAMES(host, nick, chan)              ":" + host + " 366 " + nick + " " + chan + " :End of /NAMES list.\r\n"
 #define RPL_PRIVMSG(src, dis_nick, msg)					":" + src + " PRIVMSG " + dis_nick + " :" + msg + "\r\n"
 #define RPL_NICK(src, nick)									":" + src + " :Your nickname has been set to " + nick + "\r\n"
 #define RPL_PASS(src)											":" + src + " :Password is correct, you may continue the registration\r\n"
