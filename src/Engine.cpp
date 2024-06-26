@@ -90,7 +90,7 @@ void	Server::send_2usr(int fd)
 	std::string msg = user->getBuffer();
 	if (msg.empty())
 		return ;
-   std::vector<std::string> res = MySplit(msg, "\r\n");
+   // std::vector<std::string> res = MySplit(msg, "\r\n");
    // for (std::vector<std::string>::iterator it = res.begin();it != res.end();it++)
    // {
       // std::cout << BLUE << *it << DEFAULT << std::endl;

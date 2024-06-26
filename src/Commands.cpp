@@ -270,9 +270,9 @@ void	Server::join(Command cmd, Users *user)
 					std::string key = *(key_lst.begin());
 					key_lst.erase(key_lst.begin());
 					if (chan->getPassword() == key) {
-						chan->addUsertoC(user);
 						chan->brodcastMsg(RPL_JOIN(user->getNickname(), user->getUsername(), user->getHostname(), chan->getName()), AllUsers);
-						// chan->brodcastMsg(RPL_BOT_CWELCOME(user->getNickname(), chan->getName()), AllUsers);
+						chan->addUsertoC(user);
+						chan->brodcastMsg(RPL_BOT_CWELCOME(user->getNickname(), chan->getName()), AllUsers);
 						if (chan->getTopic().empty())
 							user->setBuffer(RPL_NOTOPIC(this->getHost(), user->getNickname(), chan->getName()));
 						else
@@ -287,9 +287,9 @@ void	Server::join(Command cmd, Users *user)
 					user->setBuffer(ERR_BADCHANNELKEY(user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname(), chan->getName())); 
 			}
 			else {
-				chan->addUsertoC(user);
 				chan->brodcastMsg(RPL_JOIN(user->getNickname(), user->getUsername(), user->getHostname(), chan->getName()), AllUsers);
-				// chan->brodcastMsg(RPL_BOT_CWELCOME(user->getNickname(), chan->getName()), AllUsers);
+				chan->addUsertoC(user);
+				chan->brodcastMsg(RPL_BOT_CWELCOME(user->getNickname(), chan->getName()), AllUsers);
 				if (chan->getTopic().empty())
 					user->setBuffer(RPL_NOTOPIC(this->getHost(), user->getNickname(), chan->getName()));
 				else

@@ -109,7 +109,7 @@ std::string Channel::getAllUsersInChanList(std::vector<Users *> AllUsers)
 		{
 			if ((*it)->getNickname() == t->user->getNickname())
 			{
-						list += " @" + (*t).user->getNickname();
+						list += (*t).user->getNickname();
 						if (t + 1 != UserList.end())
 							list += " ";
 			}
