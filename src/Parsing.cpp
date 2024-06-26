@@ -207,7 +207,7 @@ int	CheckJoin(Command &cmd, Users *user)
 		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
-	std::vector<std::string> tmp = Split(cmd.Rest);
+	cmd.params = Split(cmd.Rest);
 	return 0;
 }
 

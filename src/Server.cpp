@@ -181,7 +181,6 @@ void Server::executeCmd(Command msg, Users *user)
 	std::cout << user->getStatus() << std::endl;
 	if (user->getStatus() != 4 && (msg.CmdName != "PING" && msg.CmdName != "CAP" && msg.CmdName != "NICK" && msg.CmdName != "USER" && msg.CmdName != "PASS"))
 		return user->setBuffer(ERR_NOTREGISTERED(getHost()));
-	// std::cout << YELLOW << msg.CmdName << DEFAULT << std::endl;
 	if (msg.CmdName == "CAP")
 		CapInit(msg, user);
 	else if (msg.CmdName == "PASS")
@@ -197,8 +196,7 @@ void Server::executeCmd(Command msg, Users *user)
 	else if (msg.CmdName == "BOT")
 		Knight->executeBot(msg, user, this->AllUsers, this->AllChannels);
 	else if (msg.CmdName == "JOIN")
-		std::cout << "GOOD" << std::endl;
-    	// c_join(msg.parameters, user);
+		join(msg, user);
 	else if (msg.CmdName == "PART")
 		std::cout << "GOOD" << std::endl;
 		// c_part(msg.parameters, user);
@@ -218,6 +216,4 @@ void Server::executeCmd(Command msg, Users *user)
 		// c_mode(msg.parameters, AllUsers, AllChannels)
 	else if (msg.CmdName == "PRIVMSG")
 		c_privmsg(msg, user);
-		// c_privmsg(cmd, user, AllUsers, AllChannels)
-		// c_quit(msg.parameters, user);
 }

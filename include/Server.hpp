@@ -85,4 +85,5 @@ class Server
 		void c_quit(Command cmd, Users *user);
 		void	c_topic(Command cmd, Users *user);
 		void	c_privmsg(Command cmd, Users *user);
+		void	join(Command, Users *user);
 };

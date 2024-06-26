@@ -222,3 +222,12 @@ void	Server::c_privmsg(Command cmd, Users *user)
 		}
 	}
 }
+
+void	Server::join(Command cmd, Users *user)
+{
+	for (std::vector<std::string>::iterator it = cmd.params.begin();it != cmd.params.end();it++)
+	{
+		std::cout << *it << std::endl;
+	}
+	(void)user;
+}

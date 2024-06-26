@@ -32,6 +32,7 @@ class Channel
 		bool						Limitf;
 		bool						Topicf;
 		bool						Invitef;
+		bool						Passf;
 		std::string				Mode;
 		std::string				Name;
 		std::string				Password;
