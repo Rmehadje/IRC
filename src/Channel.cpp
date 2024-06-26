@@ -96,6 +96,9 @@ bool	Channel::getPasswordf() const{
 	return this->Passf;
 }
 
+int	Channel::getNumberofUsers(std::vector<struct C_Users>	UserList){
+	return UserList.size();
+}
 
 std::vector<Users *> Channel::getAllUsersInChan(std::vector<Users *> AllUsers)
 {
