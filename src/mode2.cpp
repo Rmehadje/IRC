@@ -20,35 +20,69 @@ Users* CheckUser(std::vector<Users*>& allUsers, std::string& target) {
     return NULL;
 }
 
-void removeMode(std::string &currentModes, const std::string &modeString) {
-    // Remove modes specified in modeString from currentModes
-    for (std::string::const_iterator it = modeString.begin(); it != modeString.end(); ++it) {
-        size_t pos = currentModes.find(*it);
-        if (pos != std::string::npos) {
-            currentModes.erase(pos, 1);
-        }
-    }
-}
+// void removeMode(std::string &currentModes, const std::string &modeString) {
+//     // Remove modes specified in modeString from currentModes
+//     for (std::string::const_iterator it = modeString.begin(); it != modeString.end(); ++it) {
+//         size_t pos = currentModes.find(*it);
+//         if (pos != std::string::npos) {
+//             currentModes.erase(pos, 1);
+//         }
+//     }
+// }
 
 void setMode(std::string &currentModes, const std::string &modeString, const std::vector<std::string> &modeArgs) {
     // Simplified mode setting: only supports single character modes and no arguments
+    
+    int i = 0;
+    int j = 0;
+    std::string pos = "";
+    std::string neg = "";
+    while (currentModes[i])
+    {
+        if (currentModes[i] == '+')
+        {
+            while(currentModes[++i] != '-' || currentModes[i] != NULL)
+                pos+= currentModes[j];
+        }
+        if (currentModes[i] == '-')
+        {
+            while(currentModes[++i] != '+' || currentModes[i] != NULL)
+                neg+= currentModes[j];
+        }
+
+    }
     for (std::string::const_iterator it = modeString.begin(); it != modeString.end(); ++it) {
         if (*it == '+') {
             ++it;
             while (it != modeString.end() && isalpha(*it)) {
-                if (currentModes.find(*it) == std::string::npos) {
-                    currentModes += *it;
+                if (pos.find(*it) == std::string::npos) {
+                    if (pos.find("+") == std::string::npos)
+                        pos+="+";
+                    while(*it != '+' && *it != '-')
+                        {
+                            pos += *it;
+                            ++it;
+                            }
                 }
                 ++it;
             }
         } else if (*it == '-') {
             ++it;
             while (it != modeString.end() && isalpha(*it)) {
-                removeMode(currentModes, std::string(1, *it));
+                if (neg.find(*it) == std::string::npos) {
+                    if (neg.find("-") == std::string::npos)
+                        neg+="-";
+                    while(*it != '+' && *it != '-')
+                        {
+                            neg += *it;
+                            ++it;
+                            }
                 ++it;
+            }
             }
         }
     }
+    currentModes = pos + neg;
 }
 
 
@@ -67,4 +101,5 @@ void c_mode(Command cmd, Users *user, std::vector<Users *> AllUsers, std::vector
             setMode(currentModes, modeString, param);
             return(user->setBuffer(RPL_CHANNELMODEIS(user->getHostname(), target)));
         }
+    }
 }
