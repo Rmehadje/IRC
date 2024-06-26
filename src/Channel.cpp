@@ -108,8 +108,10 @@ std::string Channel::getAllUsersInChanList(std::vector<Users *> AllUsers)
 		for (std::vector<struct C_Users>::iterator t = UserList.begin();t != UserList.end();t++)
 		{
 			if ((*it)->getNickname() == t->nickName)
+			{
 				list += (*it)->getNickname();
 				list += " / ";
+			}
 		}
 	}
 	return list;
