@@ -30,6 +30,7 @@ struct Command
 
 int PortChecker(std::string port);
 bool	Check(std::string str, std::string find);
+bool	CheckChannelName(std::string	name);
 std::vector<std::string> MySplit(std::string str, std::string del);
 Command parse(std::string str);
 int	CheckCmd(Command &cmd, Users *user);

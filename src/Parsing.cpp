@@ -29,6 +29,20 @@ bool	Check(std::string str, std::string find)
 	return true;
 }
 
+bool	CheckChannelName(std::string name){
+	int i = 0;
+	while (name[i]){
+		if (name[0] != '#')
+			return false;
+		else{
+			if (name[i] == ',' || name[i] == ' ' || name[i] == '\a')
+				return false;
+		}
+		i++;
+	}
+	return true;
+}
+
 std::vector<std::string> MySplit(std::string str, std::string del)
 {
 	std::vector<std::string> tmp;
