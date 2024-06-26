@@ -232,7 +232,11 @@ void	Server::join(Command cmd, Users *user)
 	for (std::vector<std::string>::iterator it = chan_name.begin(); it != chan_name.end(); ++it) {
 		Channel *chan = getChannel(*it);
 		if (!chan) {
-			//check channel name
+			if (!CheckChannelName(*it))
+			{
+				user->setBuffer(ERR_BADCHANMASK(*it));
+				continue;
+			}
 			chan = new Channel(*it);
 			this->AddChanToServ(chan);
 			chan->addUsertoC(user);
@@ -279,6 +283,7 @@ void	Server::join(Command cmd, Users *user)
 							user->setBuffer(RPL_TOPIC(this->getHost(), user->getNickname(), chan->getName(), chan->getTopic()));
 						user->setBuffer(RPL_NAMERPLY(this->getHost(), user->getNickname(), chan->getName(), chan->getAllUsersInChanList(AllUsers)));
 						user->setBuffer(RPL_ENDOFNAMES(this->getHost(), user->getNickname(), chan->getName()));
+						user->setBuffer(RPL_JOIN(user->getNickname(), user->getUsername(), user->getHostname(), chan->getName()));
 					}
 					else
 						user->setBuffer(ERR_BADCHANNELKEY(user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname(), chan->getName()));
@@ -296,6 +301,7 @@ void	Server::join(Command cmd, Users *user)
 					user->setBuffer(RPL_TOPIC(this->getHost(), user->getNickname(), chan->getName(), chan->getTopic()));
 				user->setBuffer(RPL_NAMERPLY(this->getHost(), user->getNickname(), chan->getName(), chan->getAllUsersInChanList(AllUsers)));
 				user->setBuffer(RPL_ENDOFNAMES(this->getHost(), user->getNickname(), chan->getName()));
+				user->setBuffer(RPL_JOIN(user->getNickname(), user->getUsername(), user->getHostname(), chan->getName()));
 			}
 
 			}
