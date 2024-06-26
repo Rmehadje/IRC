@@ -1,5 +1,6 @@
 #pragma once
 
+#define ERR_BADCHANMASK(chan)									": 476 " + chan + " :Bad Channel Mask\r\n"	   
 #define ERR_NOSUCHNICK(src, nick, chan)					":" + src + " 401 " + nick + " " + chan + " :No such Nick/channel\r\n"
 #define ERR_NOSUCHSERVER(src, serv)							":" + src + " 402 " + serv + " :No such server\r\n"
 #define ERR_NOSUCHCHANNEL(src, chan)						":" + src + " 403 " + chan + " :No such channel\r\n"
