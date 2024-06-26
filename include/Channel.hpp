@@ -48,6 +48,10 @@ class Channel
 		void	setPassword(std::string password);
 		void	setTopic(std::string topic);
 		void	setLimit(int	limit);
+		void	setLimitf(bool	limitf);
+		void	setPasswordf(bool	passwordf);
+		void	setInvitef(bool	invitef);
+		void	setTopicf(bool	topicf);
 		void	setQuote(std::string Quote);
 		
 		std::vector<struct C_Users>	UserList;
@@ -56,8 +60,8 @@ class Channel
 		std::string	getTopic() const;
 		std::string	getQuote() const;
 		std::string	getMode() const;
-		int			getLimit() const;
-		int			getinvitef() const;
+		int	getLimit() const;
+		bool	getPasswordf() const;
 		bool	getLimitf() const;
 		bool	getTopicf() const;
 		bool	getInvitef() const;

@@ -51,8 +51,8 @@
 
 
 #define RPL_BOT()
-#define RPL_BOT_HC(msg)										"- The knight:  " + msg + "\r\n"
-#define RPL_BOT_BC(src, msg)								":" + src + " " + msg + "\r\n"
+#define RPL_BOT_HC(msg)										"KNIGHT:  " + msg + "\r\n"
+#define RPL_BOT_BC(msg)										": " + msg + "\r\n"
 #define RPL_BOT_UL(help)									": " + help + " \r\n"
 #define RPL_BOT_CL(help)									": " + help + " \r\n"
 #define RPL_BOT_EB(help)									": " + help + " \r\n"

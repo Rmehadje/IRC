@@ -50,7 +50,7 @@ void	Bot::BotCommands(Users *user){
 	"KNIGHT Channel list: (write <BOT CL>), shows you all the available Channels created by you or other users.\n"
 	"KNIGHT EightBall: (write <BOT Eightball>), you summon my capabilities of second sight by advising you wether you should, or should not act upon what you ask me.\n"
 	"KNIGHT d20: (write <BOT d20>), permits you to test your luck out of 20.\n";
-	user->setBuffer(RPL_BOT_BC(user->getHostname(), Help));
+	user->setBuffer(RPL_BOT_BC(Help));
 }
 
 void	Bot::UserList(Users *user, std::vector<Users *>	&AllUsers){

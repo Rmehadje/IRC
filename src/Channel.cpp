@@ -45,6 +45,18 @@ void	Channel::setLimit(int limit){
 void	Channel::setQuote(std::string Quote){
 	this->Quote = Quote;
 }
+void	Channel::setLimitf(bool limitf){
+	this->Limitf = limitf;
+}
+void	Channel::setTopicf(bool topicf){
+	this->Topicf = topicf;
+}
+void	Channel::setInvitef(bool	invitef){
+	this->Invitef = invitef;
+}
+void	Channel::setPasswordf(bool passwordf){
+	this->Passf = passwordf;
+}
 std::string	Channel::getName() const{
 	return (this->Name);
 }
@@ -79,6 +91,9 @@ bool Channel::getInvitef() const
 
 bool	Channel::getTopicf() const{
 	return this->Topicf;
+}
+bool	Channel::getPasswordf() const{
+	return this->Passf;
 }
 
 
