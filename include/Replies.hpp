@@ -43,7 +43,7 @@
 // #define RPL_NICKCHANGE(src, nick)							":" + src + " Your new nickname has been set to " + nick + "\r\n"
 #define RPL_QUIT(src, nick, reply)							":" + src + " " + nick + " " + reply + "\r\n" 
 #define RPL_KICK(src, chan, reason, user)					":" + src + " KICK " + chan + " " + user + " :" + reason + "\r\n" //
-#define RPL_PART(src, chan, nick)							":" + src + " " + nick + " has parted from " + chan + "\r\n"
+#define RPL_PART(src, chan, msg)                           ":" + src + " PART " + chan + " :" + msg + "\r\n"
 #define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + nick + " :Welcome to the IRC_server network " + nick + "!" + user + "@" + host + "\r\n" //
 #define RPL_UMODEIS(src, nick, mode)						":" + src + " 221 " + nick + " " + mode + "\r\n"
 #define RPL_CHANNELMODEIS(src, chan, modest, modea)	":" + src + " 324 " + chan + " " + modest + " " + modea + "\r\n"
