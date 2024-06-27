@@ -372,3 +372,53 @@ void	Server::Whois(Users *user, Command cmd){
 	user->setBuffer(RPL_WHOISUSER(this->getHost(), user->getNickname(), name, u->getUsername(), u->getHostname(), u->getRealname()));
 	user->setBuffer(RPL_ENDOFWHOIS(this->getHost(), user->getNickname(), name));
 }
+
+
+void Server::c_invite(Command cmd, Users *user)
+{
+   std::string channel = cmd.params[1];
+   std::string target = cmd.params[0];
+
+   if (user->getStatus() < 2)
+	return (user->setBuffer(ERR_NOTREGISTERED(this->getHost())));
+   Channel *cnl = getChannel(channel);
+   if (!cnl)
+       return(user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), channel)));
+   if (!cnl->UserIsInC(user))
+       return(user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), channel)));
+   Users *invitee = getUserByNn(target);
+   if (invitee == NULL)
+       return user->setBuffer(ERR_NOSUCHNICK(this->getHost(), target, cnl->getName())); 
+   if (cnl->UserIsInC(invitee))
+       return(user->setBuffer(ERR_USERONCHANNEL(this->getHost(), user->getNickname(), target, cnl->getName())));
+   if (cnl->getInvitef())
+   {
+      if (cnl->CheckifOP(user))
+      {
+			user->setBuffer(RPL_INVITING(this->getHost(), user->getNickname(), invitee->getNickname(), cnl->getName()));
+			cnl->brodcastMsg(RPL_JOIN(invitee->getNickname(), invitee->getUsername(), invitee->getHostname(), cnl->getName()), AllUsers);
+      	cnl->addUsertoC(invitee);
+			cnl->brodcastMsg(RPL_BOT_CWELCOME(invitee->getNickname(), cnl->getName()), AllUsers);
+			if (cnl->getTopic().empty())
+					invitee->setBuffer(RPL_NOTOPIC(this->getHost(), invitee->getNickname(), cnl->getName()));
+				else
+					invitee->setBuffer(RPL_TOPIC(this->getHost(), invitee->getNickname(), cnl->getName(), cnl->getTopic()));
+			invitee->setBuffer(RPL_NAMERPLY(this->getHost(), invitee->getNickname(), cnl->getName(), cnl->getAllUsersInChanList(AllUsers)));
+			invitee->setBuffer(RPL_ENDOFNAMES(this->getHost(), invitee->getNickname(), cnl->getName()));
+			invitee->setBuffer(RPL_JOIN(invitee->getNickname(), invitee->getUsername(), invitee->getHostname(), cnl->getName()));
+         return ;
+      }
+      return(user->setBuffer(ERR_CHANOPRIVSNEEDED(this->getHost(), channel)));
+   }
+	user->setBuffer(RPL_INVITING(this->getHost(), user->getNickname(), invitee->getNickname(), cnl->getName()));
+	cnl->brodcastMsg(RPL_JOIN(invitee->getNickname(), invitee->getUsername(), invitee->getHostname(), cnl->getName()), AllUsers);
+	cnl->addUsertoC(invitee);
+	cnl->brodcastMsg(RPL_BOT_CWELCOME(invitee->getNickname(), cnl->getName()), AllUsers);
+	if (cnl->getTopic().empty())
+			invitee->setBuffer(RPL_NOTOPIC(this->getHost(), invitee->getNickname(), cnl->getName()));
+		else
+			invitee->setBuffer(RPL_TOPIC(this->getHost(), invitee->getNickname(), cnl->getName(), cnl->getTopic()));
+	invitee->setBuffer(RPL_NAMERPLY(this->getHost(), invitee->getNickname(), cnl->getName(), cnl->getAllUsersInChanList(AllUsers)));
+	invitee->setBuffer(RPL_ENDOFNAMES(this->getHost(), invitee->getNickname(), cnl->getName()));
+	invitee->setBuffer(RPL_JOIN(invitee->getNickname(), invitee->getUsername(), invitee->getHostname(), cnl->getName()));
+}

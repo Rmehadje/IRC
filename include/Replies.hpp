@@ -51,7 +51,7 @@
 #define RPL_TOPIC(host, nick, chan, topic)				":" + host + " 332 " + nick + " " + chan + " :" + topic + "\r\n"
 #define RPL_NICKCHANGE(oldnick, user, host, newnick)  ":" + oldnick + "!" + user + "@" + host + " NICK :" + newnick + "\r\n" //
 #define RPL_JOIN(nick, user, user_host, chan)							":" + nick + "!" + user + "@" + user_host + " JOIN :" + chan + "\r\n" //
-#define RPL_INVITING(src, user, nick, chan)				":" src + " 341 " + user + " " + nick + " " chan + " :has been invited\r\n"
+#define RPL_INVITING(src, user, nick, chan)				":" + src + " 341 " + user + " " + nick + " " + chan + " :has been invited\r\n"
 
 
 //Bot replies

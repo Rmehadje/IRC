@@ -208,8 +208,7 @@ void Server::executeCmd(Command msg, Users *user)
 	else if (msg.CmdName == "KICK")
 		c_kick(msg, user);
   	else if (msg.CmdName == "INVITE")
-		std::cout << "GOOD" << std::endl;
-    	// c_invite(msg.parameters, user);
+		c_invite(msg, user);
 	else if (msg.CmdName == "TOPIC")
 		c_topic(msg, user);
 		// c_topic(msg.parameters,user, AllChanels)

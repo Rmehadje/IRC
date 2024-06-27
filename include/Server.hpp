@@ -89,4 +89,5 @@ class Server
 		void	c_privmsg(Command cmd, Users *user);
 		void	join(Command, Users *user);
 		void	c_kick(Command cmd, Users *user);
+		void	c_invite(Command cmd, Users *user);
 };
