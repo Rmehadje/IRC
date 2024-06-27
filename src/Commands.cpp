@@ -467,7 +467,7 @@ void Server::c_mode(Command cmd, Users *user)
         return(user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), target)));
     if (cmd.params.size() == 1)
     {
-        return (user->setBuffer(RPL_CHANNELMODEIS(this->getHost(), channel->getName(), user->getNickname(), channel->getMode())));
+        return (user->setBuffer(RPL_CHANNELMODEIS(user->getSrc(), channel->getName(), user->getNickname(), channel->getMode())));
     }
     std::string modeString = cmd.params[1];
     std::string currentModes = channel->getMode();
@@ -540,5 +540,5 @@ void Server::c_mode(Command cmd, Users *user)
             break;
     }
     channel->ChangeMode();
-    channel->brodcastMsg(RPL_CHANNELMODEIS(this->getHost(), channel->getName(), user->getNickname(), channel->getMode()), AllUsers);
+    channel->brodcastMsg(RPL_CHANNELMODEIS(user->getSrc(), channel->getName(), user->getNickname(), channel->getMode()), AllUsers);
 }

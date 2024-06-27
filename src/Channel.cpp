@@ -232,5 +232,15 @@ void	Channel::ChangeMode()
 		Mode2 += "t";
 	else
 		Mode1 += "t";
+	if (Mode1.length() == 1)
+	{
+		Mode = Mode2;
+		return ;
+	}
+	if (Mode2.length() == 1)
+	{
+		Mode = Mode1;
+		return;
+	}
 	Mode = Mode1 + Mode2;
 }
