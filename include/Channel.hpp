@@ -32,6 +32,7 @@ class Channel
 		bool						Limitf;
 		bool						Topicf;
 		bool						Invitef;
+		bool						Kickf;
 		bool						Passf;
 		bool						Kickf;
 		std::string				Mode;
@@ -54,6 +55,7 @@ class Channel
 		void	setInvitef(bool	invitef);
 		void	setTopicf(bool	topicf);
 		void	setQuote(std::string Quote);
+		void	setKickf(bool	Kickf);
 		
 		std::vector<struct C_Users>	UserList;
 		std::string	getName() const;
@@ -63,6 +65,7 @@ class Channel
 		std::string	getMode() const;
 		int	getLimit() const;
 		bool	getPasswordf() const;
+		bool	getKickf() const;
 		bool	getLimitf() const;
 		bool	getTopicf() const;
 		bool	getInvitef() const;
