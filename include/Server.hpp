@@ -57,6 +57,7 @@ class Server
 		void	handleMsg(Users *user);
 		void	executeCmd(Command msg, Users *user);
 		void	AddChanToServ(Channel *channel);
+		void	Whois(Users *user, Command cmd);
 	
 	//Setters
 		void	setHost(std::string name);
