@@ -422,3 +422,42 @@ void Server::c_invite(Command cmd, Users *user)
 	invitee->setBuffer(RPL_ENDOFNAMES(this->getHost(), invitee->getNickname(), cnl->getName()));
 	invitee->setBuffer(RPL_JOIN(invitee->getNickname(), invitee->getUsername(), invitee->getHostname(), cnl->getName()));
 }
+
+std::vector<std::string> split(const std::string &str, const char *delimiter) {
+    std::vector<std::string> tokens;
+    char *cstr = new char[str.length() + 1];
+    std::strcpy(cstr, str.c_str());
+
+    char *token = std::strtok(cstr, delimiter);
+    while (token != NULL) {
+        tokens.push_back(std::string(token));
+        token = std::strtok(NULL, delimiter);
+    }
+
+    delete[] cstr;
+    return tokens;
+}
+
+
+void Server::c_part(Command cmd, Users* user)
+{
+    if (cmd.params[0].empty())
+        return(user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), cmd.CmdName)));
+    std::string reason = cmd.params[1];
+    std::vector<std::string> channels = split(cmd.params[0], ",");
+    for (std::vector<std::string>::const_iterator it = channels.begin(); it != channels.end(); ++it) {
+        Channel *channel = getChannel(*it);
+        if (channel == NULL){
+            user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), *it));
+            continue ;
+        }
+        if (!channel->UserIsInC(user)){
+            user->setBuffer(ERR_NOTONCHANNEL(this->getHost(), user->getNickname()));
+            continue ;
+        }
+        channel->deleteUserfromC(user);
+        user->setBuffer(RPL_PART(user->getSrc(), *it, reason));
+        channel->brodcastMsg(RPL_PART(user->getSrc(), *it, reason), AllUsers);
+    }
+
+}

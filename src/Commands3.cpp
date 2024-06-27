@@ -4,21 +4,6 @@
 #include "../include/Replies.hpp"
 #include <cstring>
 
-std::vector<std::string> split(const std::string &str, const char *delimiter) {
-    std::vector<std::string> tokens;
-    char *cstr = new char[str.length() + 1];
-    std::strcpy(cstr, str.c_str());
-
-    char *token = std::strtok(cstr, delimiter);
-    while (token != NULL) {
-        tokens.push_back(std::string(token));
-        token = std::strtok(NULL, delimiter);
-    }
-
-    delete[] cstr;
-    return tokens;
-}
-
 
 
 
