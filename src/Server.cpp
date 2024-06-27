@@ -203,8 +203,7 @@ void Server::executeCmd(Command msg, Users *user)
 	else if (msg.CmdName == "JOIN")
 		join(msg, user);
 	else if (msg.CmdName == "PART")
-		std::cout << "GOOD" << std::endl;
-		// c_part(msg.parameters, user);
+		;
 	else if (msg.CmdName == "KICK")
 		c_kick(msg, user);
   	else if (msg.CmdName == "INVITE")

@@ -232,7 +232,18 @@ int	CheckPart(Command &cmd, Users *user)
 		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
-	cmd.params = Split(cmd.Rest);
+	if (cmd.Rest.find(' ') == std::string::npos)
+	{
+		cmd.params.push_back(RSpaces(cmd.Rest));
+		cmd.params.push_back("Needed Some Time Off");
+		return 0;
+	}
+	int i = cmd.Rest.find(' ');
+	std::string Chans = cmd.Rest.substr(0, i);
+	cmd.Rest = cmd.Rest.substr(i + 1, cmd.Rest.length() - i);
+	cmd.params.push_back(Chans);
+	cmd.Rest = RSpaces(cmd.Rest);
+	cmd.params.push_back(cmd.Rest);
 	return 0;
 }
 
