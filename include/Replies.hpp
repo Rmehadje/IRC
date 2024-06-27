@@ -29,7 +29,7 @@
 #define ERR_USERDONTMATCH(src)								":" + src + " 502 :Cant change mode for other users\r\n"
 #define ERR_ALREADYOPERATOR(src, nick, chan, dest_nick)				":" + src + " 905 " + nick + " " + chan + " :" + dest_nick + " Already An operator\r\n"
 #define ERR_INVALIDKEY(src, nick, chan)					":" + src + " 525 " + nick + " " + chan +  " :Cannot join channel (+k)\r\n"
-#define ERR_INVALIDMODEPARAM(src, nick, mode, param)	":" + src + " 696 " + nick + " " + mode + " " + param + " :Invalid mode parameter\r\n"
+#define ERR_INVALIDMODEPARAM(src, nick, mode, param, wprm)	":" + src + " 696 " + nick + " " + mode + " " + param + " " + wprm + " :Invalid mode parameter\r\n"
 
 //replies
 #define RPL_NAMERPLY(host, nick, chan, list)				":" + host + " 353 " + nick + " = " + chan + " :" + list + "\r\n" //
