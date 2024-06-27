@@ -8,7 +8,7 @@
 #define ERR_TOOMANYCHANNELS(src, chan)						":" + src + " 405 " + chan + " :You have joined too many channels\r\n"
 #define ERR_NOTEXTTOSEND(src, nick)							":" + src + " 412 " + nick + " :No text to send\r\n"
 #define ERR_INPUTTOOLONG(src)									":" + src + " 417 :Input line too long\r\n"
-#define ERR_UNKNOWNCOMMAND(src, cmd, nick)				":" + src + " 421 " + nick + " " + cmd + " :Unknown command\r\n" 
+#define ERR_UNKNOWNCOMMAND(src, cmd, nick)				":" + src + " 421 " + nick + " " + cmd + " :Unknown command\r\n" //
 #define ERR_NONICKNAMEGIVEN(src)								":" + src + " 431 :No nickname given\r\n"
 #define ERR_ERRONEUSNICKNAME(src, nick)					":" + src + " 432 " + nick + " :Erroneus nickname\r\n"
 #define ERR_NICKNAMEINUSE(src, nick)						":" + src + " 433 " + nick + " :Nickname is already in use\r\n"
@@ -44,13 +44,14 @@
 #define RPL_QUIT(src, nick, reply)							":" + src + " " + nick + " " + reply + "\r\n" 
 #define RPL_KICK(src, chan, reason, user)					":" + src + " KICK " + chan + " " + user + " :" + reason + "\r\n" //
 #define RPL_PART(src, chan, nick)							":" + src + " " + nick + " has parted from " + chan + "\r\n"
-#define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + nick + " :Welcome to the IRC_server network " + nick + "!" + user + "@" + host + "\r\n"
+#define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + nick + " :Welcome to the IRC_server network " + nick + "!" + user + "@" + host + "\r\n" //
 #define RPL_UMODEIS(src, nick, mode)						":" + src + " 221 " + nick + " " + mode + "\r\n"
 #define RPL_CHANNELMODEIS(src, chan, modest, modea)	":" + src + " 324 " + chan + " " + modest + " " + modea + "\r\n"
 #define RPL_NOTOPIC(src,nick, chan)								":" + src + " 331 " + nick + " " + chan + " :No topic is set\r\n"
 #define RPL_TOPIC(host, nick, chan, topic)				":" + host + " 332 " + nick + " " + chan + " :" + topic + "\r\n"
 #define RPL_NICKCHANGE(oldnick, user, host, newnick)  ":" + oldnick + "!" + user + "@" + host + " NICK :" + newnick + "\r\n" //
 #define RPL_JOIN(nick, user, user_host, chan)							":" + nick + "!" + user + "@" + user_host + " JOIN :" + chan + "\r\n" //
+#define RPL_INVITING(src, user, nick, chan)				":" src + " 341 " + user + " " + nick + " " chan + " :has been invited\r\n"
 
 
 //Bot replies
