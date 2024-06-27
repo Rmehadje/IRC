@@ -303,7 +303,7 @@ int	CheckMode(Command &cmd, Users *user, std::string Host)
 	i = cmd.Rest.find(' ');
 	mode = cmd.Rest.substr(0, i);
 	if (mode.length() != 2)
-		return (user->setBuffer(ERR_UKNOWNMODE(Host, cmd.Rest)), -1);
+		return (user->setBuffer(ERR_UNKNOWNMODE(Host, cmd.Rest)), -1);
 	cmd.params.push_back(mode);
 	arg = cmd.Rest.substr(i + 1, cmd.Rest.length() -  i);
 	arg = RSpaces(arg);

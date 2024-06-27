@@ -213,10 +213,7 @@ void Server::executeCmd(Command msg, Users *user)
 		// c_topic(msg.parameters,user, AllChanels)
     	// c_topic(msg.parameters, user);
 	else if (msg.CmdName == "MODE")
-	{
-		for (std::vector<std::string>::iterator it = msg.params.begin();it != msg.params.end();it++)
-			std::cout << *it << std::endl;
-	}
+		c_mode(msg, user);
 	else if (msg.CmdName == "PRIVMSG")
 		c_privmsg(msg, user);
 	else if(msg.CmdName == "WHOIS")
