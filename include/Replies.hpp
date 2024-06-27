@@ -20,13 +20,14 @@
 #define ERR_ALREADYREGISTERED(src)							":" + src + " 462 :You may not reregister\r\n"
 #define ERR_PASSWDMISMATCH(src)								":" + src + " 464 " "PASS" + " :Password incorrect\r\n"
 #define ERR_CHANNELISFULL(src, chan)						":" + src + " 471 " + chan + " :Cannot join channel (+l)\r\n"
-#define ERR_UKNOWNMODE(src, mode)							":" + src + " 472 " + mode + " :is unknown mode char to me\r\n"
+#define ERR_UNKNOWNMODE(src, mode)							":" + src + " 472 " + mode + " :is unknown mode char to me\r\n"
 #define ERR_INVITEONLYCHAN(src, chan)						":" + src + " 473 " + chan + " :Cannot join channel (+i)\r\n"
 #define ERR_BADCHANNELKEY(src, chan)						":" + src + " 475 " + chan + " :Cannot join channel (+k)\r\n"
 #define ERR_NOPRIVILIGES(src)									":" + src + " 481 :Permission denied- You're not an IRC operator\r\n"
 #define ERR_CHANOPRIVSNEEDED(src, chan)					":" + src + " 482 " + chan + " :You're not channel operator\r\n"
 #define ERR_UMODEUNKNOWNFLAG(src)							":" + src + " 501 :Unknown MODE flag\r\n"
 #define ERR_USERDONTMATCH(src)								":" + src + " 502 :Cant change mode for other users\r\n"
+#define ERR_ALREADYOPERATOR(src, nick, chan, dest_nick)				":" + src + " 905 " + nick + " " + chan + " :" + dest_nick + " Already An operator\r\n"
 
 //replies
 #define RPL_NAMERPLY(host, nick, chan, list)				":" + host + " 353 " + nick + " = " + chan + " :" + list + "\r\n" //
@@ -52,7 +53,6 @@
 #define RPL_NICKCHANGE(oldnick, user, host, newnick)  ":" + oldnick + "!" + user + "@" + host + " NICK :" + newnick + "\r\n" //
 #define RPL_JOIN(nick, user, user_host, chan)							":" + nick + "!" + user + "@" + user_host + " JOIN :" + chan + "\r\n" //
 #define RPL_INVITING(src, user, nick, chan)				":" + src + " 341 " + user + " " + nick + " " + chan + " :has been invited\r\n"
-
 
 //Bot replies
 
