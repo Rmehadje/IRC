@@ -189,49 +189,49 @@ int	CheckMult(std::string str)
 	return 0;
 }
 
-int	CheckPriv(Command &cmd, Users *user)
+int	CheckPriv(Command &cmd, Users *user, std::string Host)
 {
 	if (user->getStatus() < 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	cmd.params = PrivSplit(cmd.Rest);
 	if (cmd.params.size() != 2)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	return 0;
 }
 
-int	CheckInv(Command &cmd, Users *user)
+int	CheckInv(Command &cmd, Users *user, std::string Host)
 {
 	if (user->getStatus() < 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	cmd.params = Split(cmd.Rest);
 	if (cmd.params.size() != 2)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	return 0;
 }
 
-int	CheckJoin(Command &cmd, Users *user)
+int	CheckJoin(Command &cmd, Users *user, std::string Host)
 {	if (user->getStatus() < 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	cmd.params = Split(cmd.Rest);
 	return 0;
 }
 
-int	CheckPart(Command &cmd, Users *user)
+int	CheckPart(Command &cmd, Users *user, std::string Host)
 {
 	if (user->getStatus() < 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
 	{
 		cmd.params.push_back(RSpaces(cmd.Rest));
@@ -247,17 +247,17 @@ int	CheckPart(Command &cmd, Users *user)
 	return 0;
 }
 
-int	CheckKick(Command &cmd, Users *user)
+int	CheckKick(Command &cmd, Users *user, std::string Host)
 {
 	if (user->getStatus() < 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	cmd.params = KickSplit(cmd.Rest);
 	if (cmd.params.size() < 2)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	if (cmd.params.size() == 2)
 		cmd.params.push_back("Just Because");
 	if (cmd.params.size() == 3)
@@ -265,12 +265,12 @@ int	CheckKick(Command &cmd, Users *user)
 		std::vector<std::string>::iterator it = cmd.params.end();
 		it--;
 		if ((*it).length() >= KICKLEN)
-			return (user->setBuffer(ERR_INPUTTOOLONG(user->getHostname())), -1);
+			return (user->setBuffer(ERR_INPUTTOOLONG(Host)), -1);
 	}
 	return 0;
 }
 
-int	CheckMode(Command &cmd, Users *user)
+int	CheckMode(Command &cmd, Users *user, std::string Host)
 {
 	int i = 0;
 	std::string channel;
@@ -278,9 +278,9 @@ int	CheckMode(Command &cmd, Users *user)
 	std::string arg;
 
 	if (user->getStatus() < 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (OnlySpaces(cmd.Rest))
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
 	{
 		cmd.params.push_back(cmd.Rest);
@@ -296,14 +296,14 @@ int	CheckMode(Command &cmd, Users *user)
 		if (OnlySpaces(cmd.Rest))
 			return 0;
 		if (cmd.Rest.length() != 2)
-			return (user->setBuffer(ERR_UKNOWNMODE(user->getHostname(), cmd.Rest)), -1);
+			return (user->setBuffer(ERR_UNKNOWNMODE(Host, cmd.Rest)), -1);
 		cmd.params.push_back(cmd.Rest);
 		return 0;
 	}
 	i = cmd.Rest.find(' ');
 	mode = cmd.Rest.substr(0, i);
 	if (mode.length() != 2)
-		return (user->setBuffer(ERR_UKNOWNMODE(user->getHostname(), cmd.Rest)), -1);
+		return (user->setBuffer(ERR_UKNOWNMODE(Host, cmd.Rest)), -1);
 	cmd.params.push_back(mode);
 	arg = cmd.Rest.substr(i + 1, cmd.Rest.length() -  i);
 	arg = RSpaces(arg);
@@ -313,22 +313,22 @@ int	CheckMode(Command &cmd, Users *user)
 	return 0;
 }
 
-int	CheckBot(Command &cmd, Users *user)
+int	CheckBot(Command &cmd, Users *user, std::string Host)
 {
 	if (user->getStatus() != 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty())
-		return (user->setBuffer(ERR_UNKNOWNCOMMAND(user->getHostname(), cmd.CmdName, user->getNickname())), -1);
+		return (user->setBuffer(ERR_UNKNOWNCOMMAND(Host, cmd.CmdName, user->getNickname())), -1);
 	return 0;
 }
 
-int	CheckWho(Command &cmd, Users *user)
+int	CheckWho(Command &cmd, Users *user, std::string Host)
 {
 	int i = 0;
 	if (user->getStatus() < 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty() || OnlySpaces(cmd.Rest))
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	cmd.Rest = RSpaces(cmd.Rest);
 	if (cmd.Rest.find(' ') == std::string::npos)
 		return 0;
@@ -337,49 +337,49 @@ int	CheckWho(Command &cmd, Users *user)
 	return 0;
 }
 
-int	CheckCmd(Command &cmd, Users *user)
+int	CheckCmd(Command &cmd, Users *user, std::string Host)
 {
 	if (cmd.CmdName == "WHOIS")
-		return CheckWho(cmd, user);
+		return CheckWho(cmd, user ,Host);
 	if (cmd.CmdName == "BOT")
-		return CheckBot(cmd, user);
+		return CheckBot(cmd,user ,Host);
 	if (cmd.CmdName == "CAP")
 		return 0;
 	if (cmd.CmdName == "PASS")
 		return 0;
 	if (cmd.CmdName == "NICK")
-		return CheckNick(cmd, user);
+		return CheckNick(cmd,user ,Host);
 	if (cmd.CmdName == "USER")
-		return CheckUser(cmd, user);
+		return CheckUser(cmd,user ,Host);
 	if (cmd.CmdName == "PRIVMSG")
-		return CheckPriv(cmd, user);
+		return CheckPriv(cmd,user ,Host);
 	if (cmd.CmdName == "INVITE")
-		return CheckInv(cmd, user);
+		return CheckInv(cmd,user ,Host);
 	if (cmd.CmdName == "JOIN")
-		return CheckJoin(cmd, user);
+		return CheckJoin(cmd,user ,Host);
 	if (cmd.CmdName == "PART")
-		return CheckPart(cmd, user);
+		return CheckPart(cmd,user ,Host);
 	if (cmd.CmdName == "QUIT")
 		return 0;
 	if (cmd.CmdName == "PING")
 		return 0;
 	if (cmd.CmdName == "KICK")
-		return CheckKick(cmd, user);
+		return CheckKick(cmd,user ,Host);
 	if (cmd.CmdName == "MODE")
-		return CheckMode(cmd, user);
+		return CheckMode(cmd,user ,Host);
 	if (cmd.CmdName == "TOPIC")
-		return CheckTopic(cmd, user);
+		return CheckTopic(cmd,user ,Host);
 	else
-		user->setBuffer(ERR_UNKNOWNCOMMAND(user->getHostname(), cmd.CmdName, user->getNickname()));
+		return (user->setBuffer(ERR_UNKNOWNCOMMAND(Host, cmd.CmdName, user->getNickname())), -1);
 	return 0;
 }
 
-int	CheckTopic(Command &cmd, Users *user)
+int	CheckTopic(Command &cmd, Users *user, std::string Host)
 {
 	if (user->getStatus() < 4)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.length() == 0)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
 	{
 		cmd.params.push_back(cmd.Rest);
@@ -411,25 +411,25 @@ std::vector<std::string> Split(std::string str)
 	return tmp;
 }
 
-int	CheckUser(Command &cmd, Users *user)
+int	CheckUser(Command &cmd, Users *user, std::string Host)
 {
 	if (user->getStatus() < 2)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	cmd.params = Split(cmd.Rest);
 	if (cmd.params.size() != 4)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)),-1);
 	std::vector<std::string>::iterator it = cmd.params.begin();
 	if ((*it).length() > USERLEN)
-		return (user->setBuffer(ERR_INPUTTOOLONG(user->getHostname())), -1);
+		return (user->setBuffer(ERR_INPUTTOOLONG(Host)), -1);
 	it++;
 	if ((*it) != "0")
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)),-1);
 	it++;
 	if ((*it) != "*")
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)),-1);
 	it++;
 	if ((*it).length() <= 1)
-		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)),-1);
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(Host, cmd.CmdName)),-1);
 	return 0;
 }
 
@@ -453,23 +453,23 @@ std::string	RSpaces(std::string str)
 	return res;
 }
 
-int	CheckNick(Command &cmd, Users *user)
+int	CheckNick(Command &cmd, Users *user, std::string Host)
 {
 	if (user->getStatus() < 2)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty())
-		return (user->setBuffer(ERR_NONICKNAMEGIVEN(user->getHostname())), -1);
+		return (user->setBuffer(ERR_NONICKNAMEGIVEN(Host)), -1);
 	int	i;
 	if (cmd.Rest.length() > NICKLEN || cmd.Rest[0] == '#' || cmd.Rest[0] == '&' || cmd.Rest[0] == ':'
 			 || cmd.Rest[0] == '@' || isdigit(cmd.Rest[0]) || std::isspace(cmd.Rest[0] || cmd.Rest.length() < 3))
-		return ((user->setBuffer(ERR_ERRONEUSNICKNAME(user->getHostname(), cmd.Rest))),-1);
+		return ((user->setBuffer(ERR_ERRONEUSNICKNAME(Host, cmd.Rest))),-1);
 	i = 0;
 	while (i < (int)strlen(cmd.Rest.c_str()))
 	{
 		if (!isalnum(cmd.Rest[i]) && cmd.Rest[i] != '\\' && cmd.Rest[i] != '|'
 			&& cmd.Rest[i] != '[' && cmd.Rest[i] != ']' && cmd.Rest[i] != '{'
 			&& cmd.Rest[i] != '}' && cmd.Rest[i] != '-' && cmd.Rest[i] != '_')
-			return ((user->setBuffer(ERR_ERRONEUSNICKNAME(user->getHostname(), cmd.Rest))),-1);
+			return ((user->setBuffer(ERR_ERRONEUSNICKNAME(Host, cmd.Rest))),-1);
 		i++;
 	}
 	return 0;

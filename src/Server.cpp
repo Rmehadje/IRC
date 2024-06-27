@@ -175,7 +175,7 @@ void Server::handleMsg(Users *user)
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
 			std::cout <<"Recv"<< *it << std::endl;
-			if (!CheckCmd(cmd, user))
+			if (!CheckCmd(cmd, user ,this->getHost()))
 				executeCmd(cmd, user);
 		}
 	}
