@@ -57,6 +57,9 @@ void	Channel::setInvitef(bool	invitef){
 void	Channel::setPasswordf(bool passwordf){
 	this->Passf = passwordf;
 }
+void	Channel::setKickf(bool Kickf){
+	this->Kickf = Kickf;
+}
 std::string	Channel::getName() const{
 	return (this->Name);
 }
@@ -94,6 +97,9 @@ bool	Channel::getTopicf() const{
 }
 bool	Channel::getPasswordf() const{
 	return this->Passf;
+}
+bool	Channel::getKickf() const{
+	return this->Kickf;
 }
 
 int	Channel::getNumberofUsers(){
