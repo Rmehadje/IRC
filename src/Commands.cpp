@@ -437,30 +437,63 @@ std::vector<std::string> split(const std::string &str, const char *delimiter) {
     return tokens;
 }
 
-
 void Server::c_part(Command cmd, Users* user)
 {
     if (cmd.params[0].empty())
-        return(user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), cmd.CmdName)));
+    {
+        user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), cmd.CmdName));
+        return;
+    }
+    
     std::string reason = cmd.params[1];
     std::vector<std::string> channels = split(cmd.params[0], ",");
-    for (std::vector<std::string>::const_iterator it = channels.begin(); it != channels.end(); ++it) {
+    
+    for (std::vector<std::string>::const_iterator it = channels.begin(); it != channels.end(); ++it)
+    {
         Channel *channel = getChannel(*it);
-        if (channel == NULL){
+        
+        if (channel == NULL)
+        {
             user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), *it));
-            continue ;
+            continue;
         }
-        if (!channel->UserIsInC(user)){
+        
+        if (!channel->UserIsInC(user))
+        {
             user->setBuffer(ERR_NOTONCHANNEL(this->getHost(), user->getNickname()));
-            continue ;
+            continue;
         }
-		  //checkoplist;
-		  //delete channel if all leave
+        
+        // Handle deleting channel if necessary
+        if (channel->UserList.size() == 1)
+        {
+            // Iterate through vector of channels and erase the channel if found
+            for (std::vector<Channel*>::iterator i = getVectorCh().begin(); i != getVectorCh().end(); )
+            {
+                if ((*i)->getName() == *it)
+                {
+                    i = getVectorCh().erase(i); // Erase the element and update iterator
+                }
+				i++;
+            }
+        }
+			int opc = 0;
+			for (std::vector<struct C_Users>::iterator i = channel->UserList.begin(); i != channel->UserList.end(); )
+            {
+                if (i->flag == 1)
+                {
+                    opc +=1; 
+                }
+				i++;
+            }
+			
+        
         channel->deleteUserfromC(user);
+		if (opc<=1)
+			channel->UserList[0].flag = 1;
         user->setBuffer(RPL_PART(user->getSrc(), *it, reason));
         channel->brodcastMsg(RPL_PART(user->getSrc(), *it, reason), AllUsers);
     }
-
 }
 
 void Server::c_mode(Command cmd, Users *user) 
