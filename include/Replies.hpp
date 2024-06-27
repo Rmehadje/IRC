@@ -40,7 +40,7 @@
 #define RPL_CAP(src)												":" + src + " CAP * LS : you may enter PASS now...\r\n"
 // #define RPL_NICKCHANGE(src, nick)							":" + src + " Your new nickname has been set to " + nick + "\r\n"
 #define RPL_QUIT(src, nick, reply)							":" + src + " " + nick + " " + reply + "\r\n"
-#define RPL_KICK(src, chan, nick, user)					":" + src + " " + user + " has kicked " + nick + " from " + chan + "\r\n"
+#define RPL_KICK(src, chan, reason, user)					":" + src + " KICK " + chan + " " + user + " :" + reason + "\r\n"
 #define RPL_PART(src, chan, nick)							":" + src + " " + nick + " has parted from " + chan + "\r\n"
 #define RPL_WELCOME(src, user, host, nick)				":" + src + " 001 " + nick + " :Welcome to the IRC_server network " + nick + "!" + user + "@" + host + "\r\n"
 #define RPL_UMODEIS(src, nick, mode)						":" + src + " 221 " + nick + " " + mode + "\r\n"

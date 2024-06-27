@@ -156,7 +156,8 @@ std::vector<std::string> KickSplit(std::string tmp)
 		res.push_back(reason);
 		return res;
 	}
-	user = tmp.substr(0, i + 1);
+	user = tmp.substr(0, tmp.length());
+   user = RSpaces(user);
 	if (OnlySpaces(user))
 		return res;
 	res.push_back(user);
@@ -241,9 +242,13 @@ int	CheckKick(Command &cmd, Users *user)
 		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+	if (cmd.Rest.find(' ') == std::string::npos)
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	cmd.params = KickSplit(cmd.Rest);
 	if (cmd.params.size() < 2)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+	if (cmd.params.size() == 2)
+		cmd.params.push_back("Just Because");
 	if (cmd.params.size() == 3)
 	{
 		std::vector<std::string>::iterator it = cmd.params.end();

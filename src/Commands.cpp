@@ -326,26 +326,40 @@ void Server::c_quit(Command cmd, Users *user){
 
 void	Server::c_kick(Command cmd, Users *user)
 {
-
-    std::string channel = cmd.params[0];
-    std::vector<std::string> target = getTargets(cmd.params[1]);
-
-    if (channel.empty())
-        return(user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)));
-    Channel *cnl = getChannel(channel);
-    if (cnl == NULL)
-        return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), channel)));
-    // if (!cnl->UserIsInC(user))
-    //     return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), channel)));
-    // if (cnl->getKickf())
-    // {
-    //     if (!cnl->CheckifOP(user))
-    //         return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), channel)));
-    // }
-    // for (std::vector<std::string>::const_iterator it = target.begin(); it != target.end(); ++it) {
-    //     Users *tar = getUserByNn(*it);
-    //     if (!cnl->UserIsInC(tar))
-    //         return(user->setBuffer(ERR_USERNOTINCHANNEL(user->getHostname(),tar->getNickname(), channel)));
-    //     cnl->deleteUserfromC(tar);
-    // }   
+	for (std::vector<std::string>::iterator it = cmd.params.begin();it != cmd.params.end();it++)
+		std::cout << *it << std::endl;
+   std::string channel = cmd.params[0];
+   std::vector<std::string> target = getTargets(cmd.params[1]);
+   if (channel.empty())
+       return(user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)));
+   Channel *cnl = getChannel(channel);
+   if (cnl == NULL)
+       return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), channel)));
+   if (!cnl->UserIsInC(user))
+       return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), channel)));
+   if (cnl->getKickf())
+   {
+       if (!cnl->CheckifOP(user))
+           return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), channel)));
+   }
+   for (std::vector<std::string>::const_iterator it = target.begin(); it != target.end(); ++it) {
+      Users *tar = getUserByNn(*it);
+		if (tar == NULL)
+		{
+			user->setBuffer(ERR_NOSUCHNICK(this->getHost(), user->getNickname(), *it));
+			continue;
+		}
+		if (tar->getNickname() == user->getNickname())
+		{
+			continue;
+		}
+      if (!cnl->UserIsInC(tar))
+		{
+         (user->setBuffer(ERR_USERNOTINCHANNEL(user->getHostname(),tar->getNickname(), channel)));
+			continue; 
+		}
+      cnl->deleteUserfromC(tar);
+		tar->setBuffer(RPL_KICK(user->getSrc(), cnl->getName(), cmd.params[2], tar->getNickname()));
+		cnl->brodcastMsg(RPL_KICK(user->getSrc(), cnl->getName(), cmd.params[2], tar->getNickname()), AllUsers);
+   }
 }
