@@ -212,8 +212,7 @@ void Server::executeCmd(Command msg, Users *user)
 		std::cout << "GOOD" << std::endl;
     	// c_invite(msg.parameters, user);
 	else if (msg.CmdName == "TOPIC")
-			;
-		// c_topic(msg, user);
+		c_topic(msg, user);
 		// c_topic(msg.parameters,user, AllChanels)
     	// c_topic(msg.parameters, user);
 	else if (msg.CmdName == "MODE")

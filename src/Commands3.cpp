@@ -151,8 +151,11 @@ void	Server::c_kick(Command cmd, Users *user)
         return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), channel)));
     if (!cnl->UserIsInC(user))
         return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), channel)));
-    if (!cnl->CheckifOP(user))
-        return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), channel)));
+    if (cnl->getKickf())
+    {
+        if (!cnl->CheckifOP(user))
+            return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), channel)));
+    }
     for (std::vector<std::string>::const_iterator it = target.begin(); it != target.end(); ++it) {
         Users *tar = getUserByNn(*it);
         if (!cnl->UserIsInC(tar))
