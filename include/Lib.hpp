@@ -51,5 +51,5 @@ int	CheckBot(Command &cmd, Users *user);
 std::vector<std::string> KickSplit(std::string tmp);
 std::vector<std::string> PrivSplit(std::string tmp);
 std::vector<std::string> Split(std::string str);
-
+std::vector<std::string> getTargets(std::string targets);
 

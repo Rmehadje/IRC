@@ -206,8 +206,7 @@ void Server::executeCmd(Command msg, Users *user)
 		std::cout << "GOOD" << std::endl;
 		// c_part(msg.parameters, user);
 	else if (msg.CmdName == "KICK")
-		std::cout << "GOOD" << std::endl;
-    	// c_kick(msg.parameters, user);
+		c_kick(msg, user);
   	else if (msg.CmdName == "INVITE")
 		std::cout << "GOOD" << std::endl;
     	// c_invite(msg.parameters, user);

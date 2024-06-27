@@ -34,7 +34,6 @@ class Channel
 		bool						Invitef;
 		bool						Kickf;
 		bool						Passf;
-		bool						Kickf;
 		std::string				Mode;
 		std::string				Name;
 		std::string				Password;

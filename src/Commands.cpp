@@ -1,4 +1,5 @@
 #include "../include/Server.hpp"
+#include "../include/Lib.hpp"
 #include "../include/Replies.hpp"
 
 void	Server::AddPtoUser(Command cmd, Users *user){
@@ -308,3 +309,43 @@ void	Server::join(Command cmd, Users *user)
 		}	
 
 	}
+
+void Server::broadcast_quit_message(Users *user, const std::string& message) {
+    user->setBuffer(RPL_QUIT(user->getHostname(), user->getNickname(), message));
+    send_2usr(user->getSocket());
+    removeUserFromServer(user);
+    // close(user->getSocket());
+}
+
+void Server::c_quit(Command cmd, Users *user){
+    std::string param = cmd.Rest;
+    if (param.empty())
+        param = "Has Quit For No Apparent Reason";
+    broadcast_quit_message(user, param);
+}
+
+void	Server::c_kick(Command cmd, Users *user)
+{
+
+    std::string channel = cmd.params[0];
+    std::vector<std::string> target = getTargets(cmd.params[1]);
+
+    if (channel.empty())
+        return(user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)));
+    Channel *cnl = getChannel(channel);
+    if (cnl == NULL)
+        return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), channel)));
+    // if (!cnl->UserIsInC(user))
+    //     return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), channel)));
+    // if (cnl->getKickf())
+    // {
+    //     if (!cnl->CheckifOP(user))
+    //         return(user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), channel)));
+    // }
+    // for (std::vector<std::string>::const_iterator it = target.begin(); it != target.end(); ++it) {
+    //     Users *tar = getUserByNn(*it);
+    //     if (!cnl->UserIsInC(tar))
+    //         return(user->setBuffer(ERR_USERNOTINCHANNEL(user->getHostname(),tar->getNickname(), channel)));
+    //     cnl->deleteUserfromC(tar);
+    // }   
+}

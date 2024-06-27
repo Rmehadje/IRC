@@ -210,8 +210,8 @@ int	CheckInv(Command &cmd, Users *user)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	if (cmd.Rest.find(' ') == std::string::npos)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
-	std::vector<std::string> tmp = Split(cmd.Rest);
-	if (tmp.size() != 2)
+	cmd.params = Split(cmd.Rest);
+	if (cmd.params.size() != 2)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
 	return 0;
 }
@@ -231,7 +231,7 @@ int	CheckPart(Command &cmd, Users *user)
 		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
-	std::vector<std::string> tmp = Split(cmd.Rest);
+	cmd.params = Split(cmd.Rest);
 	return 0;
 }
 
@@ -241,12 +241,12 @@ int	CheckKick(Command &cmd, Users *user)
 		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
 	if (cmd.Rest.empty() || cmd.Rest.length() == 1)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
-	std::vector<std::string> tmp = KickSplit(cmd.Rest);
-	if (tmp.size() < 2)
+	cmd.params = KickSplit(cmd.Rest);
+	if (cmd.params.size() < 2)
 		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
-	if (tmp.size() == 3)
+	if (cmd.params.size() == 3)
 	{
-		std::vector<std::string>::iterator it = tmp.end();
+		std::vector<std::string>::iterator it = cmd.params.end();
 		it--;
 		if ((*it).length() >= KICKLEN)
 			return (user->setBuffer(ERR_INPUTTOOLONG(user->getHostname())), -1);
