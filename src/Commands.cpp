@@ -173,8 +173,9 @@ std::vector<std::string> getTargets(std::string targets)
 			tmp = targets.substr(j, i);
 			if (!tmp.empty())
 				res.push_back(tmp);
-			targets = targets.substr(i + 1, targets.length() - i + 1);
+			targets = targets.substr(i + 1, targets.length());
 			targets = RSpaces(targets);
+			i = 0;
 		}
 		else
 		{
@@ -247,6 +248,7 @@ void	Server::join(Command cmd, Users *user)
 				key_lst.erase(key_lst.begin());
 				chan->setPassword(key);
 				chan->setPasswordf(true);
+				chan->ChangeMode();
 			}
 			user->setBuffer(RPL_JOIN(user->getNickname(), user->getUsername(), user->getHostname(), chan->getName()));
 		}
@@ -508,7 +510,7 @@ void Server::c_mode(Command cmd, Users *user)
                 if (cmd.params.size() != 3)
                     return (user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), "MODE")));
                 if (!IfValid(cmd.params[3]))
-                    return (user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), "MODE")));
+                    return (user->setBuffer(ERR_INVALIDKEY(this->getHost(), user->getNickname(), channel->getName())));
                 channel->setPasswordf(true);
                 channel->setPassword(cmd.params[3]);
             }
