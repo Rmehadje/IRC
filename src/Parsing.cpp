@@ -475,3 +475,25 @@ int	CheckNick(Command &cmd, Users *user)
 	return 0;
 }
 
+bool	IfNumbers(std::string str)
+{
+	int i = 0;
+	while (str[i])
+	{
+		if (!isdigit(str[i]))
+			return false;
+		i++;
+	}
+	if (str.length() >= 3)
+		return false;
+	return true;
+}
+
+bool	IfValid(std::string str)
+{
+	if (str.find(' ') != std::string::npos)
+		return false;
+	if (str.length() >= 32)
+		return false;
+	return true;
+}

@@ -9,6 +9,7 @@ Channel::Channel(std::string name){
 	Limitf  = false;
 	Topicf = false;
 	Invitef = false;
+	Passf = false;
 }
 
 Channel::Channel(const	Channel &cp){
@@ -208,4 +209,28 @@ void	Channel::brodcastMsgPriv(std::string msg, std::vector<Users *> users, Users
 			continue;
 		(*it)->setBuffer(msg);
 	}
+}
+
+void	Channel::ChangeMode()
+{
+	std::string Mode1 = "+";
+	std::string Mode2 = "-";
+
+	if (getInvitef() == false)
+		Mode2 += "i";
+	else
+		Mode1 += "i";
+	if (getLimitf() == false)
+		Mode2 += "l";
+	else
+		Mode1 += "l";
+	if (getPasswordf() == false)
+		Mode2 += "k";
+	else
+		Mode1 += "k";
+	if (getTopicf() == false)
+		Mode2 += "t";
+	else
+		Mode1 += "t";
+	Mode = Mode1 + Mode2;
 }

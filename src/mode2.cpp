@@ -86,20 +86,84 @@ void setMode(std::string &currentModes, const std::string &modeString, const std
 }
 
 
-void c_mode(Command cmd, Users *user, std::vector<Users *> AllUsers, std::vector<Channel *> AllChannels) {
+void Server::c_mode(Command cmd, Users *user) 
+{
     std::string target = cmd.params[0];
-    std::string modeString = cmd.params[1];
-    std::vector<std::string> param = cmd.params;
-    if (target[0] == '#') { // Channel mode still in progress
-        Channel *channel = CheckChannel(AllChannels, target);
-        if (channel == NULL)
-            return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), target)));
-        std::string currentModes = channel->getMode();
-        if (param.empty()) {
-            return(user->setBuffer(RPL_CHANNELMODEIS(user->getHostname(), target)));
-        } else {
-            setMode(currentModes, modeString, param);
-            return(user->setBuffer(RPL_CHANNELMODEIS(user->getHostname(), target)));
-        }
+    if (cmd.params.size() == 1)
+    {
+        return ; //rpl mode is
     }
+    std::string modeString = cmd.params[1];
+    Channel *channel = getChannel(target);
+    if (channel == NULL)
+        return(user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), target)));
+    std::string currentModes = channel->getMode();
+    if (!channel->CheckifOP(user))
+        return ; //rply no privs
+    switch (modeString[1])
+    {
+        case 'i':
+            if (modeString[0] == '-')
+                channel->setInvitef(false);
+            else
+                channel->setInvitef(true);
+            break;
+        case 't':
+            if (modeString[0] == '-')
+                channel->setTopicf(false);
+            else
+                channel->setTopicf(true);
+            break;
+        case 'l':
+            if (modeString[0] == '-')
+                channel->setLimitf(false);
+            else
+            {
+                if (cmd.params.size() != 3)
+                    return ;//rplymore params
+                if (!IfNumbers(cmd.params[3]))
+                    return ; // rply wrong param
+                channel->setLimitf(true);
+                channel->setLimit(std::atoi(cmd.params[3].c_str()));
+            }
+            break;
+        case 'k':
+            if (modeString[0] == '-')
+                channel->setPasswordf(false);
+            else
+            {
+                if (cmd.params.size() != 3)
+                    return ;//rplymore params
+                if (!IfValid(cmd.params[3]))
+                    return ; // rply wrong param
+                channel->setPasswordf(true);
+                channel->setPassword(cmd.params[3]);
+            }
+            break;
+        case 'o':
+            if (cmd.params.size() != 3)
+                return ;//rplymore params
+            if (getUserByNn(cmd.params[3]) == NULL)
+                return ; //no such nick
+            if (!channel->UserIsInC(getUserByNn(cmd.params[3])))
+                return ;// user not in c
+            if (modeString[0] == '-')
+            {
+                if (!channel->CheckifOP(getUserByNn(cmd.params[3])))
+                    return ; //not op
+                channel->fliptoOperator(getUserByNn(cmd.params[3]));
+            }
+            else
+            {
+                if (channel->CheckifOP(getUserByNn(cmd.params[3])))
+                    return ; //already op
+                channel->fliptoOperator(getUserByNn(cmd.params[3]));
+            }
+            break;
+        default:
+            //unkown char
+            break;
+    }
+    channel->ChangeMode();
+    channel->brodcastMsg(RPL_CHANNELMODEIS(this->getHost(), channel->getName(), user->getNickname(), channel->getMode()), AllUsers);
 }

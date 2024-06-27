@@ -72,7 +72,7 @@ class Channel
 		int	getNumberofUsers();
 		std::string getAllUsersInChanList(std::vector<Users *> AllUsers);
 
-
+		void	ChangeMode();
 		void	addUsertoC(Users *user);
 		bool	UserIsInC(Users *user);
 		void	deleteUserfromC(Users	*user);

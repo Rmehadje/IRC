@@ -91,4 +91,5 @@ class Server
 		void	c_kick(Command cmd, Users *user);
 		void	c_invite(Command cmd, Users *user);
 		void	c_part(Command cmd, Users* user);
+		void	c_mode(Command cmd, Users *user);
 };
