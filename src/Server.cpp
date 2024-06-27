@@ -220,4 +220,6 @@ void Server::executeCmd(Command msg, Users *user)
 		// c_mode(msg.parameters, AllUsers, AllChannels)
 	else if (msg.CmdName == "PRIVMSG")
 		c_privmsg(msg, user);
+	else if(msg.CmdName == "WHOIS")
+		Whois(user, msg);
 }

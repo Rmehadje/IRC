@@ -37,7 +37,7 @@
 #define RPL_USER(src, user)									":" + src + " :Your username is now set to: " + user + "\r\n"
 #define RPL_NOTOPERATORANYMORE(src, chan)					":" + src + " :You are no longer an IRC operator in " + chan + "\r\n"
 #define RPL_BECOMINGOPERATOR(src, chan)					":" + src + " :You are now an IRC operator in " + chan + "\r\n"
-#define RPL_WHOISUSER(src, nick, user, username, host, rname)			":" + src + " 311 " + user + " " + nick + " " + username + " " + host + " * :" + rname + "\r\n"
+#define RPL_WHOISUSER(src, nick, user, username, host, rname)			":" + src + " 311 " + nick + " " + user + " " + username + " " + host + " * :" + rname + "\r\n"
 #define RPL_ENDOFWHOIS(src, user, name)										":" + src + " 318 " + user + " " + name + " :End of WHOIS list\r\n"
 #define RPL_CAP(src)												":" + src + " CAP * LS : you may enter PASS now...\r\n"
 // #define RPL_NICKCHANGE(src, nick)							":" + src + " Your new nickname has been set to " + nick + "\r\n"

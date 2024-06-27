@@ -311,8 +311,25 @@ int	CheckBot(Command &cmd, Users *user)
 	return 0;
 }
 
+int	CheckWho(Command &cmd, Users *user)
+{
+	int i = 0;
+	if (user->getStatus() < 4)
+		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())), -1);
+	if (cmd.Rest.empty() || OnlySpaces(cmd.Rest))
+		return (user->setBuffer(ERR_NEEDMOREPARAMS(user->getHostname(), cmd.CmdName)), -1);
+	cmd.Rest = RSpaces(cmd.Rest);
+	if (cmd.Rest.find(' ') == std::string::npos)
+		return 0;
+	i = cmd.Rest.find(' ');
+	cmd.Rest = cmd.Rest.substr(0, i);
+	return 0;
+}
+
 int	CheckCmd(Command &cmd, Users *user)
 {
+	if (cmd.CmdName == "WHOIS")
+		return CheckWho(cmd, user);
 	if (cmd.CmdName == "BOT")
 		return CheckBot(cmd, user);
 	if (cmd.CmdName == "CAP")

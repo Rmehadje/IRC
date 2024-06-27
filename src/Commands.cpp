@@ -363,3 +363,12 @@ void	Server::c_kick(Command cmd, Users *user)
 		cnl->brodcastMsg(RPL_KICK(user->getSrc(), cnl->getName(), cmd.params[2], tar->getNickname()), AllUsers);
    }
 }
+
+void	Server::Whois(Users *user, Command cmd){
+	std::string name = cmd.Rest;
+	Users *u = getUserByNn(name);
+	if (u == NULL)
+		return user->setBuffer(ERR_NOSUCHNICK(this->getHost(), user->getNickname(), name));
+	user->setBuffer(RPL_WHOISUSER(this->getHost(), user->getNickname(), name, u->getUsername(), u->getHostname(), u->getRealname()));
+	user->setBuffer(RPL_ENDOFWHOIS(this->getHost(), user->getNickname(), name));
+}

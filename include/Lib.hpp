@@ -48,6 +48,7 @@ int	OnlySpaces(std::string str);
 int	CheckTopic(Command &cmd, Users *user);
 int	CheckMode(Command &cmd, Users *user);
 int	CheckBot(Command &cmd, Users *user);
+int	CheckWho(Command &cmd, Users *user);
 std::vector<std::string> KickSplit(std::string tmp);
 std::vector<std::string> PrivSplit(std::string tmp);
 std::vector<std::string> Split(std::string str);
