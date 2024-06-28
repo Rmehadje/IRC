@@ -76,7 +76,8 @@ void	Bot::ChannelList(Users *user, std::vector<Channel *> &AllChannels){
 	}
 	user->setBuffer(RPL_BOT_CL(everychannel));
 }
-void	Bot::WhoisOperator(Users *user, Command cmd, std::vector<Channel *> &AllChannels){
+
+void	Bot:: WhoisOperator(Users *user, Command cmd, std::vector<Channel *> &AllChannels){
 	std::string channel;
 	if (AllChannels.empty()){
 		return user->setBuffer(RPL_BOT_WHOISOP(user->getNickname(), "There are no Channels available currently, feel free to create one!"));
