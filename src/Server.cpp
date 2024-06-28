@@ -11,7 +11,15 @@ Server::Server(int port, std::string password)
 	std::cout << GREEN << "-------STARTING---SERVER-------" << DEFAULT << std::endl;
 }
 
-Server::~Server(){}
+Server::~Server()
+{
+	for (std::vector<Channel *>::iterator it = AllChannels.begin();it != AllChannels.end();it++)
+		delete *it;
+	for (std::vector<Users *>::iterator it = AllUsers.begin();it != AllUsers.end();it++)
+		delete *it;
+	AllChannels.clear();
+	AllUsers.clear();
+}
 
 Server::Server(const Server &cp)
 {
