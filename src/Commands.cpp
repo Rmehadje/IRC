@@ -5,32 +5,32 @@
 void	Server::AddPtoUser(Command cmd, Users *user){
 	std::string pword = cmd.Rest;
 	if (user->getStatus() == 0)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
+		return (user->setBuffer(ERR_NOTREGISTERED(this->getHost())));
 	if (user->getStatus() == 1){
 		if (!pword.empty() && pword == this->Password){
 			user->setStatus(2);
 			user->setBuffer(RPL_PASS(user->getHostname()));
 		}
 		else if (pword.empty())
-			user->setBuffer((user->getHostname(), cmd.CmdName));
+			user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), cmd.CmdName));
 		else {
-			user->setBuffer(ERR_PASSWDMISMATCH(user->getHostname()));
+			user->setBuffer(ERR_PASSWDMISMATCH(this->getHost()));
 		}
 	}
 	else if (user->getStatus() >= 2){
-		user->setBuffer(ERR_ALREADYREGISTERED(user->getHostname()));
+		user->setBuffer(ERR_ALREADYREGISTERED(this->getHost()));
 	}
 }
 
 void	Server::AddNicktoUser(Command cmd, Users *user){
 	if (user->getStatus() < 2)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
+		return (user->setBuffer(ERR_NOTREGISTERED(this->getHost())));
 	if (user->getStatus() == 4 && user->getNickname() != "*")
 	{
 		std::string Nick = cmd.Rest;
 		for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end(); it++){
 				if ((*it)->getNickname() == Nick){
-					user->setBuffer(ERR_NICKNAMEINUSE(user->getHostname(), Nick));
+					user->setBuffer(ERR_NICKNAMEINUSE(this->getHost(), Nick));
 					return ;
 				}
 		}
@@ -42,7 +42,7 @@ void	Server::AddNicktoUser(Command cmd, Users *user){
 		std::string Nick = cmd.Rest;
 		for (std::vector<Users *>::iterator it = this->AllUsers.begin(); it != this->AllUsers.end(); it++){
 				if ((*it)->getNickname() == Nick){
-					user->setBuffer(ERR_NICKNAMEINUSE(user->getHostname(), Nick));
+					user->setBuffer(ERR_NICKNAMEINUSE(this->getHost(), Nick));
 					return ;
 				}
 		}
@@ -75,7 +75,7 @@ void	Server::RegisterUser(Command cmd, Users *user)
 	if (user->getStatus() == 4 && user->getUsername() != "*")
 		return user->setBuffer(ERR_ALREADYREGISTERED(this->getHost()));
 	if (user->getStatus() < 2)
-		return (user->setBuffer(ERR_NOTREGISTERED(user->getHostname())));
+		return (user->setBuffer(ERR_NOTREGISTERED(this->getHost())));
 	if (user->getStatus() >= 2)
 	{
 		std::vector<std::string>::iterator it = cmd.params.begin();
@@ -125,9 +125,9 @@ void Server::c_topic(Command cmd, Users *user)
    std::string ChannelName = cmd.params[0];
    Channel *Channel= CheckChannel(AllChannels, ChannelName);
    if (Channel == NULL)
-        return(user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), ChannelName)));
+        return(user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), ChannelName)));
 	if (!Channel->UserIsInC(user))
-		return(user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), Channel->getName())));
+		return(user->setBuffer(ERR_NOTONCHANNEL(this->getHost(), Channel->getName())));
 	if (cmd.params.size() == 1)
 	{
 		if (Channel->getTopic().empty())
@@ -145,7 +145,7 @@ void Server::c_topic(Command cmd, Users *user)
 		else
 		{
 			if (!Channel->CheckifOP(user))
-				return (user->setBuffer(ERR_CHANOPRIVSNEEDED(user->getHostname(), Channel->getName())));
+				return (user->setBuffer(ERR_CHANOPRIVSNEEDED(this->getHost(), Channel->getName())));
 			else
 			{
 				Channel->setTopic(cmd.params[1]);
@@ -196,19 +196,19 @@ void	Server::c_privmsg(Command cmd, Users *user)
 	{
 		if (OnlySpaces(*it))
 		{
-			user->setBuffer(ERR_NOSUCHNICK(user->getHostname(), user->getNickname(), *it));
+			user->setBuffer(ERR_NOSUCHNICK(this->getHost(), user->getNickname(), *it));
 			continue;
 		}
 		if ((*it)[0] == '#')
 		{
 			if (getChannel(*it) == NULL)
 			{
-				user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), *it));
+				user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), *it));
 				continue;
 			}
 			if (!getChannel(*it)->UserIsInC(user))
 			{
-				user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), *it));
+				user->setBuffer(ERR_NOTONCHANNEL(this->getHost(), *it));
 				continue;
 			}
 			getChannel(*it)->brodcastMsgPriv(RPL_PRIVMSG(user->getSrc(), *it, cmd.params[1]), AllUsers, user);
@@ -217,7 +217,7 @@ void	Server::c_privmsg(Command cmd, Users *user)
 		{
 			if (!getUserByNn(*it))
 			{
-				user->setBuffer(ERR_NOSUCHNICK(user->getHostname(), user->getNickname(), *it));
+				user->setBuffer(ERR_NOSUCHNICK(this->getHost(), user->getNickname(), *it));
 				continue;
 			}
 			getUserByNn(*it)->setBuffer(RPL_PRIVMSG(user->getSrc(), *it, cmd.params[1]));
@@ -437,28 +437,63 @@ std::vector<std::string> split(const std::string &str, const char *delimiter) {
     return tokens;
 }
 
-
 void Server::c_part(Command cmd, Users* user)
 {
     if (cmd.params[0].empty())
-        return(user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), cmd.CmdName)));
+    {
+        user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), cmd.CmdName));
+        return;
+    }
+    
     std::string reason = cmd.params[1];
     std::vector<std::string> channels = split(cmd.params[0], ",");
-    for (std::vector<std::string>::const_iterator it = channels.begin(); it != channels.end(); ++it) {
+    
+    for (std::vector<std::string>::const_iterator it = channels.begin(); it != channels.end(); ++it)
+    {
         Channel *channel = getChannel(*it);
-        if (channel == NULL){
+        
+        if (channel == NULL)
+        {
             user->setBuffer(ERR_NOSUCHCHANNEL(this->getHost(), *it));
-            continue ;
+            continue;
         }
-        if (!channel->UserIsInC(user)){
+        
+        if (!channel->UserIsInC(user))
+        {
             user->setBuffer(ERR_NOTONCHANNEL(this->getHost(), user->getNickname()));
-            continue ;
+            continue;
         }
+        
+        // Handle deleting channel if necessary
+        if (channel->UserList.size() == 1)
+        {
+            // Iterate through vector of channels and erase the channel if found
+            for (std::vector<Channel*>::iterator i = getVectorCh().begin(); i != getVectorCh().end(); )
+            {
+                if ((*i)->getName() == *it)
+                {
+                    i = getVectorCh().erase(i); // Erase the element and update iterator
+                }
+				i++;
+            }
+        }
+			int opc = 0;
+			for (std::vector<struct C_Users>::iterator i = channel->UserList.begin(); i != channel->UserList.end(); )
+            {
+                if (i->flag == 1)
+                {
+                    opc +=1; 
+                }
+				i++;
+            }
+			
+        
         channel->deleteUserfromC(user);
+		if (opc<=1)
+			channel->UserList[0].flag = 1;
         user->setBuffer(RPL_PART(user->getSrc(), *it, reason));
         channel->brodcastMsg(RPL_PART(user->getSrc(), *it, reason), AllUsers);
     }
-
 }
 
 void Server::c_mode(Command cmd, Users *user) 
@@ -496,45 +531,48 @@ void Server::c_mode(Command cmd, Users *user)
             {
                 if (cmd.params.size() != 3)
                     return (user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), "MODE")));
-                if (!IfNumbers(cmd.params[3]))
-                    return (user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), "MODE")));
+                if (!IfNumbers(cmd.params[2]))
+                    return (user->setBuffer(ERR_INVALIDMODEPARAM(this->getHost(), user->getNickname(), channel->getName(), modeString[1], cmd.params[2])));
                 channel->setLimitf(true);
-                channel->setLimit(std::atoi(cmd.params[3].c_str()));
+                channel->setLimit(std::atoi(cmd.params[2].c_str()));
             }
             break;
         case 'k':
             if (modeString[0] == '-')
-                channel->setPasswordf(false);
+				{
+					channel->ClearPass();
+               channel->setPasswordf(false);
+				}
             else
             {
                 if (cmd.params.size() != 3)
                     return (user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), "MODE")));
-                if (!IfValid(cmd.params[3]))
+                if (!IfValid(cmd.params[2]))
                     return (user->setBuffer(ERR_INVALIDKEY(this->getHost(), user->getNickname(), channel->getName())));
                 channel->setPasswordf(true);
-                channel->setPassword(cmd.params[3]);
+                channel->setPassword(cmd.params[2]);
             }
             break;
         case 'o':
             if (cmd.params.size() != 3)
                 return (user->setBuffer(ERR_NEEDMOREPARAMS(this->getHost(), "MODE")));
-            if (getUserByNn(cmd.params[3]) == NULL)
+            if (!getUserByNn(cmd.params[2]))
                 return (user->setBuffer(ERR_NOSUCHNICK(this->getHost(), user->getNickname(), channel->getName())));
-            if (!channel->UserIsInC(getUserByNn(cmd.params[3])))
+            if (!channel->UserIsInC(getUserByNn(cmd.params[2])))
                 return (user->setBuffer(ERR_USERNOTINCHANNEL(this->getHost(), user->getNickname(), channel->getName())));
             if (modeString[0] == '-')
             {
-                if (!channel->CheckifOP(getUserByNn(cmd.params[3])))
+                if (!channel->CheckifOP(getUserByNn(cmd.params[2])))
                     return (user->setBuffer(ERR_CHANOPRIVSNEEDED(this->getHost(), channel->getName())));
-                channel->fliptoOperator(getUserByNn(cmd.params[3]));
+                channel->fliptoOperator(getUserByNn(cmd.params[2]));
                 getUserByNn(cmd.params[3])->setBuffer(RPL_NOTOPERATORANYMORE(this->getHost(), channel->getName()));
             }
             else
             {
-                if (channel->CheckifOP(getUserByNn(cmd.params[3])))
+                if (channel->CheckifOP(getUserByNn(cmd.params[2])))
                     return (user->setBuffer(ERR_ALREADYOPERATOR(this->getHost(), user->getNickname(), channel->getName(), cmd.params[3])));
-                channel->fliptoOperator(getUserByNn(cmd.params[3]));
-                getUserByNn(cmd.params[3])->setBuffer(RPL_BECOMINGOPERATOR(this->getHost(), channel->getName()));
+                channel->fliptoOperator(getUserByNn(cmd.params[2]));
+                getUserByNn(cmd.params[2])->setBuffer(RPL_BECOMINGOPERATOR(this->getHost(), channel->getName()));
             }
             break;
         default:
