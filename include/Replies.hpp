@@ -68,7 +68,7 @@
 #define RPL_BOT_D20(help)									": " + help + " \r\n"
 #define RPL_BOT_WELCOME(nick)								nick + ": Welcome to the server! my name is The Knight, if you need any help please type <BOT BOTC> or <BOT HELPC>, I will do my best to assist you\r\n"
 #define RPL_BOT_CWELCOME(nick, chan)					":KNIGHT!KNIGHT@0.0.0.0 PRIVMSG " + chan + " : good folks, i would like you to please make " + nick + " feel at home within our noble walls\r\n"
-#define RPL_BOT_WHOISOP(chan, list)						":KNIGHT!KNIGHT@0.0.0.0 PRIVMSG " + chan + " " + list + "\r\n"
+#define RPL_BOT_WHOISOP(list)								list + "\r\n"
 #define RPL_BOT_()
 
 
