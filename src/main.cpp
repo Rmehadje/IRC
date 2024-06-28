@@ -12,10 +12,7 @@ int main(int argc, char **argv)
 	if (PortChecker(argv[1]) == 1)
 		return 1;
 	Server server(atoi(argv[1]), argv[2]);
-	while (server.getStatus() == true)
-	{
-		server.init();
-		server.start();
-	}
+	server.init();
+	server.start();
 	return 0;
 }

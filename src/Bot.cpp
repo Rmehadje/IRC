@@ -164,7 +164,7 @@ void	Bot::executeBot(Command cmd, Users *user, std::vector<Users *>users, std::v
 		ChannelList(user, Channels);
 	else if (cmd.Rest == "BOTC")
 		BotCommands(user);
-	else if (cmd.Rest == "WHOISOP")
+	else if (!cmd.params.empty() && cmd.params[0] == "WHOISOP")
 		WhoisOperator(user, cmd, Channels);
 	else
 		user->setBuffer(ERR_UNKNOWNCOMMAND(user->getHostname(), cmd.Rest, user->getNickname()));

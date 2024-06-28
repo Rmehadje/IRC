@@ -319,6 +319,12 @@ int	CheckBot(Command &cmd, Users *user, std::string Host)
 		return (user->setBuffer(ERR_NOTREGISTERED(Host)), -1);
 	if (cmd.Rest.empty())
 		return (user->setBuffer(ERR_UNKNOWNCOMMAND(Host, cmd.CmdName, user->getNickname())), -1);
+	cmd.Rest = RSpaces(cmd.Rest);
+	if (cmd.Rest.find(' '))
+	{
+		cmd.params.push_back(cmd.Rest.substr(0, cmd.Rest.find(' ')));
+		cmd.params.push_back(cmd.Rest.substr(cmd.Rest.find(' ') + 1, cmd.Rest.length()));
+	}
 	return 0;
 }
 

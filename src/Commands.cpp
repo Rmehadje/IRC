@@ -313,10 +313,22 @@ void	Server::join(Command cmd, Users *user)
 	}
 
 void Server::broadcast_quit_message(Users *user, const std::string& message) {
-    user->setBuffer(RPL_QUIT(user->getHostname(), user->getNickname(), message));
-    send_2usr(user->getSocket());
-    removeUserFromServer(user);
-    // close(user->getSocket());
+   user->setBuffer(RPL_QUIT(user->getHostname(), user->getNickname(), message));
+   send_2usr(user->getSocket());
+	for (std::vector<Channel *>::iterator it = AllChannels.begin();it != AllChannels.end();it++)
+	{
+		for (std::vector<C_Users>::iterator i = (*it)->UserList.begin(); i != (*it)->UserList.end();i++)
+		{
+			if (user == i->user)
+			{
+				std::string com = "PART " + (*it)->getName();
+				Command cmd = parse(com);
+				CheckCmd(cmd, user, this->getHost());
+				c_part(cmd, user);
+			}
+		}
+	}
+   removeUserFromServer(user);
 }
 
 void Server::c_quit(Command cmd, Users *user){
@@ -463,20 +475,6 @@ void Server::c_part(Command cmd, Users* user)
             user->setBuffer(ERR_NOTONCHANNEL(this->getHost(), user->getNickname()));
             continue;
         }
-        
-        // Handle deleting channel if necessary
-        if (channel->UserList.size() == 1)
-        {
-            // Iterate through vector of channels and erase the channel if found
-            for (std::vector<Channel*>::iterator i = getVectorCh().begin(); i != getVectorCh().end(); )
-            {
-                if ((*i)->getName() == *it)
-                {
-                    i = getVectorCh().erase(i); // Erase the element and update iterator
-                }
-				i++;
-            }
-        }
 			int opc = 0;
 			for (std::vector<struct C_Users>::iterator i = channel->UserList.begin(); i != channel->UserList.end(); )
             {
@@ -486,12 +484,27 @@ void Server::c_part(Command cmd, Users* user)
                 }
 				i++;
             }
+        channel->deleteUserfromC(user);
+        user->setBuffer(RPL_PART(user->getSrc(), *it, reason));
+		if (opc <= 1)
+		{
+			channel->UserList[0].flag = 1;
+			channel->UserList[0].user->setBuffer(RPL_BECOMINGOPERATOR(this->getHost(), channel->getName()));
+		}
+        if (channel->UserList.size() == 0)
+        {
+            for (std::vector<Channel*>::iterator i = AllChannels.begin(); i != AllChannels.end();i++ )
+            {
+                if ((*i)->getName() == *it)
+                {
+                    AllChannels.erase(i);
+						  delete channel;
+						  return ;
+                }
+            }
+        }
 			
         
-        channel->deleteUserfromC(user);
-		if (opc<=1)
-			channel->UserList[0].flag = 1;
-        user->setBuffer(RPL_PART(user->getSrc(), *it, reason));
         channel->brodcastMsg(RPL_PART(user->getSrc(), *it, reason), AllUsers);
     }
 }
