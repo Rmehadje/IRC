@@ -77,7 +77,16 @@ void	Bot::ChannelList(Users *user, std::vector<Channel *> &AllChannels){
 	user->setBuffer(RPL_BOT_CL(everychannel));
 }
 
-void	Bot::WhoisOperator(Users *user, Command cmd, std::vector<Channel *> &AllChannels){
+Channel	*Bot::getChan(std::string name, std::vector<Channel *> AllChannels)
+{
+	for (std::vector<Channel *>::iterator it = AllChannels.begin();it != AllChannels.end(); ++it) {
+		if ((*it)->getName() == name)
+			return *it;
+	}
+	return NULL;
+}
+
+void	Bot::WhoisOperator(Users *user, Command &cmd, std::vector<Channel *> &AllChannels){
 	std::string channel;
 	if (AllChannels.empty()){
 		std::string t = " :KNIGHT There are no Channels available currently, feel free to create one!";
@@ -85,23 +94,28 @@ void	Bot::WhoisOperator(Users *user, Command cmd, std::vector<Channel *> &AllCha
 	}
 	else{
 		std::string name = cmd.params[1];
-		for (std::vector<Channel *>::iterator it = AllChannels.begin(); it != AllChannels.end(); it++){
-			if (name == (*it)->getName()){ 
+		Channel *tmp = getChan(name, AllChannels);
+		if (tmp)
+		{
+			if (!(tmp)->UserIsInC(user))
+				{
+					std::string n = (tmp)->getName();
+					return user->setBuffer(ERR_NOTONCHANNEL(user->getHostname(), n));
+				}
 				channel = " :KNIGHT Here is the list of operators in this channel: ";
-				for (std::vector<C_Users>::iterator i = (*it)->UserList.begin(); i != (*it)->UserList.end(); i++){
+				for (std::vector<C_Users>::iterator i = (tmp)->UserList.begin(); i != (tmp)->UserList.end(); i++){
 					if ((i)->flag == 1)
 					{
 						channel += (i)->user->getNickname();
 						channel += " / ";
 					}
 				}
-			}
-			else
-				return user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), (*it)->getName()));
-			}
+			user->setBuffer(RPL_BOT_WHOISOP(channel));
 		}
-		user->setBuffer(RPL_BOT_WHOISOP(channel));
+		else
+			return user->setBuffer(ERR_NOSUCHCHANNEL(user->getHostname(), name));
 	}
+}
 
 void	Bot::EightBall(Users *user){
     static const char* responses[] = {

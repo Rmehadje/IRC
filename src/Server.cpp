@@ -157,8 +157,7 @@ void	Server::removeUserFromServer(Users *user)
 			break ;
 		}
 	}
-	delete user;
-}
+	delete user;}
 
 void Server::handleMsg(Users *user)
 {
@@ -182,11 +181,6 @@ void Server::handleMsg(Users *user)
 		user->setCmd(tmp);
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
-			if (cmd.CmdName == "NEYAK")
-			{
-				system("leaks IRC");
-				exit(0);
-			}
 			std::cout <<"Recv"<< *it << std::endl;
 			if (!CheckCmd(cmd, user ,this->getHost()))
 				executeCmd(cmd, user);
@@ -196,7 +190,6 @@ void Server::handleMsg(Users *user)
 
 void Server::executeCmd(Command msg, Users *user)
 {
-	std::cout << user->getStatus() << std::endl;
 	if (user->getStatus() != 4 && (msg.CmdName != "PING" && msg.CmdName != "CAP" && msg.CmdName != "NICK" && msg.CmdName != "USER" && msg.CmdName != "PASS"))
 		return user->setBuffer(ERR_NOTREGISTERED(getHost()));
 	if (msg.CmdName == "CAP")
@@ -223,8 +216,6 @@ void Server::executeCmd(Command msg, Users *user)
 		c_invite(msg, user);
 	else if (msg.CmdName == "TOPIC")
 		c_topic(msg, user);
-		// c_topic(msg.parameters,user, AllChanels)
-    	// c_topic(msg.parameters, user);
 	else if (msg.CmdName == "MODE")
 		c_mode(msg, user);
 	else if (msg.CmdName == "PRIVMSG")
