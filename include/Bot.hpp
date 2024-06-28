@@ -30,4 +30,5 @@ class Bot{
 		void	EightBall(Users *user);
 		void	d20(Users *user);
 		void	executeBot(Command cmd, Users *user,std::vector<Users *>users, std::vector<Channel *>Channels);
+		void	WhoisOperator(Users *user, Command cmd, std::vector<Channel *> &AllChannels);
 };
