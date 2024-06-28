@@ -31,6 +31,8 @@ Channel	&Channel::operator=(const Channel &og){
 	return (*this);
 }
 
+Channel::~Channel(){}
+
 void	Channel::setName(std::string name){
 	this->Name = name;
 }

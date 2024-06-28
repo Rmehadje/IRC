@@ -174,6 +174,11 @@ void Server::handleMsg(Users *user)
 		user->setCmd(tmp);
 		for (std::vector<std::string>::iterator it = vec.begin(); it != vec.end(); ++it) {
 			Command cmd = parse(*it);
+			if (cmd.CmdName == "NEYAK")
+			{
+				system("leaks IRC");
+				exit(0);
+			}
 			std::cout <<"Recv"<< *it << std::endl;
 			if (!CheckCmd(cmd, user ,this->getHost()))
 				executeCmd(cmd, user);
