@@ -30,16 +30,16 @@ std::string	Bot::getBotName() const{
 
 void	Bot::HelpCommands(Users *user){
 	std::string Help = "You ask and you shall receive, here is the list of commands:\n\n"
-	"KNIGHT TOPIC:   <Channel> <TOPIC>,                      The TOPIC command serves the purpose of giving you the possibility of changing the Topic, or see the topic set for the channel\n"
-	"KNIGHT KICK:    <Channel> <user>,                          The KICK command ejects a user from the Channel.\n"
-	"KNIGHT INVITE:  <NickName> <Channel>,                The INVITE command hands you the power of inviting your peers to the Channel.\n"
-	"KNIGHT PRIVMSG: <target>   <message>,                 It is quite self explanatory, this command is used to send a private message to someone.\n\n"
+	"KNIGHT TOPIC:   <Channel> <TOPIC>,                                    The TOPIC command serves the purpose of giving you the possibility of changing the Topic, or see the topic set for the channel\n"
+	"KNIGHT KICK:    <Channel> <user>,                                        The KICK command ejects a user from the Channel.\n"
+	"KNIGHT INVITE:  <NickName> <Channel>,                              The INVITE command hands you the power of inviting your peers to the Channel.\n"
+	"KNIGHT PRIVMSG: <target>   <message>,                               It is quite self explanatory, this command is used to send a private message to someone.\n\n"
 	"KNIGHT MODE: this is used to change Channel modes, for this you would need to be the OP, here are the modes available:\n"
-	"KNIGHT +i: #Channel <+i>                                         Set or remove the invite only for the channel.\n"
-	"KNIGHT +t: #Channel <+t>                                        Set or remove the Topic restrictions for the OP.\n"
-	"KNIGHT +k: #Channel <+K> <PassWord>                Set or remove Channel Password.\n"
-	"KNIGHT +l: #Channel <+l> <int>                              Set or remove the limit of users in one Channel.\n"
-	"KNIGHT +o: #Channel <+/-o> <NickName>            Set or remove the OP privilages to a user.\n\n"
+	"KNIGHT +i: MODE #Channel <+/-i>                                         Set or remove the invite only for the channel.\n"
+	"KNIGHT +t: MODE #Channel <+/-t>                                         Set or remove the Topic restrictions for the OP.\n"
+	"KNIGHT +k: MODE #Channel <+/-K> <PassWord>                 Set or remove Channel Password.\n"
+	"KNIGHT +l: MODE #Channel <+/-l> <int>                              Set or remove the limit of users in one Channel.\n"
+	"KNIGHT +o: MODE #Channel <+/-o> <NickName>                Set or remove the OP privilages to a user.\n\n"
 	"KNIGHT As mentioned before, some of these commands require you to be the OP, you can't use KICK and MODE if you are a user, unless some restrtictions have been softened for you.";
 	user->setBuffer(RPL_BOT_HC(Help));
 }
